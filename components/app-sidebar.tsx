@@ -23,9 +23,11 @@ export function AppSidebar() {
         <Sidebar>
             <SidebarHeader className="bg-[#492727] h-36 flex justify-center items-center">
                 <Image className="absolute w-full rotate-180 top-0" src={"/images/pyramids.png"} alt="" width={225} height={225} />
-                <div className="transition-transform z-10 hover:scale-105 active:scale-95 hover:cursor-pointer">
-                    <Image src={"/images/logo-white.png"} alt="AggieSeek" width={225} height={225} />
-                </div>
+                <Link href={"/"} className="z-10">
+                    <div className="transition-transform hover:scale-105 active:scale-95 hover:cursor-pointer">
+                        <Image src={"/images/logo-white.png"} alt="AggieSeek" width={225} height={225} />
+                    </div>
+                </Link>
             </SidebarHeader>
             <SidebarContent>
                 <Collapsible defaultOpen className="group/collapsible">
@@ -90,7 +92,7 @@ export function AppSidebar() {
                                     </SidebarMenuItem>
                                     <SidebarMenuItem>
                                         <SidebarMenuButton asChild>
-                                            <Link href={"/dashboard"}>
+                                            <Link href={"https://ko-fi.com/aggieseek"} target="_blank" rel="noopener noreferrer">
                                                 <Banknote />
                                                 <span>Donate</span>
                                             </Link>
