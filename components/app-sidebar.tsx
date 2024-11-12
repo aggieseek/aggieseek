@@ -3,7 +3,6 @@ import {
     SidebarContent,
     SidebarFooter,
     SidebarGroup,
-    SidebarGroupAction,
     SidebarGroupContent,
     SidebarGroupLabel,
     SidebarHeader,
@@ -12,11 +11,10 @@ import {
     SidebarMenuItem,
     SidebarRail,
 } from "@/components/ui/sidebar";
-import { Banknote, ChevronDown, Info, LayoutDashboard, MessageCircleQuestion, Phone, Plus, Search, Settings } from "lucide-react";
+import { Banknote, ChevronDown, Info, LayoutDashboard, MessageCircleQuestion, Phone, Search, Settings } from "lucide-react";
 import Image from "next/image";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible";
 import Link from "next/link";
-import { motion } from "framer-motion";
 
 export function AppSidebar() {
     return (

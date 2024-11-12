@@ -5,7 +5,7 @@ import { useState } from "react";
 
 export default function Dashboard() {
 
-  const [crns, setCRNs] = useState<string[]>(["12345", "10338", "22605", "19960", "54747", "43689"]);
+  const [crns] = useState<string[]>(["12345", "10338", "22605", "19960", "54747", "43689"]);
 
   return (
     <>

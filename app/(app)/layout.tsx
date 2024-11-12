@@ -38,7 +38,7 @@ const getTitle = async (path: string) => {
   }
 
   return null;
-}
+};
 
 const titles: Record<string, Title> = {
   "/dashboard": {
