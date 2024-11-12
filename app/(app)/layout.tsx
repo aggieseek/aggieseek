@@ -14,9 +14,13 @@ const titles: Record<string, Title> = {
     title: "Dashboard",
     subtitle: "View your tracked courses and stay updated."
   },
-  "/dashboard/search": {
+  "/search": {
     title: "Search",
     subtitle: "Search for specific classes, professors, and more."
+  },
+  "/settings": {
+    title: "Settings",
+    subtitle: "Manage your account settings and preferences."
   }
 };
 
@@ -28,8 +32,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <AppSidebar />
       <main className="flex flex-col w-full">
         <header className="flex flex-col justify-end h-1/4 p-8">
-          <h1 className="font-bold text-4xl">{titles[pathname].title}</h1>
-          <h2 className="font-medium text-lg opacity-30">{titles[pathname].subtitle}</h2>
+          <h1 className="font-bold text-3xl">{titles[pathname].title}</h1>
+          <h2 className="font-medium text-base opacity-30">{titles[pathname].subtitle}</h2>
         </header>
 
         <section className="flex h-full bg-zinc-100">
