@@ -15,8 +15,12 @@ import { Banknote, ChevronDown, Info, LayoutDashboard, MessageCircleQuestion, Ph
 import Image from "next/image";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export function AppSidebar() {
+
+    const pathname = usePathname();
+
     return (
         <Sidebar>
             <SidebarHeader className="bg-[#492727] h-36 flex justify-center items-center">
@@ -41,7 +45,7 @@ export function AppSidebar() {
                                 <SidebarMenu className="text-white">
                                     <SidebarMenuItem>
                                         <SidebarMenuButton asChild>
-                                            <Link href={"/dashboard"}>
+                                            <Link href={"/dashboard"} className={pathname.startsWith("/dashboard") ? "border-l-2" : undefined}>
                                                 <LayoutDashboard />
                                                 <span>Dashboard</span>
                                             </Link>
@@ -49,7 +53,7 @@ export function AppSidebar() {
                                     </SidebarMenuItem>
                                     <SidebarMenuItem>
                                         <SidebarMenuButton asChild>
-                                            <Link href={"/search"}>
+                                            <Link href={"/search"} className={pathname.startsWith("/search") ? "border-l-2" : undefined}>
                                                 <Search />
                                                 <span>Search</span>
                                             </Link>
@@ -57,7 +61,7 @@ export function AppSidebar() {
                                     </SidebarMenuItem>
                                     <SidebarMenuItem>
                                         <SidebarMenuButton asChild>
-                                            <Link href={"/settings"}>
+                                            <Link href={"/settings"} className={pathname.startsWith("/settings") ? "border-l-2" : undefined}>
                                                 <Settings />
                                                 <span>Settings</span>
                                             </Link>
@@ -81,10 +85,26 @@ export function AppSidebar() {
                             <SidebarGroupContent>
                                 <SidebarMenu className="text-white">
                                     <SidebarMenuItem>
-                                        <SidebarMenuButton asChild>
-                                            <Link href={"/dashboard"}>
+                                        <SidebarMenuButton asChild className={pathname.startsWith("/about") ? "border-l-2" : undefined}>
+                                            <Link href={"/about"}>
                                                 <Info />
                                                 <span>About</span>
+                                            </Link>
+                                        </SidebarMenuButton>
+                                    </SidebarMenuItem>
+                                    <SidebarMenuItem>
+                                        <SidebarMenuButton asChild>
+                                            <Link href={"/contact"} className={pathname.startsWith("/contact") ? "border-l-2" : undefined}>
+                                                <Phone />
+                                                <span>Contact</span>
+                                            </Link>
+                                        </SidebarMenuButton>
+                                    </SidebarMenuItem>
+                                    <SidebarMenuItem>
+                                        <SidebarMenuButton asChild>
+                                            <Link href={"/feedback"} className={pathname.startsWith("/feedback") ? "border-l-2" : undefined}>
+                                                <MessageCircleQuestion />
+                                                <span>Feedback</span>
                                             </Link>
                                         </SidebarMenuButton>
                                     </SidebarMenuItem>
@@ -93,22 +113,6 @@ export function AppSidebar() {
                                             <Link href={"https://ko-fi.com/aggieseek"} target="_blank" rel="noopener noreferrer">
                                                 <Banknote />
                                                 <span>Donate</span>
-                                            </Link>
-                                        </SidebarMenuButton>
-                                    </SidebarMenuItem>
-                                    <SidebarMenuItem>
-                                        <SidebarMenuButton asChild>
-                                            <Link href={"/search"}>
-                                                <Phone />
-                                                <span>Contact</span>
-                                            </Link>
-                                        </SidebarMenuButton>
-                                    </SidebarMenuItem>
-                                    <SidebarMenuItem>
-                                        <SidebarMenuButton asChild>
-                                            <Link href={"/settings"}>
-                                                <MessageCircleQuestion />
-                                                <span>Feedback</span>
                                             </Link>
                                         </SidebarMenuButton>
                                     </SidebarMenuItem>
