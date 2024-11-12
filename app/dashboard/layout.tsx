@@ -1,20 +1,41 @@
+'use client';
+
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
- 
+import { usePathname } from "next/navigation";
+
+type Title = {
+  title: string,
+  subtitle: string
+}
+
+const titles: Record<string, Title> = {
+  "/dashboard": {
+    title: "Dashboard",
+    subtitle: "View your tracked courses and stay updated."
+  },
+  "/dashboard/search": {
+    title: "Search",
+    subtitle: "Search for specific classes, professors, and more."
+  }
+};
+
 export default function Layout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+
   return (
     <SidebarProvider>
       <AppSidebar />
       <main className="flex flex-col w-full">
-        <header className="h-1/5 p-12">
-            <h1 className="font-bold text-4xl">Dashboard</h1>
-            <h2 className="font-semibold opacity-50">View your tracked courses and stay updated.</h2>
+        <header className="flex flex-col justify-end h-1/4 p-8">
+          <h1 className="font-bold text-4xl">{titles[pathname].title}</h1>
+          <h2 className="font-medium text-lg opacity-30">{titles[pathname].subtitle}</h2>
         </header>
 
         <section className="flex h-full bg-zinc-100">
-            <div className="w-full m-6 p-12 bg-white">
+          <div className="w-full m-6 p-10 bg-white">
             {children}
-            </div>
+          </div>
         </section>
       </main>
     </SidebarProvider>
