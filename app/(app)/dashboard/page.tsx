@@ -4,6 +4,7 @@ import ClassCell from "@/components/class-cell";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import LoadingCircle from "@/components/loading-circle";
+import { useSession } from "next-auth/react";
 
 enum PageState {
   LOADING, IDLE, ERROR
@@ -13,6 +14,9 @@ export default function Dashboard() {
 
   const [crns, setCRNs] = useState<string[]>([]);
   const [pageState, setPageState] = useState<PageState>(PageState.LOADING);
+  const { status } = useSession({
+    required: true,
+  });
 
   const addSection = (crn: string) => {
     fetch('/api/user/sections', {
@@ -58,8 +62,10 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    getSections();
-  }, []);
+    if (status == "authenticated") {
+      getSections();
+    }
+  }, [status]);
 
   const handleClick = () => {
     const input = prompt('Enter a CRN');
@@ -80,13 +86,17 @@ export default function Dashboard() {
       </div>
 
       <div className="flex flex-col space-y-2">
-        { pageState === PageState.IDLE ? crns.map(crn => (
-          <ClassCell onDeleteAction={ crn => deleteSection(crn) } key={ crn } crn={ crn }/>
-        )) : <div className="flex justify-center items-center space-y-2">
-          <div className={"inline-block"}>
-            <LoadingCircle/>
-          </div>
-        </div> }
+        { pageState === PageState.IDLE
+          ?
+          crns.map(crn => (
+            <ClassCell onDeleteAction={ crn => deleteSection(crn) } key={ crn } crn={ crn }/>
+          ))
+          :
+          <div className="flex justify-center items-center space-y-2">
+            <div className={ "inline-block" }>
+              <LoadingCircle/>
+            </div>
+          </div> }
       </div>
 
     </>

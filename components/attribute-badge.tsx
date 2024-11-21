@@ -1,4 +1,4 @@
-import { Attribute } from "@/types/CourseData";
+import { Attribute } from "@/lib/course-types";
 import { Building, Landmark, Laptop, Star, Waves } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { RiToothLine } from "react-icons/ri";

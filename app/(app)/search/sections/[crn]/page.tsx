@@ -2,14 +2,14 @@
 
 import {useParams} from "next/navigation";
 import {useEffect, useState} from "react";
-import {CourseData} from "@/types/CourseData";
+import {Course} from "@/lib/course-types";
 import LoadingCircle from "@/components/loading-circle";
 
 export default function Section() {
 
   const params = useParams(); // This will get the dynamic parameters
   const {crn} = params;
-  const [courseData, setCourseData] = useState<CourseData | null>(null);
+  const [courseData, setCourseData] = useState<Course | null>(null);
 
   const fetchCRNDetails = async (term: string, crn: string) => {
     const url = `http://127.0.0.1:8080/terms/${term}/classes/${crn}`;

@@ -6,11 +6,7 @@ import { usePathname } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { SessionProvider } from "next-auth/react";
-
-type Title = {
-  title: string,
-  subtitle: string
-}
+import { Title, titles } from "@/lib/title";
 
 const fetchCRNDetails = async (term: string, crn: string) => {
   const url = `https://howdy.tamu.edu/api/course-section-details?term=${ term }&subject=&course=&crn=${ crn }`;
@@ -40,33 +36,6 @@ const getTitle = async (path: string) => {
   return null;
 };
 
-const titles: Record<string, Title> = {
-  "/dashboard": {
-    title: "Dashboard",
-    subtitle: "View your tracked courses and stay updated."
-  },
-  "/search": {
-    title: "Search",
-    subtitle: "Search for specific classes, professors, and more."
-  },
-  "/settings": {
-    title: "Settings",
-    subtitle: "Manage your account settings and preferences."
-  },
-  "/about": {
-    title: "About",
-    subtitle: "Learn more about AggieSeek and our team."
-  },
-  "/contact": {
-    title: "Contact",
-    subtitle: "Get in touch with the AggieSeek team."
-  },
-  "/feedback": {
-    title: "Feedback",
-    subtitle: "Share your thoughts to help us improve AggieSeek."
-  }
-};
-
 export default function Layout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const [title, setTitle] = useState<Title | null>(null);
@@ -78,11 +47,8 @@ export default function Layout({ children }: { children: ReactNode }) {
     }
 
     setTitle(null);
-    const loadTitle = async () => {
-      const titleData = await getTitle(pathname);
-      setTitle(titleData);
-    };
-    loadTitle();
+    getTitle(pathname)
+      .then(data => setTitle(data));
   }, [pathname]);
 
   return (

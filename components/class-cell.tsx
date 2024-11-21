@@ -1,6 +1,6 @@
 'use client';
 
-import { CourseData, SeatData } from "@/types/CourseData";
+import { Course, Seat } from "@/lib/course-types";
 import React, { useEffect, useState } from "react";
 import { IoPerson } from "react-icons/io5";
 import { PiArmchairFill } from "react-icons/pi";
@@ -20,35 +20,39 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin']
 });
 
+const fetchCRNDetails = async (crn: string) => {
+  const url = `http://127.0.0.1:8080/terms/202511/classes/${ crn }`;
+  const response = await fetch(url);
+  if (response.status == 200) {
+    return await response.json();
+  }
+
+  return [];
+};
+
+const fetchCRNSeats = async (crn: string) => {
+  const url = `http://127.0.0.1:8080/terms/202511/classes/${ crn }/seats`;
+  const response = await fetch(url);
+  if (response.status == 200) {
+    return await response.json();
+  }
+  return null;
+};
+
 export default function ClassCell({ crn, onDeleteAction }: ClassCellProps) {
 
-  const [courseData, setCourseData] = useState<CourseData | null>(null);
-  const [seatData, setSeatData] = useState<SeatData | null>(null);
-
-  const fetchCRNSeats = async (crn: string) => {
-    const url = `http://127.0.0.1:8080/terms/202511/classes/${ crn }/seats`;
-    const response = await fetch(url);
-    if (response.status == 200) {
-      const data = await response.json();
-      setSeatData(data.SEATS);
-    } else {
-      console.error(`Error while fetching CRN: ${ crn }`);
-    }
-  };
-
-  const fetchCRNDetails = async (crn: string) => {
-    const url = `http://127.0.0.1:8080/terms/202511/classes/${ crn }`;
-    const response = await fetch(url);
-    if (response.status == 200) {
-      const data = await response.json();
-      setCourseData(data);
-
-      fetchCRNSeats(crn);
-    }
-  };
+  const [courseData, setCourseData] = useState<Course | null>(null);
+  const [seatData, setSeatData] = useState<Seat | null>(null);
 
   useEffect(() => {
-    fetchCRNDetails(crn);
+    fetchCRNDetails(crn)
+      .then(section => {
+        setCourseData(section);
+      });
+    fetchCRNSeats(crn)
+      .then(seatsData => {
+        setSeatData(seatsData);
+      });
   }, [crn]);
 
   return (
