@@ -3,7 +3,7 @@ import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {Select} from "@radix-ui/react-select";
 import {SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
-import majors from "@/public/majors.json";
+import majors from "@/public/data/majors.json";
 
 export function NotificationWindow() {
 
