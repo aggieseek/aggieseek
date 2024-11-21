@@ -27,10 +27,7 @@ export default {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
-  		},
-			gridTemplateColumns: {
-				'classcell': '50% auto',
-			}
+  		}
   	}
   },
   plugins: [require("tailwindcss-animate")],
