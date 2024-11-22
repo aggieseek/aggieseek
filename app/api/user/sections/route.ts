@@ -4,20 +4,6 @@ import { getServerSession, Session } from "next-auth";
 import prisma from "@/lib/prisma-client";
 import { authOptions } from "@/lib/auth-options";
 
-type UserType = {
-  id: string,
-  name: string,
-  email: string | null,
-  emailVerified: Date | null,
-  image: string | null,
-  createdAt: Date,
-  updatedAt: Date
-}
-
-type SectionType = {
-
-}
-
 async function getID(session: Session) {
   if (!session.user) return null;
   return prisma.user.findUnique({
@@ -25,7 +11,7 @@ async function getID(session: Session) {
       email: session.user.email || ""
     }
   })
-    .then((user: UserType | null) => {
+    .then((user) => {
       return user?.id;
     });
 }
@@ -41,7 +27,7 @@ export async function GET() {
     where: {
       userId: userId
     }
-  })).map((section) => section.crn);
+  })).map(section => section.crn);
 
   return NextResponse.json({ sections }, { status: 200 });
 }
