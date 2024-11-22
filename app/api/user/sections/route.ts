@@ -14,6 +14,10 @@ type UserType = {
   updatedAt: Date
 }
 
+type SectionType = {
+
+}
+
 async function getID(session: Session) {
   if (!session.user) return null;
   return prisma.user.findUnique({
@@ -37,7 +41,7 @@ export async function GET() {
     where: {
       userId: userId
     }
-  })).map(section => section.crn);
+  })).map((section) => section.crn);
 
   return NextResponse.json({ sections }, { status: 200 });
 }
