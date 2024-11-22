@@ -1,9 +1,18 @@
-// @ts-nocheck
 
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession, Session } from "next-auth";
 import prisma from "@/lib/prisma-client";
 import { authOptions } from "@/lib/auth-options";
+
+type UserType = {
+  id: string,
+  name: string,
+  email: string | null,
+  emailVerified: Date | null,
+  image: string | null,
+  createdAt: Date,
+  updatedAt: Date
+}
 
 async function getID(session: Session) {
   if (!session.user) return null;
@@ -12,7 +21,7 @@ async function getID(session: Session) {
       email: session.user.email || ""
     }
   })
-    .then(user => {
+    .then((user: UserType | null) => {
       return user?.id;
     });
 }
