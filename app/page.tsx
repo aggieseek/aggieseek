@@ -14,14 +14,16 @@ export default function Home() {
         <Image src={"/images/logo-black.png"} alt={"AggieSeek"} width={400} height={200} />
       </main>
 
-      <div className="flex flex-col mt-6 gap-y-2">
-        <Link href={"/dashboard"}>Dashboard</Link>
+      <div className="mt-6 space-y-2">
         { session?.user
           ? <>
             <h2>Welcome, { session.user.name }</h2>
-            <div onClick={ () => signOut() }>Sign Out</div>
+            <div className={"flex gap-x-4"}>
+              <Link className={"hover:font-bold"} href={"/dashboard"}>Dashboard</Link>
+              <div className={"inline-flex hover:cursor-pointer hover:font-bold"} onClick={ () => signOut() }>Sign Out</div>
+            </div>
           </>
-          : <div onClick={ () => signIn('google') }>Sign In</div> }
+          : <div className={"inline-block hover:cursor-pointer hover:font-bold"} onClick={ () => signIn('google') }>Sign In</div> }
       </div>
     </div>
   );

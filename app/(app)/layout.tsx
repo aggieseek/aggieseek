@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Title, titles } from "@/lib/title";
+import { useSession } from "next-auth/react";
 
 const fetchCRNDetails = async (term: string, crn: string) => {
   const url = `https://howdy.tamu.edu/api/course-section-details?term=${ term }&subject=&course=&crn=${ crn }`;
@@ -38,6 +39,10 @@ const getTitle = async (path: string) => {
 export default function Layout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const [title, setTitle] = useState<Title | null>(null);
+
+  useSession({
+    required: true,
+  });
 
   useEffect(() => {
     if (pathname in titles) {

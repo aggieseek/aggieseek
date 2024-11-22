@@ -14,9 +14,7 @@ export default function Dashboard() {
 
   const [crns, setCRNs] = useState<string[]>([]);
   const [pageState, setPageState] = useState<PageState>(PageState.LOADING);
-  const { status } = useSession({
-    required: true,
-  });
+  const { status } = useSession();
 
   const addSection = (crn: string) => {
     fetch('/api/user/sections', {
