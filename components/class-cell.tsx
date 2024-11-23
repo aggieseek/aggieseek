@@ -9,6 +9,7 @@ import AttributeBadge from "@/components/attribute-badge";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { JetBrains_Mono } from "next/font/google";
+import { AttributeHowdy, InstructorHowdy, SectionHowdy } from "@/lib/howdy-types";
 
 interface ClassCellProps {
   crn: string;

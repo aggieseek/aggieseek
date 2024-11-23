@@ -52,7 +52,7 @@ export default function Dashboard() {
       body: JSON.stringify({ crn: crn })
     })
       .then(() => {
-        setCRNs(prev => prev.filter(currCrn => currCrn != crn));
+        setCRNs(prev => prev.filter(currCrn => currCrn !== crn));
       })
       .catch(err => {
         console.error(err);
@@ -60,7 +60,7 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    if (status == "authenticated") {
+    if (status === "authenticated") {
       getSections();
     }
   }, [status]);

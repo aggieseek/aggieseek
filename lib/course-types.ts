@@ -60,12 +60,6 @@ export interface Course {
   XLIST_GROUP: string | null,
 }
 
-export interface Seat {
-  ACTUAL: number,
-  CAPACITY: number,
-  REMAINING: number
-}
-
 export interface Instructor {
   CV: string | null,
   HAS_CV: "Y" | "N",

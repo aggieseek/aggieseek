@@ -1,4 +1,4 @@
-interface SectionHowdy {
+export interface SectionHowdy {
   TERM_CODE: string;
   CRN: string;
   SSBSECT_PTRM_CODE: string;
@@ -32,12 +32,12 @@ interface SectionHowdy {
   NUMBER_OF_UNITS: number | null;
 }
 
-interface InstructorHowdy {
+export interface InstructorHowdy {
   SWV_CLASS_SEARCH_INSTRCTR_JSON: string;
   SWV_CLASS_SEARCH_JSON_CLOB: string;
 }
 
-interface AttributeHowdy {
+export interface AttributeHowdy {
   SSRATTR_ATTR_CODE: string;
   STVATTR_DESC: string;
 }

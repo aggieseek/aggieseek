@@ -7,11 +7,12 @@ import { ReactNode, useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Title, titles } from "@/lib/title";
 import { useSession } from "next-auth/react";
+import { SectionHowdy } from "@/lib/howdy-types";
 
 const fetchSectionDetails = async (term: string, crn: string) => {
   const url = `/api/sections?crn=${crn}&term=${term}`;
   const response = await fetch(url);
-  if (response.status == 200) {
+  if (response.status === 200) {
     return await response.json();
   }
   return null;

@@ -17,4 +17,4 @@ export async function GET(request: NextRequest) {
     console.error(err);
     return NextResponse.json({ message: "Error while fetching section" }, { status: 500 });
   }
-};
+}
