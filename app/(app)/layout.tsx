@@ -8,8 +8,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Title, titles } from "@/lib/title";
 import { useSession } from "next-auth/react";
 
-const fetchCRNDetails = async (term: string, crn: string) => {
-  const url = `https://howdy.tamu.edu/api/course-section-details?term=${ term }&subject=&course=&crn=${ crn }`;
+const fetchSectionDetails = async (term: string, crn: string) => {
+  const url = `/api/sections?crn=${crn}&term=${term}`;
   const response = await fetch(url);
   if (response.status == 200) {
     return await response.json();
@@ -23,7 +23,7 @@ const getTitle = async (path: string) => {
   if (path.startsWith("/search/sections/")) {
     const term = path.substring("/search/sections/".length, 23);
     const crn = path.substring("/search/sections/XXXXXX".length);
-    const data = await fetchCRNDetails(term, crn);
+    const data: SectionHowdy = await fetchSectionDetails(term, crn);
 
     if (data) {
       return {

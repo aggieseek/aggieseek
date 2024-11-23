@@ -125,15 +125,7 @@ export function AppSidebar() {
                 </Collapsible>
 
             </SidebarContent>
-            <SidebarFooter className={"text-white flex justify-center h-20 p-2"}>
-                <div className={"hover:bg-gray-100 h-full p-2 bg-black/25"}>
-                    {session?.user?.image
-                    ? <Image
-                        className={"rounded-full w-auto h-auto"}
-                        src={session?.user?.image} alt={"Profile"} width={100} height={100} />
-                    : <></>}
-                </div>
-            </SidebarFooter>
+            <SidebarFooter />
             <SidebarRail />
         </Sidebar>
     );
