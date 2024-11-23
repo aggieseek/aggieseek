@@ -16,12 +16,10 @@ import Image from "next/image";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useSession } from "next-auth/react";
 
 export function AppSidebar() {
 
     const pathname = usePathname();
-    const { data: session } = useSession();
 
     return (
         <Sidebar>

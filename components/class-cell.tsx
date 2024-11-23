@@ -1,9 +1,7 @@
 'use client';
 
-import { Course, Instructor, Seat } from "@/lib/course-types";
 import React, { useEffect, useState } from "react";
 import { IoPerson } from "react-icons/io5";
-import { PiArmchairFill } from "react-icons/pi";
 import { MdNumbers } from "react-icons/md";
 import { Skeleton } from "./ui/skeleton";
 import Link from "next/link";
@@ -22,7 +20,7 @@ export const jetbrainsMono = JetBrains_Mono({
 });
 
 const fetchSectionDetails = async (term: string, crn: string) => {
-  const url = `/api/sections?crn=${crn}&term=${term}`;
+  const url = `/api/sections?crn=${ crn }&term=${ term }`;
   try {
     const response = await fetch(url);
     if (!response.ok) return null;
@@ -33,7 +31,7 @@ const fetchSectionDetails = async (term: string, crn: string) => {
 };
 
 const fetchSectionInstructor = async (term: string, crn: string) => {
-  const url = `/api/instructors?crn=${crn}&term=${term}`;
+  const url = `/api/instructors?crn=${ crn }&term=${ term }`;
   try {
     const response = await fetch(url);
     if (!response.ok) return null;
@@ -44,7 +42,7 @@ const fetchSectionInstructor = async (term: string, crn: string) => {
 };
 
 const fetchSectionAttributes = async (term: string, crn: string) => {
-  const url = `/api/attributes?crn=${crn}&term=${term}`;
+  const url = `/api/attributes?crn=${ crn }&term=${ term }`;
   try {
     const response = await fetch(url);
     if (!response.ok) return null;
@@ -69,11 +67,11 @@ export default function ClassCell({ crn, onDeleteAction }: ClassCellProps) {
     fetchSectionInstructor('202511', crn)
       .then(data => {
         setInstructorData(data);
-      })
+      });
     fetchSectionAttributes('202511', crn)
       .then(data => {
         setAttributeData(data);
-      })
+      });
   }, [crn]);
 
   return (
@@ -100,7 +98,7 @@ export default function ClassCell({ crn, onDeleteAction }: ClassCellProps) {
               { instructorData
                 ? <p className="text-xs truncate hover:underline select-none">
                   { JSON.parse(instructorData?.SWV_CLASS_SEARCH_INSTRCTR_JSON)[0].NAME }
-              </p>
+                </p>
                 : <Skeleton className="h-3 w-32 bg-zinc-400"/> }
             </div>
 
@@ -115,13 +113,13 @@ export default function ClassCell({ crn, onDeleteAction }: ClassCellProps) {
               </p>
             </div>
 
-            {/*<div*/}
-            {/*  className={ `flex items-center ${ seatData && seatData.REMAINING <= 0 ? "text-red-500" : undefined }` }>*/}
-            {/*  <PiArmchairFill className="w-4 h-4 mr-2"/>*/}
-            {/*  { seatData*/}
-            {/*    ? <p className={ "text-xs" }>{ seatData.REMAINING } seats</p>*/}
-            {/*    : <Skeleton className="h-3 w-12 bg-zinc-400"/> }*/}
-            {/*</div>*/}
+            {/*<div*/ }
+            {/*  className={ `flex items-center ${ seatData && seatData.REMAINING <= 0 ? "text-red-500" : undefined }` }>*/ }
+            {/*  <PiArmchairFill className="w-4 h-4 mr-2"/>*/ }
+            {/*  { seatData*/ }
+            {/*    ? <p className={ "text-xs" }>{ seatData.REMAINING } seats</p>*/ }
+            {/*    : <Skeleton className="h-3 w-12 bg-zinc-400"/> }*/ }
+            {/*</div>*/ }
           </div>
         </div>
       </div>
