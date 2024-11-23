@@ -2,11 +2,11 @@
 
 import {useParams} from "next/navigation";
 import {useEffect, useState} from "react";
-import {Course} from "@/lib/course-types";
 import LoadingCircle from "@/components/loading-circle";
+import { SectionHowdy } from "@/lib/howdy-types";
 
 const fetchSectionDetails = async (term: string, crn: string) => {
-  const url = `http://127.0.0.1:8080/terms/${term}/classes/${crn}`;
+  const url = `/api/sections?crn=${crn}&term=${term}`;
   const response = await fetch(url);
   if (response.status === 200) {
     return await response.json();
@@ -18,7 +18,7 @@ export default function Section() {
 
   const params = useParams(); // This will get the dynamic parameters
   const {crn} = params;
-  const [courseData, setCourseData] = useState<Course | null>(null);
+  const [courseData, setCourseData] = useState<SectionHowdy | null>(null);
 
   useEffect(() => {
     if (typeof crn != "string") return;
@@ -32,15 +32,12 @@ export default function Section() {
 
   return (
     <div className="space-y-4">
-      <p>
-        {courseData?.COURSE_DESCRIPTION}
-      </p>
       {courseData
-        ? <h3 className="text-xl">
-          <span className={"font-bold"}>Instructor:</span> {courseData.INSTRUCTOR}
-        </h3>
-        : <div className={"flex justify-center"}>
-          <LoadingCircle/>
+        ? <p>
+          { courseData?.COURSE_DESCRIPTION }
+        </p>
+        : <div className={ "flex justify-center" }>
+        <LoadingCircle/>
         </div>}
     </div>
   );
