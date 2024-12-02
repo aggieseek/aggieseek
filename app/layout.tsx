@@ -4,6 +4,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import SessionWrapper from "@/components/session-wrapper";
+import { ReactNode } from "react";
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
                                      children,
                                    }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <html lang="en">

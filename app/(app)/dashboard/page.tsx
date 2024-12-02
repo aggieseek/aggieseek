@@ -17,7 +17,7 @@ export default function Dashboard() {
   const { status } = useSession();
 
   const addSection = (crn: string) => {
-    fetch('/api/user/sections', {
+    fetch('/api/users/sections', {
       method: "POST",
       body: JSON.stringify({ crn: crn })
     })
@@ -30,7 +30,7 @@ export default function Dashboard() {
   };
 
   const getSections = () => {
-    fetch('/api/user/sections', {
+    fetch('/api/users/sections', {
       method: "GET"
     })
       .then(data => {
@@ -47,12 +47,12 @@ export default function Dashboard() {
   };
 
   const deleteSection = (crn: string) => {
-    fetch('/api/user/sections', {
+    fetch('/api/users/sections', {
       method: "DELETE",
       body: JSON.stringify({ crn: crn })
     })
       .then(() => {
-        setCRNs(prev => prev.filter(currCrn => currCrn != crn));
+        setCRNs(prev => prev.filter(currCrn => currCrn !== crn));
       })
       .catch(err => {
         console.error(err);
@@ -60,7 +60,7 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    if (status == "authenticated") {
+    if (status === "authenticated") {
       getSections();
     }
   }, [status]);

@@ -1,9 +1,7 @@
 'use client';
 
-import { Course, Seat } from "@/lib/course-types";
 import React, { useEffect, useState } from "react";
 import { IoPerson } from "react-icons/io5";
-import { PiArmchairFill } from "react-icons/pi";
 import { MdNumbers } from "react-icons/md";
 import { Skeleton } from "./ui/skeleton";
 import Link from "next/link";
@@ -11,6 +9,7 @@ import AttributeBadge from "@/components/attribute-badge";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { JetBrains_Mono } from "next/font/google";
+import { AttributeHowdy, InstructorHowdy, SectionHowdy } from "@/lib/howdy-types";
 
 interface ClassCellProps {
   crn: string;
@@ -21,38 +20,58 @@ export const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin']
 });
 
-const fetchCRNDetails = async (crn: string) => {
-  const url = `http://127.0.0.1:8080/terms/202511/classes/${ crn }`;
-  const response = await fetch(url);
-  if (response.status === 200) {
+const fetchSectionDetails = async (term: string, crn: string) => {
+  const url = `/api/sections?crn=${ crn }&term=${ term }`;
+  try {
+    const response = await fetch(url);
+    if (!response.ok) return null;
     return await response.json();
+  } catch {
+    return null;
   }
-
-  return null;
 };
 
-const fetchCRNSeats = async (crn: string) => {
-  const url = `http://127.0.0.1:8080/terms/202511/classes/${ crn }/seats`;
-  const response = await fetch(url);
-  if (response.status === 200) {
+const fetchSectionInstructor = async (term: string, crn: string) => {
+  const url = `/api/instructors?crn=${ crn }&term=${ term }`;
+  try {
+    const response = await fetch(url);
+    if (!response.ok) return null;
     return await response.json();
+  } catch {
+    return null;
   }
-  return null;
 };
+
+const fetchSectionAttributes = async (term: string, crn: string) => {
+  const url = `/api/attributes?crn=${ crn }&term=${ term }`;
+  try {
+    const response = await fetch(url);
+    if (!response.ok) return null;
+    return await response.json();
+  } catch {
+    return null;
+  }
+};
+
 
 export default function ClassCell({ crn, onDeleteAction }: ClassCellProps) {
 
-  const [courseData, setCourseData] = useState<Course | null>(null);
-  const [seatData, setSeatData] = useState<Seat | null>(null);
+  const [courseData, setCourseData] = useState<SectionHowdy | null>(null);
+  const [instructorData, setInstructorData] = useState<InstructorHowdy | null>(null);
+  const [attributeData, setAttributeData] = useState<AttributeHowdy[] | null>(null);
 
   useEffect(() => {
-    fetchCRNDetails(crn)
+    fetchSectionDetails('202511', crn)
       .then(section => {
         setCourseData(section);
       });
-    fetchCRNSeats(crn)
-      .then(seatsData => {
-        setSeatData(seatsData ? seatsData.SEATS : null);
+    fetchSectionInstructor('202511', crn)
+      .then(data => {
+        setInstructorData(data);
+      });
+    fetchSectionAttributes('202511', crn)
+      .then(data => {
+        setAttributeData(data);
       });
   }, [crn]);
 
@@ -64,8 +83,9 @@ export default function ClassCell({ crn, onDeleteAction }: ClassCellProps) {
         <div className="grid grid-rows-2">
           { courseData
             ? <div className={ "flex items-center gap-x-2" }>
-              <h3 className="font-bold text-sm truncate">{ courseData.COURSE_NAME } - { courseData.COURSE_TITLE }</h3>
-              { courseData.OTHER_ATTRIBUTES["Section attributes"].map((attr, index) => (
+              <h3 className="font-bold text-sm truncate">
+                { courseData.SUBJECT_CODE } { courseData.COURSE_NUMBER } - { courseData.COURSE_TITLE }</h3>
+              { attributeData?.map((attr, index) => (
                 <AttributeBadge attribute={ attr } key={ index }/>
               )) }
             </div>
@@ -76,8 +96,10 @@ export default function ClassCell({ crn, onDeleteAction }: ClassCellProps) {
               <div className="w-4 h-4 mr-2">
                 <IoPerson/>
               </div>
-              { courseData
-                ? <p className="text-xs truncate hover:underline select-none">{ courseData.INSTRUCTOR }</p>
+              { instructorData
+                ? <p className="text-xs truncate hover:underline select-none">
+                  { JSON.parse(instructorData?.SWV_CLASS_SEARCH_INSTRCTR_JSON)[0].NAME }
+                </p>
                 : <Skeleton className="h-3 w-32 bg-zinc-400"/> }
             </div>
 
@@ -92,13 +114,13 @@ export default function ClassCell({ crn, onDeleteAction }: ClassCellProps) {
               </p>
             </div>
 
-            <div
-              className={ `flex items-center ${ seatData && seatData.REMAINING <= 0 ? "text-red-500" : undefined }` }>
-              <PiArmchairFill className="w-4 h-4 mr-2"/>
-              { seatData
-                ? <p className={ "text-xs" }>{ seatData.REMAINING } seats</p>
-                : <Skeleton className="h-3 w-12 bg-zinc-400"/> }
-            </div>
+            {/*<div*/ }
+            {/*  className={ `flex items-center ${ seatData && seatData.REMAINING <= 0 ? "text-red-500" : undefined }` }>*/ }
+            {/*  <PiArmchairFill className="w-4 h-4 mr-2"/>*/ }
+            {/*  { seatData*/ }
+            {/*    ? <p className={ "text-xs" }>{ seatData.REMAINING } seats</p>*/ }
+            {/*    : <Skeleton className="h-3 w-12 bg-zinc-400"/> }*/ }
+            {/*</div>*/ }
           </div>
         </div>
       </div>
