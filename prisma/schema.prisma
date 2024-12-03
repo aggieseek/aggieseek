@@ -68,15 +68,40 @@ model VerificationRequest {
 }
 
 model TrackedSection {
-  id        String   @id @default(cuid())
   userId    String   @map("user_id")
-  crn       String
+  crn       String   @db.VarChar(5)
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  term      String   @db.VarChar(10)
+  sections  Section  @relation(fields: [term, crn], references: [term, crn], onDelete: Cascade, onUpdate: NoAction)
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([userId, crn])
+  @@id([userId, term, crn])
   @@map("tracked_sections")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model Section {
+  term             String           @db.VarChar(10)
+  crn              String           @db.VarChar(5)
+  title            String           @db.VarChar(100)
+  subject          String           @db.VarChar(10)
+  course           String           @db.VarChar(10)
+  section          String           @db.VarChar(3)
+  credit_hours     Decimal          @db.Decimal
+  subject_desc     String
+  instructor_json  Json?            @db.Json
+  meetings_json    Json?            @db.Json
+  attributes       String?          @db.VarChar(500)
+  instruction_type String?          @db.VarChar(50)
+  schedule_type    String           @db.VarChar(10)
+  session          String           @db.VarChar(50)
+  site             String?          @db.VarChar(50)
+  section_open     Boolean
+  tracked_sections TrackedSection[]
+
+  @@id([term, crn])
+  @@unique([term, subject, course, section], map: "section_num_key")
+  @@map("sections")
 }
 
 enum Class {

@@ -53,12 +53,12 @@ const fetchSectionAttributes = async (term: string, crn: string) => {
   }
 };
 
-
 export default function ClassCell({ crn, onDeleteAction }: ClassCellProps) {
 
   const [courseData, setCourseData] = useState<SectionHowdy | null>(null);
   const [instructorData, setInstructorData] = useState<InstructorHowdy | null>(null);
   const [attributeData, setAttributeData] = useState<AttributeHowdy[] | null>(null);
+  const isLoaded = courseData && instructorData && attributeData;
 
   useEffect(() => {
     fetchSectionDetails('202511', crn)
@@ -81,7 +81,7 @@ export default function ClassCell({ crn, onDeleteAction }: ClassCellProps) {
       <div
         className="w-full h-full grid grid-cols-1 xl:grid-cols-[50%_auto]">
         <div className="grid grid-rows-2">
-          { courseData
+          { isLoaded
             ? <div className={ "flex items-center gap-x-2" }>
               <h3 className="font-bold text-sm truncate">
                 { courseData.SUBJECT_CODE } { courseData.COURSE_NUMBER } - { courseData.COURSE_TITLE }</h3>
@@ -96,7 +96,7 @@ export default function ClassCell({ crn, onDeleteAction }: ClassCellProps) {
               <div className="w-4 h-4 mr-2">
                 <IoPerson/>
               </div>
-              { instructorData
+              { isLoaded
                 ? <p className="text-xs truncate hover:underline select-none">
                   { JSON.parse(instructorData?.SWV_CLASS_SEARCH_INSTRCTR_JSON)[0].NAME }
                 </p>
@@ -108,8 +108,8 @@ export default function ClassCell({ crn, onDeleteAction }: ClassCellProps) {
                 <MdNumbers/>
               </div>
               <p className={ cn("text-xs truncate hover:underline select-none", jetbrainsMono.className) }>
-                { courseData
-                  ? <Link href={ "/search/sections/202511" + crn }>{ crn } / { courseData.SECTION_NUMBER }</Link>
+                { isLoaded
+                  ? <Link href={ "/search/sections/202511" + crn }>{ crn }</Link>
                   : crn }
               </p>
             </div>

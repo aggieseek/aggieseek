@@ -3,7 +3,7 @@ import { getServerSession, Session } from "next-auth";
 import prisma from "@/lib/prisma-client";
 import { authOptions } from "@/lib/auth-options";
 
-async function getID(session: Session) {
+async function getUserId(session: Session) {
   if (!session.user) return null;
   return prisma.user.findUnique({
     where: {
@@ -15,17 +15,21 @@ async function getID(session: Session) {
     });
 }
 
+function validateParams(crn: string | undefined, term: string | undefined) {
+  if (!crn) return { message: "CRN not specified", status: 400 };
+  if (!term) return { message: "Term not specified", status: 400 };
+  return null;
+}
+
 export async function GET() {
   const session = await getServerSession(authOptions);
   if (!session?.user) return NextResponse.json({ message: "You are not signed in!" }, { status: 401 });
 
-  const userId = await getID(session);
+  const userId = await getUserId(session);
   if (!userId) return NextResponse.json({ message: "You are not signed in!" }, { status: 401 });
 
-  const sections: string[] = (await prisma.trackedSection.findMany({
-    where: {
-      userId: userId
-    }
+  const sections = (await prisma.trackedSection.findMany({
+    where: { userId }
   })).map(section => section.crn);
 
   return NextResponse.json({ sections }, { status: 200 });
@@ -35,18 +39,15 @@ export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!session?.user) return NextResponse.json({ message: "You are not signed in!" }, { status: 401 });
 
-  const userId = await getID(session);
+  const userId = await getUserId(session);
   if (!userId) return NextResponse.json({ message: "You are not signed in!" }, { status: 401 });
 
-  const res = await req.json();
-  const { crn } = res;
-  if (!crn) return NextResponse.json({ message: "CRN not specified" }, { status: 400 });
+  const { crn, term } = await req.json();
+  const paramsInvalid = validateParams(crn, term);
+  if (paramsInvalid) return NextResponse.json(paramsInvalid, { status: 400 });
 
   const newTrackedSection = await prisma.trackedSection.create({
-    data: {
-      userId,
-      crn,
-    }
+    data: { userId, term, crn }
   });
   return NextResponse.json({ newTrackedSection }, { status: 201 });
 }
@@ -55,19 +56,16 @@ export async function DELETE(req: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!session?.user) return NextResponse.json({ message: "error" });
 
-  const userId = await getID(session);
+  const userId = await getUserId(session);
   if (!userId) return NextResponse.json({ message: "error" });
 
-  const res = await req.json();
-  const { crn } = res;
-  if (!crn) return NextResponse.json({ message: "CRN not specified" }, { status: 400 });
+  const { crn, term } = await req.json();
+  const paramsInvalid = validateParams(crn, term);
+  if (paramsInvalid) return NextResponse.json(paramsInvalid, { status: 400 });
 
   const deletedSection = await prisma.trackedSection.delete({
     where: {
-      userId_crn: {
-        userId: userId,
-        crn: crn
-      }
+      userId_term_crn: { userId, term, crn }
     }
   });
 

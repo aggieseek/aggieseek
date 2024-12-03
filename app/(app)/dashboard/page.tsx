@@ -19,9 +19,10 @@ export default function Dashboard() {
   const addSection = (crn: string) => {
     fetch('/api/users/sections', {
       method: "POST",
-      body: JSON.stringify({ crn: crn })
+      body: JSON.stringify({ crn: crn, term: '202511' })
     })
-      .then(() => {
+      .then(res => {
+        if (!res.ok) return;
         setCRNs(prev => [...prev, crn]);
       })
       .catch(err => {
@@ -49,7 +50,7 @@ export default function Dashboard() {
   const deleteSection = (crn: string) => {
     fetch('/api/users/sections', {
       method: "DELETE",
-      body: JSON.stringify({ crn: crn })
+      body: JSON.stringify({ crn: crn, term: '202511' })
     })
       .then(() => {
         setCRNs(prev => prev.filter(currCrn => currCrn !== crn));

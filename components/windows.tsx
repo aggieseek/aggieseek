@@ -10,6 +10,7 @@ export function NotificationWindow() {
   return (
     <div className={"flex flex-col gap-y-4"}>
       <Label>Email Addresses</Label>
+      <Input />
       <Label>Phone Numbers</Label>
       <Label>Discord Webhooks</Label>
       <Label>Notification Preferences</Label>
