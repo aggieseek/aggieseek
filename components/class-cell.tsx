@@ -42,7 +42,9 @@ export default function ClassCell({ section, onDeleteAction }: ClassCellProps) {
                 <IoPerson/>
               </div>
               <p className="text-xs truncate hover:underline select-non e">
-                { ((section.instructor_json as unknown) as Instructor[])[0].NAME.replaceAll('(P)', '') }
+                {section.instructor_json ?
+                  ((section.instructor_json as unknown) as Instructor[])[0].NAME.replaceAll('(P)', '')
+                : 'Not assigned'}
               </p>
             </div>
 
