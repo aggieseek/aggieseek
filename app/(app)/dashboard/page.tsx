@@ -5,25 +5,31 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import LoadingCircle from "@/components/loading-circle";
 import { useSession } from "next-auth/react";
+import { Section, TrackedSection } from "@prisma/client";
+import { CURRENT_TERM } from "@/lib/utils";
 
 enum PageState {
   LOADING, IDLE, ERROR
 }
 
+interface SectionInfo extends TrackedSection {
+  sections: Section
+}
+
 export default function Dashboard() {
 
-  const [crns, setCRNs] = useState<string[]>([]);
+  const [sections, setSections] = useState<SectionInfo[]>([]);
   const [pageState, setPageState] = useState<PageState>(PageState.LOADING);
   const { status } = useSession();
 
   const addSection = (crn: string) => {
     fetch('/api/users/sections', {
       method: "POST",
-      body: JSON.stringify({ crn: crn, term: '202511' })
+      body: JSON.stringify({ crn: crn, term: CURRENT_TERM })
     })
       .then(res => {
         if (!res.ok) return;
-        setCRNs(prev => [...prev, crn]);
+        getSections();
       })
       .catch(err => {
         console.error(err);
@@ -31,14 +37,14 @@ export default function Dashboard() {
   };
 
   const getSections = () => {
-    fetch('/api/users/sections', {
+    fetch(`/api/users/sections?term=${CURRENT_TERM}`, {
       method: "GET"
     })
       .then(data => {
         return data.json();
       })
       .then(json => {
-        setCRNs(json.sections);
+        setSections(json);
         setPageState(PageState.IDLE);
       })
       .catch(err => {
@@ -50,10 +56,10 @@ export default function Dashboard() {
   const deleteSection = (crn: string) => {
     fetch('/api/users/sections', {
       method: "DELETE",
-      body: JSON.stringify({ crn: crn, term: '202511' })
+      body: JSON.stringify({ crn: crn, term: CURRENT_TERM })
     })
       .then(() => {
-        setCRNs(prev => prev.filter(currCrn => currCrn !== crn));
+        setSections(prev => prev.filter(section => section.crn !== crn));
       })
       .catch(err => {
         console.error(err);
@@ -87,8 +93,8 @@ export default function Dashboard() {
       <div className="flex flex-col space-y-2">
         { pageState === PageState.IDLE
           ?
-          crns.map(crn => (
-            <ClassCell onDeleteAction={ crn => deleteSection(crn) } key={ crn } crn={ crn }/>
+          sections.map(section => (
+            <ClassCell onDeleteAction={ crn => deleteSection(crn) } key={ section.crn } section={section.sections}/>
           ))
           :
           <div className="flex justify-center items-center space-y-2">

@@ -21,18 +21,28 @@ function validateParams(crn: string | undefined, term: string | undefined) {
   return null;
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams;
+  const term = searchParams.get("term");
+  if (!term) return NextResponse.json({ message: "Please specify a term" }, { status: 400 });
+
   const session = await getServerSession(authOptions);
   if (!session?.user) return NextResponse.json({ message: "You are not signed in!" }, { status: 401 });
 
   const userId = await getUserId(session);
   if (!userId) return NextResponse.json({ message: "You are not signed in!" }, { status: 401 });
 
-  const sections = (await prisma.trackedSection.findMany({
-    where: { userId }
-  })).map(section => section.crn);
+  const sections = await prisma.trackedSection.findMany({
+    where: {
+      userId,
+      term
+    },
+    include: {
+      sections: true
+    }
+  });
 
-  return NextResponse.json({ sections }, { status: 200 });
+  return NextResponse.json(sections, { status: 200 });
 }
 
 export async function POST(req: NextRequest) {
