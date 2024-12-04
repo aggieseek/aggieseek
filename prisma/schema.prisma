@@ -8,16 +8,19 @@ datasource db {
 }
 
 model User {
-  id            String           @id @default(uuid())
-  name          String
-  email         String?          @unique
-  emailVerified DateTime?        @map("email_verified")
-  image         String?
-  createdAt     DateTime         @default(now())
-  updatedAt     DateTime         @updatedAt
-  accounts      Account[]
-  sessions      Session[]
-  trackedCRNs   TrackedSection[]
+  id                    String                @id @default(uuid())
+  name                  String
+  email                 String?               @unique
+  emailVerified         DateTime?             @map("email_verified")
+  image                 String?
+  createdAt             DateTime              @default(now())
+  updatedAt             DateTime              @updatedAt
+  accounts              Account[]
+  discord_webhooks      Webhooks[]
+  notification_settings NotificationSettings?
+  profile_settings      ProfileSettings?
+  sessions              Session[]
+  trackedCRNs           TrackedSection[]
 
   @@map("users")
 }
@@ -102,6 +105,43 @@ model Section {
   @@id([term, crn])
   @@unique([term, subject, course, section], map: "section_num_key")
   @@map("sections")
+}
+
+model Webhooks {
+  userId      String @map("user_id")
+  webhook_url String
+  users       User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([userId, webhook_url])
+  @@map("discord_webhooks")
+}
+
+model Majors {
+  major_id         Int               @id @default(autoincrement())
+  name             String            @unique @db.VarChar(100)
+  profile_settings ProfileSettings[]
+
+  @@map("majors")
+}
+
+model NotificationSettings {
+  userId       String  @id @map("user_id")
+  email        String?
+  phone_number String?
+  users        User    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("notification_settings")
+}
+
+model ProfileSettings {
+  userId   String  @id @map("user_id")
+  username String? @db.VarChar(20)
+  class    Class?
+  major_id Int?
+  majors   Majors? @relation(fields: [major_id], references: [major_id], onUpdate: NoAction)
+  users    User    @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@map("profile_settings")
 }
 
 enum Class {

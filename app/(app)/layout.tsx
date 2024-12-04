@@ -10,7 +10,7 @@ import { useSession } from "next-auth/react";
 import { SectionHowdy } from "@/lib/howdy-types";
 
 const fetchSectionDetails = async (term: string, crn: string) => {
-  const url = `/api/sections?crn=${crn}&term=${term}`;
+  const url = `/api/data/sections?crn=${crn}&term=${term}`;
   const response = await fetch(url);
   if (response.status === 200) {
     return await response.json();
@@ -56,6 +56,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       .then(data => setTitle(data));
   }, [pathname]);
 
+
   return (
     <SidebarProvider>
       <AppSidebar/>
@@ -78,6 +79,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           </div>
         </section>
       </main>
+
     </SidebarProvider>
   );
 }

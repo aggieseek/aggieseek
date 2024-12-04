@@ -20,9 +20,11 @@ export default function Dashboard() {
 
   const [sections, setSections] = useState<SectionInfo[]>([]);
   const [pageState, setPageState] = useState<PageState>(PageState.LOADING);
+  const [addInProgress, setAddInProgress] = useState<boolean>(false);
   const { status } = useSession();
 
   const addSection = (crn: string) => {
+    setAddInProgress(true);
     fetch('/api/users/sections', {
       method: "POST",
       body: JSON.stringify({ crn: crn, term: CURRENT_TERM })
@@ -33,7 +35,8 @@ export default function Dashboard() {
       })
       .catch(err => {
         console.error(err);
-      });
+      })
+      .finally(() => setAddInProgress(false));
   };
 
   const getSections = () => {
@@ -87,7 +90,11 @@ export default function Dashboard() {
           Your Courses
         </h3>
 
-        <Button variant={ 'default' } onClick={ handleClick } className={ "h-8" }>Add</Button>
+        <Button variant={ 'default' } onClick={ handleClick } className={ "h-8 w-16" }>
+          {addInProgress ?
+          <LoadingCircle /> :
+          "Add"}
+        </Button>
       </div>
 
       <div className="flex flex-col space-y-2">

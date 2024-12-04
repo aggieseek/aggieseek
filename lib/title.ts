@@ -27,5 +27,9 @@ export const titles: Record<string, Title> = {
   "/feedback": {
     title: "Feedback",
     subtitle: "Share your thoughts to help us improve AggieSeek."
+  },
+  "/onboarding": {
+    title: "",
+    subtitle: ""
   }
 };
