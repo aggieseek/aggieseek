@@ -1,4 +1,5 @@
-export interface Attribute {
-  SSRATTR_ATTR_CODE: string;
-  STVATTR_DESC: string;
+export interface Instructor {
+  NAME: string,
+  MORE: number,
+  HAS_CV: string
 }
