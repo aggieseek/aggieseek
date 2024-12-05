@@ -22,14 +22,14 @@ export async function GET() {
   const userId = await getUserId(session);
   if (!userId) return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
 
-  const sections = (await prisma.webhooks.findMany({
+  const sections = (await prisma.user.findUnique({
     where: {
-      userId,
+      id: userId
     },
     select: {
-      webhook_url: true
+      discordWebhooks: true
     }
-  })).map(obj => obj.webhook_url);
+  }))?.discordWebhooks.map(obj => obj.webhookUrl);
 
   return NextResponse.json(sections, { status: 200 });
 }
@@ -41,12 +41,12 @@ export async function POST(req: NextRequest) {
   const userId = await getUserId(session);
   if (!userId) return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
 
-  const { webhook } = await req.json();
+  const { webhookUrl } = await req.json();
 
-  const newWebhook = await prisma.webhooks.create({
+  const newWebhook = await prisma.webhook.create({
     data: {
       userId,
-      webhook_url: webhook
+      webhookUrl: webhookUrl
     }
   });
   return NextResponse.json({ newWebhook }, { status: 201 });
@@ -59,12 +59,12 @@ export async function DELETE(req: NextRequest) {
   const userId = await getUserId(session);
   if (!userId) return NextResponse.json({ message: "error" });
 
-  const { webhook } = await req.json();
+  const { webhookUrl } = await req.json();
 
-  const deletedWebhook = await prisma.webhooks.delete({
+  const deletedWebhook = await prisma.webhook.delete({
     where: {
-      userId_webhook_url: {
-        userId, webhook_url: webhook
+      userId_webhookUrl: {
+        userId, webhookUrl: webhookUrl
       }
     }
   });

@@ -42,8 +42,8 @@ export default function ClassCell({ section, onDeleteAction }: ClassCellProps) {
                 <IoPerson/>
               </div>
               <p className="text-xs truncate hover:underline select-non e">
-                {section.instructor_json ?
-                  ((section.instructor_json as unknown) as Instructor[])[0].NAME.replaceAll('(P)', '')
+                {section.instructorJson ?
+                  ((section.instructorJson as unknown) as Instructor[])[0].NAME.replaceAll('(P)', '')
                 : 'Not assigned'}
               </p>
             </div>
@@ -59,7 +59,7 @@ export default function ClassCell({ section, onDeleteAction }: ClassCellProps) {
 
             <div className="flex items-center">
               <p className={"text-xs truncate"}>
-                { section.section_open ? "Open"
+                { section.isSectionOpen ? "Open"
                   : <span className={"text-red-500"}>Closed</span> }
               </p>
             </div>

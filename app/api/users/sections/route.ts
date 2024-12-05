@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
       term
     },
     include: {
-      sections: true
+      section: true
     }
   });
 

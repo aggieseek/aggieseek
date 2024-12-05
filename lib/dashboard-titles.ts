@@ -1,9 +1,9 @@
-export type Title = {
+export type DashboardTitles = {
   title: string,
   subtitle: string
 }
 
-export const titles: Record<string, Title> = {
+export const titles: Record<string, DashboardTitles> = {
   "/dashboard": {
     title: "Dashboard",
     subtitle: "View your tracked courses and stay updated."

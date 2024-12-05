@@ -22,13 +22,14 @@ export async function GET() {
   const userId = await getUserId(session);
   if (!userId) return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
 
-  const notificationSettings = await prisma.notificationSettings.findUnique(
-    {
-      where: {
-        userId
-      }
+  const notificationSettings = (await prisma.user.findUnique({
+    where: {
+      id: userId
+    },
+    select: {
+      notificationSettings: true
     }
-  );
+  }))?.notificationSettings;
 
   return NextResponse.json(notificationSettings, { status: 200 });
 }

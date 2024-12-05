@@ -5,7 +5,7 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { usePathname } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Title, titles } from "@/lib/title";
+import { DashboardTitles, titles } from "@/lib/dashboard-titles";
 import { useSession } from "next-auth/react";
 import { SectionHowdy } from "@/lib/howdy-types";
 
@@ -39,7 +39,7 @@ const getTitle = async (path: string) => {
 
 export default function Layout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const [title, setTitle] = useState<Title | null>(null);
+  const [title, setTitle] = useState<DashboardTitles | null>(null);
 
   useSession({
     required: true,
