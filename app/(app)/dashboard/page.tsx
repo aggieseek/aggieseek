@@ -13,7 +13,7 @@ enum PageState {
 }
 
 interface SectionInfo extends TrackedSection {
-  sections: Section
+  section: Section
 }
 
 export default function Dashboard() {
@@ -101,7 +101,7 @@ export default function Dashboard() {
         { pageState === PageState.IDLE
           ?
           sections.map(section => (
-            <ClassCell onDeleteAction={ crn => deleteSection(crn) } key={ section.crn } section={section.sections}/>
+            <ClassCell onDeleteAction={ crn => deleteSection(crn) } key={ section.crn } section={section.section}/>
           ))
           :
           <div className="flex justify-center items-center space-y-2">
