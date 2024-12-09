@@ -31,13 +31,3 @@ export interface SectionHowdy {
   CREDIT_HRS: number | null;
   NUMBER_OF_UNITS: number | null;
 }
-
-export interface InstructorHowdy {
-  SWV_CLASS_SEARCH_INSTRCTR_JSON: string;
-  SWV_CLASS_SEARCH_JSON_CLOB: string;
-}
-
-export interface AttributeHowdy {
-  SSRATTR_ATTR_CODE: string;
-  STVATTR_DESC: string;
-}

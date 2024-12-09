@@ -1,5 +1,7 @@
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
-import {AccountWindow, NotificationWindow, ProfileWindow} from "@/components/windows";
+import ProfileTab from "@/components/settings/profile-tab";
+import NotificationsTab from "@/components/settings/notifications-tab";
+import AccountTab from "@/components/settings/account-tab";
 
 export default function Settings() {
 
@@ -13,13 +15,13 @@ export default function Settings() {
         </TabsList>
         <div className={"mt-4"}>
           <TabsContent value="notifications">
-            <NotificationWindow />
+            <NotificationsTab />
           </TabsContent>
           <TabsContent value="profile">
-            <ProfileWindow />
+            <ProfileTab />
           </TabsContent>
           <TabsContent value="account">
-            <AccountWindow />
+            <AccountTab />
           </TabsContent>
         </div>
       </Tabs>
