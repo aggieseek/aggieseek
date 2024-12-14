@@ -22,7 +22,7 @@ export default function Home() {
 
   return (
     <div className="">
-      <div className="flex mt-24 pl-8 lg:pl-24 gap-8">
+      <div className="flex flex-col lg:flex-row mt-8 lg:mt-24 pl-8 lg:pl-24 gap-8">
 
         <div className="mt-10 mr-10">
           <Image src={ "/images/logo-black.png" } alt={ "AggieSeek" } width={ 400 } height={ 200 }/>
@@ -67,10 +67,18 @@ export default function Home() {
               </Button> }
         </div>
 
-        <Image className={ "rounded-md shadow-xl" } src={ "/images/dashboard-preview.png" } alt={ "Dashboard" }
-               width={ 700 } height={ 300 }/>
+        <div className=" relative w-full h-[400px] sm:h-[300px] md:h-[500px] lg:w-[800px] lg:h-[500px] overflow-hidden rounded-md shadow-xl">
+          <Image
+            src="/images/aggieseek-ss.png"
+            alt="Dashboard"
+            fill
+            className="object-cover object-left"
+          />
+        </div>
       </div>
-
+      <div>
+        
+      </div>
     </div>
   );
 }
