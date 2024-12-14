@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { Session } from "next-auth";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Star } from 'lucide-react';
+import TestimonialCard from "@/components/testimonialCard";
 
 export default function Home() {
   const [session, setSession] = useState<Session | null | undefined>(undefined);
@@ -102,7 +102,7 @@ export default function Home() {
           />
         </div>
       </div>
-      <div className="flex flex-col  lg:flex-row mt-16 px-8 lg:px-24 gap-8">
+      <div className="flex flex-col lg:flex-row mt-16 px-8 lg:px-24 gap-8">
         <div className="w-full flex flex-col gap-4 items-center mt-0 lg:mt-24 lg:w-2/3">
           <h2 className="font-bold text-2xl lg:text-3xl text-neutral-500">
             Classes full? Get text, email, and discord messages when classes
@@ -126,64 +126,28 @@ export default function Home() {
         <h2 className="font-bold text-2xl lg:text-3xl text-neutral-500">
           See what our users think!
         </h2>
-        <p className=" text-xl mt-2 mb-4">
+        <p className=" lg:text-xl mt-2 mb-4">
           AggieSeek has helped 1000+ students get into their desired classes
         </p>
-        <div className="flex gap-8">
-          <div className="bg-[#F4F4F4] p-8 rounded-xl shadow-lg">
-            <p className="font-bold text-lg lg:text-xl text-neutral-500">
-              Sophia Phu
-            </p>
-            <div className="flex">
-              <Star className="size-5 fill-[#502F2F]" color="#502F2F]" />
-              <Star className="size-5 fill-[#502F2F]" color="#502F2F]"/>
-              <Star className="size-5 fill-[#502F2F]" color="#502F2F]"/>
-              <Star className="size-5 fill-[#502F2F]" color="#502F2F]"/>
-              <Star className="size-5 fill-[#502F2F]" color="#502F2F]"/>
-            </div>
-            <p className=" text-sm">
-              2 days ago
-            </p>
-            <p className="mt-2">
-            AggieSeek made my registration so convenient and easy. It helped me get out of my 2 8am sections and my night lab section. I don’t know what i would do it AggieSeek didn’t exist. Thank you AggieSeek developers!
-            </p>
-          </div>
-          <div className="bg-[#F4F4F4] p-8 rounded-xl shadow-lg">
-            <p className="font-bold text-lg lg:text-xl text-neutral-500">
-              Sophia Phu
-            </p>
-            <div className="flex">
-              <Star className="size-5 fill-[#502F2F]" color="#502F2F]" />
-              <Star className="size-5 fill-[#502F2F]" color="#502F2F]"/>
-              <Star className="size-5 fill-[#502F2F]" color="#502F2F]"/>
-              <Star className="size-5 fill-[#502F2F]" color="#502F2F]"/>
-              <Star className="size-5 fill-[#502F2F]" color="#502F2F]"/>
-            </div>
-            <p className=" text-sm">
-              2 days ago
-            </p>
-            <p className="mt-2">
-            AggieSeek made my registration so convenient and easy. It helped me get out of my 2 8am sections and my night lab section. I don’t know what i would do it AggieSeek didn’t exist. Thank you AggieSeek developers!
-            </p>
-          </div>
-          <div className="bg-[#F4F4F4] p-8 rounded-xl shadow-lg">
-            <p className="font-bold text-lg lg:text-xl text-neutral-500">
-              Sophia Phu
-            </p>
-            <div className="flex">
-              <Star className="size-5 fill-[#502F2F]" color="#502F2F]" />
-              <Star className="size-5 fill-[#502F2F]" color="#502F2F]"/>
-              <Star className="size-5 fill-[#502F2F]" color="#502F2F]"/>
-              <Star className="size-5 fill-[#502F2F]" color="#502F2F]"/>
-              <Star className="size-5 fill-[#502F2F]" color="#502F2F]"/>
-            </div>
-            <p className=" text-sm">
-              2 days ago
-            </p>
-            <p className="mt-2">
-            AggieSeek made my registration so convenient and easy. It helped me get out of my 2 8am sections and my night lab section. I don’t know what i would do it AggieSeek didn’t exist. Thank you AggieSeek developers!
-            </p>
-          </div>
+        <div className="flex flex-col lg:flex-row gap-8">
+          <TestimonialCard
+            name="Sophia Phu"
+            rating={5}
+            date="2 days ago"
+            feedback="AggieSeek made my registration so convenient and easy. It helped me get out of my 2 8am sections and my night lab section. I don’t know what I would do if AggieSeek didn’t exist. Thank you AggieSeek developers!"
+          />
+          <TestimonialCard
+            name="Sophia Phu"
+            rating={5}
+            date="2 days ago"
+            feedback="AggieSeek made my registration so convenient and easy. It helped me get out of my 2 8am sections and my night lab section. I don’t know what I would do if AggieSeek didn’t exist. Thank you AggieSeek developers!"
+          />
+          <TestimonialCard
+            name="Sophia Phu"
+            rating={5}
+            date="2 days ago"
+            feedback="AggieSeek made my registration so convenient and easy. It helped me get out of my 2 8am sections and my night lab section. I don’t know what I would do if AggieSeek didn’t exist. Thank you AggieSeek developers!"
+          />
         </div>
       </div>
     </div>
