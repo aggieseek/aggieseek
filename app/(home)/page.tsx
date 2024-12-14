@@ -122,7 +122,7 @@ export default function Home() {
           />
         </div>
       </div>
-      <div className="mt-16 px-8 lg:px-24 gap-8">
+      <div className="mt-16 px-8 lg:px-24 gap-8 mb-8 lg:mb-24">
         <h2 className="font-bold text-2xl lg:text-3xl text-neutral-500">
           See what our users think!
         </h2>
