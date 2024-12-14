@@ -35,18 +35,18 @@ export default function Home() {
             Get your desired courses hassle free!
           </h2>
 
-          <div className={"flex flex-col gap-y-2 text-sm my-8"}>
-            <div className={"flex gap-x-4"}>
+          <div className={"flex flex-col gap-y-2 my-8 "}>
+            <div className={"flex gap-x-4 items-center"}>
               <Check className={"w-5 h-5"} />
               <p>Notify you when courses open</p>
             </div>
 
-            <div className={"flex gap-x-4"}>
+            <div className={"flex gap-x-4 items-center"}>
               <Check className={"w-5 h-5"} />
               <p>View course and instructor history</p>
             </div>
 
-            <div className={"flex gap-x-4"}>
+            <div className={"flex gap-x-4 items-center"}>
               <Check className={"w-5 h-5"} />
               <p>Take your mind off of registration</p>
             </div>
