@@ -71,7 +71,7 @@ export default function NotificationsTab() {
         <FaPhone />
         Phone Number
       </Label>
-      <Input autoComplete={"mobile tel"} className={ "w-64" }/>
+      <Input autoComplete={"mobile tel"} placeholder="Enter your phone number" className={ "w-64" }/>
 
       <Label htmlFor={"webhook"} className={"flex gap-x-2"}>
         <FaDiscord />
@@ -79,7 +79,7 @@ export default function NotificationsTab() {
       </Label>
       <div className={ "w-full flex rounded-md flex-col border h-56 p-4 gap-y-4" }>
         <form onSubmit={ e => {e.preventDefault(); addWebhook(webhookInput);} } className={ "flex w-full h-1/4 gap-x-2" }>
-          <Input autoComplete={"off"} value={webhookInput} onChange={e => setWebhookInput(e.target.value)} id={ "webhook" } className={ "h-full w-full" }/>
+          <Input autoComplete={"off"} value={webhookInput} placeholder="Enter your Discord webhook" onChange={e => setWebhookInput(e.target.value)} id={ "webhook" } className={ "h-full w-full" }/>
           <Button className={"transition-transform active:scale-95"} type={ "submit" }>+ Add</Button>
         </form>
 

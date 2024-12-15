@@ -102,24 +102,27 @@ export default function Home() {
           />
         </div>
       </div>
-      <div className="flex flex-col lg:flex-row mt-16 px-8 lg:px-24 gap-8">
-        <div className="w-full flex flex-col gap-4 items-center mt-0 lg:mt-24 lg:w-2/3">
-          <h2 className="font-bold text-2xl lg:text-3xl text-neutral-500">
-            Classes full? Get text, email, and discord messages when classes
-            open up!
-          </h2>
-          <p>
-            AggieSeek has a text, email, and discord notification system. As
-            soon as classes open up, you’ll be the first one to know.
-          </p>
-        </div>
-        <div className="relative flex">
+      <div className="flex flex-col-reverse lg:flex-row mt-16 px-8 lg:px-24 gap-8">
+        {/* Mobile Mockup on the Left for `lg`, Bottom for Smaller Screens */}
+        <div className="relative flex justify-center">
           <Image
             src="/images/aggieseek-mobile-mockup.png"
             alt="AggieSeek Mobile Mockup"
             width={450}
             height={300}
           />
+        </div>
+
+        {/* Text on the Right for `lg`, Top for Smaller Screens */}
+        <div className="flex flex-col gap-4 lg:w-2/3 lg:mt-32">
+          <h2 className="font-bold text-2xl lg:text-3xl text-neutral-500 text-left lg:text-right">
+            Classes full? Get text, email, and discord messages when classes
+            open up!
+          </h2>
+          <p className="text-left lg:text-right">
+            AggieSeek has a text, email, and discord notification system. As
+            soon as classes open up, you’ll be the first one to know.
+          </p>
         </div>
       </div>
       <div className="mt-16 px-8 lg:px-24 gap-8 mb-8 lg:mb-24">
