@@ -6,7 +6,7 @@ import LoadingCircle from "@/components/loading-circle";
 import { SectionHowdy } from "@/lib/howdy-types";
 
 const fetchSectionDetails = async (term: string, crn: string) => {
-  const url = `/api/sections?crn=${crn}&term=${term}`;
+  const url = `/api/data/sections?crn=${crn}&term=${term}`;
   const response = await fetch(url);
   if (response.status === 200) {
     return await response.json();

@@ -8,16 +8,20 @@ datasource db {
 }
 
 model User {
-  id            String           @id @default(uuid())
+  id            String    @id @default(uuid())
   name          String
-  email         String?          @unique
-  emailVerified DateTime?        @map("email_verified")
+  email         String?   @unique
+  emailVerified DateTime? @map("email_verified")
   image         String?
-  createdAt     DateTime         @default(now())
-  updatedAt     DateTime         @updatedAt
-  accounts      Account[]
-  sessions      Session[]
-  trackedCRNs   TrackedSection[]
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+
+  accounts             Account[]
+  discordWebhooks      Webhook[]
+  notificationSettings NotificationSettings?
+  profileSettings      ProfileSettings?
+  sessions             Session[]
+  trackedSections      TrackedSection[]
 
   @@map("users")
 }
@@ -28,14 +32,14 @@ model Account {
   type              String?
   provider          String
   providerAccountId String   @map("provider_account_id")
-  token_type        String?
-  refresh_token     String?
-  access_token      String?
-  expires_at        Int?
+  token_type         String?
+  refresh_token      String?
+  access_token       String?
+  expires_at         Int?
   scope             String?
   id_token          String?
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
   user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
@@ -48,8 +52,8 @@ model Session {
   sessionToken String   @unique @map("session_token")
   accessToken  String?  @map("access_token")
   expires      DateTime
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
   user         User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("sessions")
@@ -68,15 +72,78 @@ model VerificationRequest {
 }
 
 model TrackedSection {
-  id        String   @id @default(cuid())
   userId    String   @map("user_id")
-  crn       String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  crn       String   @db.VarChar(5)
+  createdAt DateTime @default(now()) @map("created_at")
+  term      String   @db.VarChar(10)
+  section   Section  @relation(fields: [term, crn], references: [term, crn], onDelete: Cascade, onUpdate: NoAction)
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([userId, crn])
+  @@id([userId, term, crn])
   @@map("tracked_sections")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model Section {
+  term            String           @db.VarChar(10)
+  crn             String           @db.VarChar(5)
+  title           String           @db.VarChar(100)
+  subject         String           @db.VarChar(10)
+  course          String           @db.VarChar(10)
+  section         String           @db.VarChar(3)
+  creditHours     Decimal          @map("credit_hours") @db.Decimal
+  subject_desc    String
+  instructorJson  Json?            @map("instructor_json") @db.Json
+  meetingsJson    Json?            @map("meetings_json") @db.Json
+  attributes      String?          @db.VarChar(500)
+  instructionType String?          @map("instruction_type") @db.VarChar(50)
+  schedule_type   String           @map("schedule_type") @db.VarChar(10)
+  session         String           @db.VarChar(50)
+  site            String?          @db.VarChar(50)
+  isSectionOpen   Boolean          @map("section_open")
+  updatedAt       DateTime         @default(now()) @map("updated_at") @db.Timestamp(6)
+  trackedSections TrackedSection[]
+
+  @@id([term, crn])
+  @@unique([term, subject, course, section], map: "section_num_key")
+  @@map("sections")
+}
+
+model Webhook {
+  userId     String @map("user_id")
+  webhookUrl String @map("webhook_url")
+  users      User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([userId, webhookUrl])
+  @@map("discord_webhooks")
+}
+
+model Major {
+  majorId          Int               @id @default(autoincrement()) @map("major_id")
+  name             String            @unique @db.VarChar(100)
+  profile_settings ProfileSettings[]
+
+  @@map("majors")
+}
+
+model NotificationSettings {
+  userId      String  @id @map("user_id")
+  email       String?
+  phoneNumber String? @map("phone_number")
+  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("notification_settings")
+}
+
+model ProfileSettings {
+  userId   String  @id @map("user_id")
+  username String? @db.VarChar(20)
+  class    Class?
+  majorId  Int?    @map("major_id")
+  major    Major?  @relation(fields: [majorId], references: [majorId], onUpdate: NoAction)
+  user     User    @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@map("profile_settings")
 }
 
 enum Class {

@@ -5,12 +5,12 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { usePathname } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Title, titles } from "@/lib/title";
+import { DashboardTitles, titles } from "@/lib/dashboard-titles";
 import { useSession } from "next-auth/react";
 import { SectionHowdy } from "@/lib/howdy-types";
 
 const fetchSectionDetails = async (term: string, crn: string) => {
-  const url = `/api/sections?crn=${crn}&term=${term}`;
+  const url = `/api/data/sections?crn=${crn}&term=${term}`;
   const response = await fetch(url);
   if (response.status === 200) {
     return await response.json();
@@ -39,7 +39,7 @@ const getTitle = async (path: string) => {
 
 export default function Layout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const [title, setTitle] = useState<Title | null>(null);
+  const [title, setTitle] = useState<DashboardTitles | null>(null);
 
   useSession({
     required: true,
@@ -55,6 +55,7 @@ export default function Layout({ children }: { children: ReactNode }) {
     getTitle(pathname)
       .then(data => setTitle(data));
   }, [pathname]);
+
 
   return (
     <SidebarProvider>
@@ -78,6 +79,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           </div>
         </section>
       </main>
+
     </SidebarProvider>
   );
 }

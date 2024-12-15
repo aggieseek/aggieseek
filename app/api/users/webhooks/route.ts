@@ -15,32 +15,21 @@ async function getUserId(session: Session) {
     });
 }
 
-function validateParams(crn: string | undefined, term: string | undefined) {
-  if (!crn) return { message: "CRN not specified", status: 400 };
-  if (!term) return { message: "Term not specified", status: 400 };
-  return null;
-}
-
-export async function GET(request: NextRequest) {
-  const searchParams = request.nextUrl.searchParams;
-  const term = searchParams.get("term");
-  if (!term) return NextResponse.json({ message: "Please specify a term" }, { status: 400 });
-
+export async function GET() {
   const session = await getServerSession(authOptions);
   if (!session?.user) return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
 
   const userId = await getUserId(session);
   if (!userId) return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
 
-  const sections = await prisma.trackedSection.findMany({
+  const sections = (await prisma.user.findUnique({
     where: {
-      userId,
-      term
+      id: userId
     },
-    include: {
-      section: true
+    select: {
+      discordWebhooks: true
     }
-  });
+  }))?.discordWebhooks.map(obj => obj.webhookUrl);
 
   return NextResponse.json(sections, { status: 200 });
 }
@@ -52,14 +41,15 @@ export async function POST(req: NextRequest) {
   const userId = await getUserId(session);
   if (!userId) return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
 
-  const { crn, term } = await req.json();
-  const paramsInvalid = validateParams(crn, term);
-  if (paramsInvalid) return NextResponse.json(paramsInvalid, { status: 400 });
+  const { webhookUrl } = await req.json();
 
-  const newTrackedSection = await prisma.trackedSection.create({
-    data: { userId, term, crn }
+  const newWebhook = await prisma.webhook.create({
+    data: {
+      userId,
+      webhookUrl: webhookUrl
+    }
   });
-  return NextResponse.json({ newTrackedSection }, { status: 201 });
+  return NextResponse.json({ newWebhook }, { status: 201 });
 }
 
 export async function DELETE(req: NextRequest) {
@@ -69,15 +59,15 @@ export async function DELETE(req: NextRequest) {
   const userId = await getUserId(session);
   if (!userId) return NextResponse.json({ message: "error" });
 
-  const { crn, term } = await req.json();
-  const paramsInvalid = validateParams(crn, term);
-  if (paramsInvalid) return NextResponse.json(paramsInvalid, { status: 400 });
+  const { webhookUrl } = await req.json();
 
-  const deletedSection = await prisma.trackedSection.delete({
+  const deletedWebhook = await prisma.webhook.delete({
     where: {
-      userId_term_crn: { userId, term, crn }
+      userId_webhookUrl: {
+        userId, webhookUrl: webhookUrl
+      }
     }
   });
 
-  return NextResponse.json({ deletedSection }, { status: 200 });
+  return NextResponse.json({ deletedWebhook }, { status: 200 });
 }
