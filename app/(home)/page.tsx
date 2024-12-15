@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { Session } from "next-auth";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import TestimonialCard from "@/components/testimonialCard";
+import TestimonialCard from "@/components/testimonial-card";
 
 export default function Home() {
   const [session, setSession] = useState<Session | null | undefined>(undefined);
