@@ -85,7 +85,7 @@ export default function NotificationsTab() {
 
         <div className={ "flex flex-col w-full overflow-y-auto rounded-md border h-full p-4" }>
           { webhooks.map((webhook, index) => (
-            <p onClick={() => deleteWebhook(webhook)} className={ "text-sm hover:line-through hover:cursor-pointer hover:text-red-600" } key={index}>{ webhook }</p>
+            <p onClick={() => deleteWebhook(webhook)} className={ "text-sm hover:line-through break-words whitespace-normal hover:cursor-pointer hover:text-red-600" } key={index}>{ webhook }</p>
           )) }
         </div>
       </div>
