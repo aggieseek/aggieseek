@@ -134,10 +134,10 @@ export default function Home() {
         </p>
         <div className="flex flex-col lg:flex-row gap-8">
           <TestimonialCard
-            name="Sophia Phu"
+            name="Peter Phan"
             rating={5}
-            date="2 days ago"
-            feedback="AggieSeek made my registration so convenient and easy. It helped me get out of my 2 8am sections and my night lab section. I don’t know what I would do if AggieSeek didn’t exist. Thank you AggieSeek developers!"
+            date="1 day ago"
+            feedback="AggieSeek has to be one of the greatest websites my eyes have had the pleasure of witnessing. Everything about it is top tier, and I'm grateful for every second that I get to coexist with it. The creators of it must be geniuses, no bias."
           />
           <TestimonialCard
             name="Sophia Phu"
@@ -146,10 +146,10 @@ export default function Home() {
             feedback="AggieSeek made my registration so convenient and easy. It helped me get out of my 2 8am sections and my night lab section. I don’t know what I would do if AggieSeek didn’t exist. Thank you AggieSeek developers!"
           />
           <TestimonialCard
-            name="Sophia Phu"
+            name="enelear"
             rating={5}
-            date="2 days ago"
-            feedback="AggieSeek made my registration so convenient and easy. It helped me get out of my 2 8am sections and my night lab section. I don’t know what I would do if AggieSeek didn’t exist. Thank you AggieSeek developers!"
+            date="1 month ago"
+            feedback="Boy oh boy where do I even begin. AggieSeek, my beloved. I have loved you ever since I first laid eyes on you. The way you notify me for the most competitive of classes and eliminate the stress of enrollment. I would do anything for you."
           />
         </div>
       </div>
