@@ -8,7 +8,7 @@ export default function Settings() {
   return (
     <>
       <Tabs defaultValue="notifications" className="">
-        <TabsList className="flex flex-wrap">
+        <TabsList className="">
           <TabsTrigger value="notifications">Notifications</TabsTrigger>
           <TabsTrigger value="profile">Profile</TabsTrigger>
           <TabsTrigger value="account">Account</TabsTrigger>

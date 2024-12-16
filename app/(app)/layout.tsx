@@ -60,7 +60,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <SidebarProvider>
       <AppSidebar/>
-      <main className="flex flex-col w-full">
+      <main className="flex flex-col w-full overflow-hidden">
         <header className="flex flex-col justify-end h-48 flex-shrink-0 p-8">
           { title
             ? <>
