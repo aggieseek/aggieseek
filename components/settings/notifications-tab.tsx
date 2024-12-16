@@ -63,7 +63,8 @@ export default function NotificationsTab() {
   }, []);
 
   return (
-    <div className={"flex flex-col gap-y-4 pt-4"}>
+    <div className={"flex flex-col gap-y-6 pt-4"}>
+      <div className=" flex flex-col gap-2">
       <Label className={"flex gap-x-2"}>
         <FaEnvelope />
         Email Address
@@ -73,7 +74,8 @@ export default function NotificationsTab() {
         value={notificationSettings?.email || ""}
         disabled
       />
-
+      </div>
+<div className=" flex flex-col gap-2">
       <Label className={"flex gap-x-2"}>
         <FaPhone />
         Phone Number
@@ -83,7 +85,8 @@ export default function NotificationsTab() {
         placeholder="Enter your phone number"
         className={"w-64"}
       />
-
+</div>
+<div className=" flex flex-col gap-2">
       <Label htmlFor={"webhook"} className={"flex gap-x-2"}>
         <FaDiscord />
         Discord Webhooks
@@ -125,6 +128,7 @@ export default function NotificationsTab() {
             </p>
           ))}
         </div>
+      </div>
       </div>
     </div>
   );
