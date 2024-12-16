@@ -94,7 +94,7 @@ export default function NotificationsTab() {
             e.preventDefault();
             addWebhook(webhookInput);
           }}
-          className={"flex w-full h-1/4 gap-x-2"}
+          className={"flex w-full h-1/4 gap-x-2 items-center"}
         >
           <Input
             autoComplete={"off"}
