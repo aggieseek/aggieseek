@@ -62,7 +62,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       <div className="flex w-full overflow-hidden">
         <AppSidebar />
         <main className="flex flex-col w-full overflow-hidden">
-          <header className="flex flex-col justify-end h-48 flex-shrink-0 p-8">
+          <header className="flex flex-col justify-end h-48 flex-shrink-0 p-6 md:p-8">
             {title ? (
               <>
                 <h1 className="font-bold text-3xl">{title.title}</h1>
@@ -76,8 +76,8 @@ export default function Layout({ children }: { children: ReactNode }) {
             )}
           </header>
 
-          <section className="flex-1 overflow-auto bg-zinc-100 p-8">
-            <div className="w-full h-full min-h-full bg-white p-10 rounded-lg shadow-sm">
+          <section className="flex-1 overflow-auto bg-zinc-100 p-6 md:p-8">
+            <div className="w-full h-full min-h-full bg-white p-4 md:p-8 rounded-lg shadow-sm">
               {children}
             </div>
           </section>

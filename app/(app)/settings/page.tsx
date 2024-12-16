@@ -29,7 +29,7 @@ export default function Settings() {
 
   return (
     <div className="w-full">
-      <div className="lg:hidden mb-4">
+      <div className="md:hidden mb-4">
         <Select onValueChange={handleValueChange} value={activeTab}>
           <SelectTrigger className="w-full">
             <SelectValue placeholder="Select a tab" />
@@ -42,7 +42,7 @@ export default function Settings() {
         </Select>
       </div>
 
-      <div className="hidden lg:block mb-4">
+      <div className="hidden md:block mb-4">
         <Tabs value={activeTab} onValueChange={handleValueChange}>
           <TabsList className="">
             <TabsTrigger value="notifications">Notifications</TabsTrigger>
