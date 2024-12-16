@@ -23,8 +23,8 @@ export const jetbrainsMono = JetBrains_Mono({
 export default function ClassCell({ section, onDeleteAction }: ClassCellProps) {
   return (
     <div className="transition-transform select-none flex flex-col sm:flex-row items-start sm:items-center w-full min-h-[3.5rem] bg-zinc-100 border-l-4 border-l-zinc-400 px-3 py-2 shadow-sm cursor-pointer hover:scale-[1.01]">
-      <div className="w-full grid grid-cols-1 gap-y-2 sm:gap-y-0 sm:grid-cols-[1fr_auto]">
-        <div className="space-y-2">
+      <div className="w-full grid grid-cols-1 sm:grid-cols-[1fr_auto]">
+        <div className="space-y-2 sm:space-y-0">
           <div className="flex items-center gap-2 justify-between">
             <h3 className="font-bold text-sm">
               {section.subject} {section.course} -{" "}
@@ -36,14 +36,14 @@ export default function ClassCell({ section, onDeleteAction }: ClassCellProps) {
               ))}
             </div>
             <button
-              className="transition-transform hover:scale-110 active:scale-90 mt-2 justify-end"
+              className="transition-transform hover:scale-110 active:scale-90 justify-end"
               onClick={() => onDeleteAction(section.crn)}
             >
               <X />
             </button>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs opacity-50">
+          <div className="grid grid-cols-1 sm:grid-cols-[3fr_2fr_2fr] gap-x-4 text-xs opacity-50">
             <div className="flex items-center">
               <IoPerson className="w-4 h-4 mr-2" />
               <p className="truncate hover:underline">
