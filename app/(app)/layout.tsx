@@ -59,27 +59,30 @@ export default function Layout({ children }: { children: ReactNode }) {
 
   return (
     <SidebarProvider>
-      <AppSidebar/>
-      <main className="flex flex-col w-full overflow-hidden">
-        <header className="flex flex-col justify-end h-48 flex-shrink-0 p-8">
-          { title
-            ? <>
-              <h1 className="font-bold text-3xl">{ title.title }</h1>
-              <h2 className="font-medium text-base opacity-30">{ title.subtitle }</h2>
-            </>
-            : <>
-              <Skeleton className="h-6 rounded-full w-36 mb-2 bg-zinc-200"/>
-              <Skeleton className="h-4 rounded-full w-52 bg-zinc-200 mb-1"/>
-            </> }
-        </header>
+      <div className="flex w-full h-screen overflow-hidden">
+        <AppSidebar />
+        <main className="flex flex-col w-full overflow-hidden">
+          <header className="flex flex-col justify-end h-48 flex-shrink-0 p-8">
+            {title ? (
+              <>
+                <h1 className="font-bold text-3xl">{title.title}</h1>
+                <h2 className="font-medium text-base opacity-30">{title.subtitle}</h2>
+              </>
+            ) : (
+              <>
+                <Skeleton className="h-6 rounded-full w-36 mb-2 bg-zinc-200" />
+                <Skeleton className="h-4 rounded-full w-52 bg-zinc-200 mb-1" />
+              </>
+            )}
+          </header>
 
-        <section className="flex h-full bg-zinc-100">
-          <div className="w-full m-6 p-10 bg-white">
-            { children }
-          </div>
-        </section>
-      </main>
-
+          <section className="flex-1 overflow-auto bg-zinc-100 p-8">
+            <div className="w-full h-full min-h-full bg-white p-10 rounded-lg shadow-sm">
+              {children}
+            </div>
+          </section>
+        </main>
+      </div>
     </SidebarProvider>
   );
 }
