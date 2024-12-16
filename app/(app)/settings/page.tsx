@@ -2,7 +2,13 @@
 
 import { useState } from "react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import ProfileTab from "@/components/settings/profile-tab";
 import NotificationsTab from "@/components/settings/notifications-tab";
 import AccountTab from "@/components/settings/account-tab";
@@ -52,9 +58,7 @@ export default function Settings() {
         </Tabs>
       </div>
 
-      <div className="mt-4">
-        {renderContent()}
-      </div>
+      <div className="mt-4">{renderContent()}</div>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
@@ -28,8 +28,10 @@ const getTitle = async (path: string) => {
 
     if (data) {
       return {
-        title: `${ data.SUBJECT_CODE } ${ data.COURSE_NUMBER } / ${ data.SECTION_NUMBER }` || "Course Details",
-        subtitle: data.COURSE_TITLE || ""
+        title:
+          `${data.SUBJECT_CODE} ${data.COURSE_NUMBER} / ${data.SECTION_NUMBER}` ||
+          "Course Details",
+        subtitle: data.COURSE_TITLE || "",
       };
     }
   }
@@ -52,10 +54,8 @@ export default function Layout({ children }: { children: ReactNode }) {
     }
 
     setTitle(null);
-    getTitle(pathname)
-      .then(data => setTitle(data));
+    getTitle(pathname).then((data) => setTitle(data));
   }, [pathname]);
-
 
   return (
     <SidebarProvider>
@@ -66,7 +66,9 @@ export default function Layout({ children }: { children: ReactNode }) {
             {title ? (
               <>
                 <h1 className="font-bold text-3xl">{title.title}</h1>
-                <h2 className="font-medium text-base opacity-30">{title.subtitle}</h2>
+                <h2 className="font-medium text-base opacity-30">
+                  {title.subtitle}
+                </h2>
               </>
             ) : (
               <>
