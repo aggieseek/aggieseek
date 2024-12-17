@@ -1,6 +1,6 @@
 "use client";
 
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { usePathname } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
@@ -63,6 +63,9 @@ export default function Layout({ children }: { children: ReactNode }) {
         <AppSidebar />
         <main className="flex flex-col w-full overflow-hidden">
           <header className="flex flex-col justify-end h-48 flex-shrink-0 p-6 md:p-8">
+          <div className="py-4 -ml-1">
+              <SidebarTrigger/>
+          </div>
             {title ? (
               <>
                 <h1 className="font-bold text-3xl">{title.title}</h1>
