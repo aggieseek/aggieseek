@@ -143,7 +143,7 @@ export default function Home() {
             name="Sophia Phu"
             rating={5}
             date="2 days ago"
-            feedback="AggieSeek made my registration so convenient and easy. It helped me get out of my 2 8am sections and my night lab section. I don’t know what I would do if AggieSeek didn’t exist. Thank you AggieSeek developers!"
+            feedback="AggieSeek made my registration so convenient and easy. It helped me get out of my two 8am sections and my night lab section. I don’t know what I would do if AggieSeek didn’t exist. Thank you AggieSeek developers!"
           />
           <TestimonialCard
             name="enelear"

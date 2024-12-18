@@ -1,10 +1,16 @@
-'use client';
+"use client";
 
 import { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Select } from "@radix-ui/react-select";
-import { SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { FaUser, FaBook, FaFilePen, FaEnvelope } from "react-icons/fa6";
 
 async function getDataFromRoute(endpoint: string) {
   try {
@@ -17,55 +23,71 @@ async function getDataFromRoute(endpoint: string) {
 }
 
 export default function ProfileTab() {
-
   const [majors, setMajors] = useState<string[]>([]);
   const [classes, setClasses] = useState<string[]>([]);
 
   useEffect(() => {
-    getDataFromRoute('/api/data/majors')
-      .then(result => setMajors(result));
+    getDataFromRoute("/api/data/majors").then((result) => setMajors(result));
 
-    getDataFromRoute('/api/data/classes')
-      .then(result => setClasses(result));
+    getDataFromRoute("/api/data/classes").then((result) => setClasses(result));
   }, []);
 
   return (
-    <div className={ "flex flex-col gap-y-4" }>
-      <div className={ "w-1/5 space-y-1" }>
-        <Label>Username</Label>
-        <Input placeholder={ "username" }/>
+    <div className={"flex flex-col gap-y-6 pt-4"}>
+      <div className=" flex flex-col gap-2">
+      <Label className=" flex gap-x-2">
+        <FaUser />
+        Name
+      </Label>
+      <Input className="w-64" placeholder={"First Last"} />
       </div>
-
-      <div className={ "w-1/5 space-y-1" }>
-        <Label>Class</Label>
-        <Select disabled={ classes.length === 0 }>
+<div className=" flex flex-col gap-2">
+      <Label className=" flex gap-x-2">
+        <FaEnvelope />
+        Google Email
+      </Label>
+      <Input className="w-64" placeholder={"test@gmail.com"} />
+      </div>
+<div className=" flex flex-col gap-2">
+      <Label className=" flex gap-x-2">
+        <FaFilePen />
+        Class
+      </Label>
+      <div className="w-64">
+        <Select disabled={classes.length === 0}>
           <SelectTrigger>
-            <SelectValue placeholder="Select"/>
+            <SelectValue placeholder="Select" />
           </SelectTrigger>
           <SelectContent>
-            { classes.map((major, index) => (
-              <SelectItem key={ index } value={ major }>{ major }</SelectItem>
-            )) }
+            {classes.map((major, index) => (
+              <SelectItem key={index} value={major}>
+                {major}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
-
       </div>
-
-      <div className={ "w-1/5 space-y-1" }>
-        <Label>Major</Label>
-        <Select disabled={ majors.length === 0 }>
+      </div>
+<div className=" flex flex-col gap-2">
+      <Label className=" flex gap-x-2">
+        <FaBook />
+        Major
+      </Label>
+      <div className=" min-w-64 max-w-96">
+        <Select disabled={majors.length === 0}>
           <SelectTrigger>
-            <SelectValue placeholder="Select"/>
+            <SelectValue placeholder="Select" />
           </SelectTrigger>
           <SelectContent>
-            { majors.map((major, index) => (
-              <SelectItem key={ index } value={ major }>{ major }</SelectItem>
-            )) }
+            {majors.map((major, index) => (
+              <SelectItem key={index} value={major}>
+                {major}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
-
       </div>
-
+      </div>
     </div>
   );
 }
