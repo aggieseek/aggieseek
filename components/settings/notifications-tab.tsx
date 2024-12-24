@@ -65,70 +65,70 @@ export default function NotificationsTab() {
   return (
     <div className={"flex flex-col gap-y-6 pt-4"}>
       <div className=" flex flex-col gap-2">
-      <Label className={"flex gap-x-2"}>
-        <FaEnvelope />
-        Email Address
-      </Label>
-      <Input
-        className={"w-64"}
-        value={notificationSettings?.email || ""}
-        disabled
-      />
+        <Label className={"flex gap-x-2"}>
+          <FaEnvelope />
+          Email Address
+        </Label>
+        <Input
+          className={"w-64"}
+          value={notificationSettings?.email || ""}
+          disabled
+        />
       </div>
-<div className=" flex flex-col gap-2">
-      <Label className={"flex gap-x-2"}>
-        <FaPhone />
-        Phone Number
-      </Label>
-      <Input
-        autoComplete={"mobile tel"}
-        placeholder="Enter your phone number"
-        className={"w-64"}
-      />
-</div>
-<div className=" flex flex-col gap-2">
-      <Label htmlFor={"webhook"} className={"flex gap-x-2"}>
-        <FaDiscord />
-        Discord Webhooks
-      </Label>
-      <div className={"flex rounded-md flex-col border p-4 gap-y-4"}>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            addWebhook(webhookInput);
-          }}
-          className={"flex w-full h-1/4 gap-x-2 items-center"}
-        >
-          <Input
-            autoComplete={"off"}
-            value={webhookInput}
-            placeholder="Enter your Discord webhook"
-            onChange={(e) => setWebhookInput(e.target.value)}
-            id={"webhook"}
-            className={"h-full w-full"}
-          />
-          <Button
-            className={"transition-transform active:scale-95"}
-            type={"submit"}
+      <div className=" flex flex-col gap-2">
+        <Label className={"flex gap-x-2"}>
+          <FaPhone />
+          Phone Number
+        </Label>
+        <Input
+          autoComplete={"mobile tel"}
+          placeholder="Enter your phone number"
+          className={"w-64"}
+        />
+      </div>
+      <div className=" flex flex-col gap-2">
+        <Label htmlFor={"webhook"} className={"flex gap-x-2"}>
+          <FaDiscord />
+          Discord Webhooks
+        </Label>
+        <div className={"flex rounded-md flex-col border p-4 gap-y-4"}>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              addWebhook(webhookInput);
+            }}
+            className={"flex w-full h-1/4 gap-x-2 items-center"}
           >
-            + Add
-          </Button>
-        </form>
-
-        <div className={"flex flex-col rounded-md border h-full p-4"}>
-          {webhooks.map((webhook, index) => (
-            <p
-              onClick={() => deleteWebhook(webhook)}
-              className={
-                "text-sm hover:line-through hover:cursor-pointer hover:text-red-600 break-words whitespace-normal  "
-              }
-              key={index}
+            <Input
+              autoComplete={"off"}
+              value={webhookInput}
+              placeholder="Enter your Discord webhook"
+              onChange={(e) => setWebhookInput(e.target.value)}
+              id={"webhook"}
+              className={"h-full w-full"}
+            />
+            <Button
+              className={"transition-transform active:scale-95"}
+              type={"submit"}
             >
-              {webhook}
-            </p>
-          ))}
+              + Add
+            </Button>
+          </form>
+
+          <div className={"flex flex-col rounded-md border h-full p-4"}>
+            {webhooks.map((webhook, index) => (
+              <p
+                onClick={() => deleteWebhook(webhook)}
+                className={
+                  "text-sm hover:line-through hover:cursor-pointer hover:text-red-600 break-words whitespace-normal  "
+                }
+                key={index}
+              >
+                {webhook}
+              </p>
+            ))}
+          </div>
         </div>
-      </div>
       </div>
     </div>
   );
