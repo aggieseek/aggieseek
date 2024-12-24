@@ -5,7 +5,9 @@ import { NotificationSettings } from "@prisma/client";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { FaDiscord, FaPhone, FaEnvelope } from "react-icons/fa6";
+import { FaDiscord, FaPhone, FaEnvelope, FaBell } from "react-icons/fa6";
+import { Separator } from "@/components/ui/separator";
+import { Checkbox } from "@/components/ui/checkbox";
 
 async function getDataFromRoute(endpoint: string) {
   try {
@@ -127,6 +129,61 @@ export default function NotificationsTab() {
                 {webhook}
               </p>
             ))}
+          </div>
+        </div>
+      </div>
+      <div className=" flex flex-col gap-2">
+        <div className="flex items-center justify-between gap-2">
+          <Label className={"flex gap-x-2"}>
+            <FaBell />
+            Notification Preferences
+          </Label>
+          <div className="flex gap-4 text-neutral-500">
+            <p className=" text-sm font-semibold">Discord</p>
+            <p className=" text-sm font-semibold">SMS</p>
+            <p className=" text-sm font-semibold">Email</p>
+          </div>
+        </div>
+        <Separator className="mt-2" />
+        <div className="flex items-center justify-between">
+          <div>
+            <p className=" text-sm font-semibold">Class Openings</p>
+            <p className=" text-sm text-neutral-500">
+              Get notified when classes open up
+            </p>
+          </div>
+          <div className=" flex gap-8 mr-2">
+            <Checkbox />
+            <Checkbox />
+            <Checkbox />
+          </div>
+        </div>
+        <Separator className="" />
+        <div className="flex items-center justify-between">
+          <div>
+            <p className=" text-sm font-semibold">Change in Seats</p>
+            <p className=" text-sm text-neutral-500">
+              Get notified when class seat amounts change
+            </p>
+          </div>
+          <div className=" flex gap-8 mr-2">
+            <Checkbox />
+            <Checkbox />
+            <Checkbox />
+          </div>
+        </div>
+        <Separator className="" />
+        <div className="flex items-center justify-between">
+          <div>
+            <p className=" text-sm font-semibold">Class Closings</p>
+            <p className=" text-sm text-neutral-500">
+              Get notified when classes close
+            </p>
+          </div>
+          <div className=" flex gap-8 mr-2">
+            <Checkbox />
+            <Checkbox />
+            <Checkbox />
           </div>
         </div>
       </div>
