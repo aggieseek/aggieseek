@@ -85,7 +85,7 @@ export default function Dashboard() {
 
   return (
     <>
-      <div className={ "flex gap-x-12 items-center mb-6" }>
+      <div className={ "flex flex-col gap-2 sm:flex-row gap-x-12 sm:items-center mb-6" }>
         <h3 className="font-bold text-xl">
           Your Courses
         </h3>

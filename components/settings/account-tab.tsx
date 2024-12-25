@@ -34,8 +34,8 @@ export default function AccountTab() {
 
   return (
     <>
-      <div className={ "flex flex-col gap-y-4" }>
-        <Button onClick={() => setDialogOpen(true)}  className={ "w-1/6" } variant={ "destructive" }>Delete Account</Button>
+      <div className={ "flex flex-col pt-4 gap-y-4" }>
+        <Button onClick={() => setDialogOpen(true)}  className={ "w-64" } variant={ "destructive" }>Delete Account</Button>
       </div>
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
