@@ -133,7 +133,7 @@ export default function NotificationsTab() {
         </div>
       </div>
       <div className=" flex flex-col gap-2">
-        <div className="flex items-center justify-between gap-2">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2">
           <Label className={"flex gap-x-2"}>
             <FaBell />
             Notification Preferences
@@ -144,43 +144,43 @@ export default function NotificationsTab() {
             <p className=" text-sm font-semibold">Email</p>
           </div>
         </div>
-        <Separator className="mt-2" />
-        <div className="flex items-center justify-between">
+        <Separator />
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
           <div>
             <p className=" text-sm font-semibold">Class Openings</p>
             <p className=" text-sm text-neutral-500">
               Get notified when classes open up
             </p>
           </div>
-          <div className=" flex gap-8 mr-2">
+          <div className="flex gap-12 ml-0 lg:gap-8 lg:mr-2 mt-2 lg:mt-0">
             <Checkbox />
             <Checkbox />
             <Checkbox />
           </div>
         </div>
         <Separator className="" />
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
           <div>
             <p className=" text-sm font-semibold">Change in Seats</p>
             <p className=" text-sm text-neutral-500">
               Get notified when class seat amounts change
             </p>
           </div>
-          <div className=" flex gap-8 mr-2">
+          <div className=" flex gap-12 ml-0 lg:gap-8 lg:mr-2 mt-2 lg:mt-0">
             <Checkbox />
             <Checkbox />
             <Checkbox />
           </div>
         </div>
         <Separator className="" />
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
           <div>
             <p className=" text-sm font-semibold">Class Closings</p>
             <p className=" text-sm text-neutral-500">
               Get notified when classes close
             </p>
           </div>
-          <div className=" flex gap-8 mr-2">
+          <div className=" flex gap-12 ml-0 lg:gap-8 lg:mr-2 mt-2 lg:mt-0">
             <Checkbox />
             <Checkbox />
             <Checkbox />
