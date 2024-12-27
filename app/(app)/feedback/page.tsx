@@ -1,12 +1,12 @@
 "use client"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Button } from "@/components/ui/button"
-import { Textarea } from "@/components/ui/textarea"
-import { useState } from 'react'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { useState } from 'react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 export default function Feedback() {
-  const [priority, setPriority] = useState<string>('')
+  const [priority, setPriority] = useState<string>('');
   return (
     <>
       <div className=" border border-neutral-300 p-4 rounded-lg">
