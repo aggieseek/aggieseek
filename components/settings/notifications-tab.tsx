@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { FaDiscord, FaPhone, FaEnvelope, FaBell } from "react-icons/fa6";
 import { Separator } from "@/components/ui/separator";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useSession } from "next-auth/react";
 
 async function getDataFromRoute(endpoint: string) {
   try {
@@ -24,6 +25,7 @@ export default function NotificationsTab() {
     useState<NotificationSettings | null>(null);
   const [webhooks, setWebhooks] = useState<string[]>([]);
   const [webhookInput, setWebhookInput] = useState<string>("");
+  const {data: session, status} = useSession();
 
   const addWebhook = (webhookUrl: string) => {
     fetch("/api/users/webhooks", {
@@ -65,19 +67,19 @@ export default function NotificationsTab() {
   }, []);
 
   return (
-    <div className={"flex flex-col gap-y-6 pt-4"}>
-      <div className=" flex flex-col gap-2">
+    <div className={"flex flex-col gap-y-8 md:gap-y-6 pt-4 text-sm"}>
+      <div className="flex flex-col gap-2">
         <Label className={"flex gap-x-2"}>
           <FaEnvelope />
           Email Address
         </Label>
         <Input
           className={"w-64"}
-          value={notificationSettings?.email || ""}
+          value={session?.user?.email || ""}
           disabled
         />
       </div>
-      <div className=" flex flex-col gap-2">
+      <div className="flex flex-col gap-2">
         <Label className={"flex gap-x-2"}>
           <FaPhone />
           Phone Number
@@ -134,7 +136,7 @@ export default function NotificationsTab() {
       </div>
       <div className=" flex flex-col gap-2">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2">
-          <Label className={"flex gap-x-2"}>
+          <Label className={"flex gap-x-2 mb-2"}>
             <FaBell />
             Notification Preferences
           </Label>
