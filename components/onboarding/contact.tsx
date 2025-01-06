@@ -1,8 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import {
-  Dialog,
-  DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
@@ -24,7 +22,7 @@ async function getDataFromRoute(endpoint: string) {
     return [];
   }
 }
-export default function Contact() {
+export default function Contact({ onNext, onPrevious }) {
   const router = useRouter();
   const [notificationSettings, setNotificationSettings] =
     useState<NotificationSettings | null>(null);
@@ -112,61 +110,62 @@ export default function Contact() {
           />
         </div>
         <div className=" flex flex-col gap-2">
-        <Label htmlFor={"webhook"} className={"flex gap-x-2"}>
-          <FaDiscord />
-          Discord Webhooks
-        </Label>
-        <div className={"flex rounded-md flex-col border p-4 gap-y-4 max-w-64 md:max-w-md lg:max-w-3xl"}>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              addWebhook(webhookInput);
-            }}
-            className={"flex h-1/4 gap-x-2 items-center"}
+          <Label htmlFor={"webhook"} className={"flex gap-x-2"}>
+            <FaDiscord />
+            Discord Webhooks
+          </Label>
+          <div
+            className={
+              "flex rounded-md flex-col border p-4 gap-y-4 max-w-64 md:max-w-md lg:max-w-3xl"
+            }
           >
-            <Input
-              autoComplete={"off"}
-              value={webhookInput}
-              placeholder="Enter your Discord webhook"
-              onChange={(e) => setWebhookInput(e.target.value)}
-              id={"webhook"}
-              className={"h-full w-full"}
-            />
-            <Button
-              className={"transition-transform active:scale-95"}
-              type={"submit"}
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                addWebhook(webhookInput);
+              }}
+              className={"flex h-1/4 gap-x-2 items-center"}
             >
-              + Add
-            </Button>
-          </form>
-
-          <div className={"flex flex-col rounded-md border h-full p-4"}>
-            {webhooks.map((webhook, index) => (
-              <p
-                onClick={() => deleteWebhook(webhook)}
-                className={
-                  "text-sm hover:line-through hover:cursor-pointer hover:text-red-600 break-words whitespace-normal  "
-                }
-                key={index}
+              <Input
+                autoComplete={"off"}
+                value={webhookInput}
+                placeholder="Enter your Discord webhook"
+                onChange={(e) => setWebhookInput(e.target.value)}
+                id={"webhook"}
+                className={"h-full w-full"}
+              />
+              <Button
+                className={"transition-transform active:scale-95"}
+                type={"submit"}
               >
-                {webhook}
-              </p>
-            ))}
+                + Add
+              </Button>
+            </form>
+
+            <div className={"flex flex-col rounded-md border h-full p-4"}>
+              {webhooks.map((webhook, index) => (
+                <p
+                  onClick={() => deleteWebhook(webhook)}
+                  className={
+                    "text-sm hover:line-through hover:cursor-pointer hover:text-red-600 break-words whitespace-normal  "
+                  }
+                  key={index}
+                >
+                  {webhook}
+                </p>
+              ))}
+            </div>
           </div>
         </div>
       </div>
-      </div>
 
-      <div className={"flex justify-between"}>
-        <div
-          className={"text-sm opacity-25 hover:underline hover:cursor-pointer"}
-        >
-          Back
-        </div>
-
-        <div className={"text-sm hover:underline hover:cursor-pointer"}>
+      <div className="flex justify-between">
+        <button className="text-sm hover:underline" onClick={onPrevious}>
+          Previous
+        </button>
+        <button className="text-sm hover:underline" onClick={onNext}>
           Next
-        </div>
+        </button>
       </div>
     </>
   );

@@ -1,8 +1,5 @@
 "use client";
-
 import {
-  Dialog,
-  DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
@@ -14,7 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Checkbox } from "@/components/ui/checkbox";
 
-export default function Preferences() {
+export default function Preferences({ onPrevious, onFinish }) {
   const router = useRouter();
 
   return (
@@ -27,16 +24,20 @@ export default function Preferences() {
             width={200}
             height={100}
           />
-          <div className={"mt-8"}>Please input your notification preferences!</div>
+          <div className={"mt-8"}>
+            Please input your notification preferences!
+          </div>
         </DialogTitle>
         <DialogDescription>
-          Inputting your notification preferences ensures that you get notified in the ways you want! Feel free to chance your preferences any time in the settings page.
+          Inputting your notification preferences ensures that you get notified
+          in the ways you want! Feel free to chance your preferences any time in
+          the settings page.
         </DialogDescription>
       </DialogHeader>
       <div className=" flex flex-col gap-2">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2">
-          <Label className={ "flex gap-x-2 mb-2" }>
-            <FaBell/>
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between lg:gap-2">
+          <Label className={"flex gap-x-2 mb-2"}>
+            <FaBell />
             Notification Preferences
           </Label>
           <div className="flex gap-4 text-neutral-500 text-sm font-semibold">
@@ -45,7 +46,7 @@ export default function Preferences() {
             <p>Email</p>
           </div>
         </div>
-        <Separator/>
+        <Separator />
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
           <div>
             <p className=" text-sm font-semibold">Class Openings</p>
@@ -54,12 +55,12 @@ export default function Preferences() {
             </p>
           </div>
           <div className="flex gap-12 ml-0 lg:gap-8 lg:mr-2 mt-2 lg:mt-0">
-            <Checkbox/>
-            <Checkbox/>
-            <Checkbox/>
+            <Checkbox />
+            <Checkbox />
+            <Checkbox />
           </div>
         </div>
-        <Separator className=""/>
+        <Separator className="" />
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
           <div>
             <p className=" text-sm font-semibold">Class Closings</p>
@@ -68,12 +69,12 @@ export default function Preferences() {
             </p>
           </div>
           <div className=" flex gap-12 ml-0 lg:gap-8 lg:mr-2 mt-2 lg:mt-0">
-            <Checkbox/>
-            <Checkbox/>
-            <Checkbox/>
+            <Checkbox />
+            <Checkbox />
+            <Checkbox />
           </div>
         </div>
-        <Separator className=""/>
+        <Separator className="" />
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
           <div>
             <p className=" text-sm font-semibold">Instructor Changes</p>
@@ -82,23 +83,19 @@ export default function Preferences() {
             </p>
           </div>
           <div className=" flex gap-12 ml-0 lg:gap-8 lg:mr-2 mt-2 lg:mt-0">
-            <Checkbox/>
-            <Checkbox/>
-            <Checkbox/>
+            <Checkbox />
+            <Checkbox />
+            <Checkbox />
           </div>
         </div>
-
       </div>
       <div className={"flex justify-between"}>
-        <div
-          className={"text-sm opacity-25 hover:underline hover:cursor-pointer"}
-        >
-          Back
-        </div>
-
-        <div className={"text-sm hover:underline hover:cursor-pointer"}>
+        <button className="text-sm hover:underline" onClick={onPrevious}>
+          Previous
+        </button>
+        <button className="text-sm hover:underline" onClick={onFinish}>
           Finish
-        </div>
+        </button>
       </div>
     </>
   );

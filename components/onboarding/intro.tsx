@@ -1,8 +1,6 @@
 "use client";
 
 import {
-  Dialog,
-  DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
@@ -10,7 +8,7 @@ import {
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-export default function Intro() {
+export default function Intro({ onNext, onFinish }) {
   const router = useRouter();
 
   return (
@@ -32,15 +30,12 @@ export default function Intro() {
       </DialogHeader>
 
       <div className={"flex justify-between"}>
-        <div
-          className={"text-sm opacity-25 hover:underline hover:cursor-pointer"}
-        >
+        <button className="text-sm hover:underline" onClick={onFinish}>
           Skip
-        </div>
-
-        <div className={"text-sm hover:underline hover:cursor-pointer"}>
+        </button>
+        <button className="text-sm hover:underline" onClick={onNext}>
           Next
-        </div>
+        </button>
       </div>
     </>
   );
