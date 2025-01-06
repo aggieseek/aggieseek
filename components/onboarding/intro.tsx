@@ -5,12 +5,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 export default function Intro({ onNext, onFinish }) {
-  const router = useRouter();
-
   return (
     <>
       <DialogHeader>

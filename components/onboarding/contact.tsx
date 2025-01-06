@@ -6,12 +6,11 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { NotificationSettings } from "@prisma/client";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { FaDiscord, FaPhone, FaEnvelope, FaBell } from "react-icons/fa6";
+import { FaDiscord, FaPhone, FaEnvelope} from "react-icons/fa6";
 
 async function getDataFromRoute(endpoint: string) {
   try {
@@ -23,7 +22,6 @@ async function getDataFromRoute(endpoint: string) {
   }
 }
 export default function Contact({ onNext, onPrevious }) {
-  const router = useRouter();
   const [notificationSettings, setNotificationSettings] =
     useState<NotificationSettings | null>(null);
   const [webhooks, setWebhooks] = useState<string[]>([]);

@@ -4,7 +4,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { FaBell } from "react-icons/fa6";
 import { Label } from "@/components/ui/label";
@@ -12,8 +11,6 @@ import { Separator } from "@/components/ui/separator";
 import { Checkbox } from "@/components/ui/checkbox";
 
 export default function Preferences({ onPrevious, onFinish }) {
-  const router = useRouter();
-
   return (
     <>
       <DialogHeader>
