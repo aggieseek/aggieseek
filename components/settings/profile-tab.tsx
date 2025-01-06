@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { FaUser, FaBook, FaFilePen, FaEnvelope } from "react-icons/fa6";
+import { FaUser, FaBook, FaGraduationCap } from "react-icons/fa6";
 
 async function getDataFromRoute(endpoint: string) {
   try {
@@ -33,60 +33,53 @@ export default function ProfileTab() {
   }, []);
 
   return (
-    <div className={"flex flex-col gap-y-6 pt-4"}>
+    <div className={ "flex flex-col gap-y-6 pt-4" }>
       <div className=" flex flex-col gap-2">
-      <Label className=" flex gap-x-2">
-        <FaUser />
-        Name
-      </Label>
-      <Input className="w-64" placeholder={"First Last"} />
+        <Label className=" flex gap-x-2">
+          <FaUser/>
+          Name
+        </Label>
+        <Input className="w-64" placeholder={ "First Last" }/>
       </div>
-<div className=" flex flex-col gap-2">
-      <Label className=" flex gap-x-2">
-        <FaEnvelope />
-        Google Email
-      </Label>
-      <Input className="w-64" placeholder={"test@gmail.com"} />
+      <div className=" flex flex-col gap-2">
+        <Label className=" flex gap-x-2">
+          <FaGraduationCap/>
+          Class
+        </Label>
+        <div className="w-64">
+          <Select disabled={ classes.length === 0 }>
+            <SelectTrigger>
+              <SelectValue placeholder="Select"/>
+            </SelectTrigger>
+            <SelectContent>
+              { classes.map((major, index) => (
+                <SelectItem key={ index } value={ major }>
+                  { major }
+                </SelectItem>
+              )) }
+            </SelectContent>
+          </Select>
+        </div>
       </div>
-<div className=" flex flex-col gap-2">
-      <Label className=" flex gap-x-2">
-        <FaFilePen />
-        Class
-      </Label>
-      <div className="w-64">
-        <Select disabled={classes.length === 0}>
-          <SelectTrigger>
-            <SelectValue placeholder="Select" />
-          </SelectTrigger>
-          <SelectContent>
-            {classes.map((major, index) => (
-              <SelectItem key={index} value={major}>
-                {major}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-      </div>
-<div className=" flex flex-col gap-2">
-      <Label className=" flex gap-x-2">
-        <FaBook />
-        Major
-      </Label>
-      <div className=" min-w-64 max-w-96">
-        <Select disabled={majors.length === 0}>
-          <SelectTrigger>
-            <SelectValue placeholder="Select" />
-          </SelectTrigger>
-          <SelectContent>
-            {majors.map((major, index) => (
-              <SelectItem key={index} value={major}>
-                {major}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
+      <div className=" flex flex-col gap-2">
+        <Label className=" flex gap-x-2">
+          <FaBook/>
+          Major
+        </Label>
+        <div className=" min-w-64 max-w-96">
+          <Select disabled={ majors.length === 0 }>
+            <SelectTrigger>
+              <SelectValue placeholder="Select"/>
+            </SelectTrigger>
+            <SelectContent>
+              { majors.map((major, index) => (
+                <SelectItem key={ index } value={ major }>
+                  { major }
+                </SelectItem>
+              )) }
+            </SelectContent>
+          </Select>
+        </div>
       </div>
     </div>
   );

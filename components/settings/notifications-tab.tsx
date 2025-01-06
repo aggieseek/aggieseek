@@ -23,9 +23,10 @@ async function getDataFromRoute(endpoint: string) {
 export default function NotificationsTab() {
   const [notificationSettings, setNotificationSettings] =
     useState<NotificationSettings | null>(null);
+  const [phoneNumber, setPhoneNumber] = useState<string | null>(null);
   const [webhooks, setWebhooks] = useState<string[]>([]);
   const [webhookInput, setWebhookInput] = useState<string>("");
-  const {data: session, status} = useSession();
+  const {data: session} = useSession();
 
   const addWebhook = (webhookUrl: string) => {
     fetch("/api/users/webhooks", {
@@ -66,8 +67,12 @@ export default function NotificationsTab() {
     );
   }, []);
 
+  useEffect(() => {
+    setPhoneNumber(notificationSettings?.phoneNumber || null);
+  }, [notificationSettings]);
+
   return (
-    <div className={"flex flex-col gap-y-8 md:gap-y-6 pt-4 text-sm"}>
+    <div className={"flex flex-col gap-y-8 md:gap-y-6 pt-4"}>
       <div className="flex flex-col gap-2">
         <Label className={"flex gap-x-2"}>
           <FaEnvelope />
@@ -87,6 +92,8 @@ export default function NotificationsTab() {
         <Input
           autoComplete={"mobile tel"}
           placeholder="Enter your phone number"
+          value={phoneNumber || ""}
+          onChange={(e) => setPhoneNumber(e.target.value)}
           className={"w-64"}
         />
       </div>
@@ -136,58 +143,59 @@ export default function NotificationsTab() {
       </div>
       <div className=" flex flex-col gap-2">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2">
-          <Label className={"flex gap-x-2 mb-2"}>
-            <FaBell />
+          <Label className={ "flex gap-x-2 mb-2" }>
+            <FaBell/>
             Notification Preferences
           </Label>
-          <div className="flex gap-4 text-neutral-500">
-            <p className=" text-sm font-semibold">Discord</p>
-            <p className=" text-sm font-semibold">SMS</p>
-            <p className=" text-sm font-semibold">Email</p>
+          <div className="flex gap-4 text-neutral-500 text-sm font-semibold">
+            <p>Discord</p>
+            <p>SMS</p>
+            <p>Email</p>
           </div>
         </div>
-        <Separator />
+        <Separator/>
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
           <div>
             <p className=" text-sm font-semibold">Class Openings</p>
-            <p className=" text-sm text-neutral-500">
+            <p className=" text-xs text-neutral-500">
               Get notified when classes open up
             </p>
           </div>
           <div className="flex gap-12 ml-0 lg:gap-8 lg:mr-2 mt-2 lg:mt-0">
-            <Checkbox />
-            <Checkbox />
-            <Checkbox />
+            <Checkbox/>
+            <Checkbox/>
+            <Checkbox/>
           </div>
         </div>
-        <Separator className="" />
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
-          <div>
-            <p className=" text-sm font-semibold">Change in Seats</p>
-            <p className=" text-sm text-neutral-500">
-              Get notified when class seat amounts change
-            </p>
-          </div>
-          <div className=" flex gap-12 ml-0 lg:gap-8 lg:mr-2 mt-2 lg:mt-0">
-            <Checkbox />
-            <Checkbox />
-            <Checkbox />
-          </div>
-        </div>
-        <Separator className="" />
+        <Separator className=""/>
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
           <div>
             <p className=" text-sm font-semibold">Class Closings</p>
-            <p className=" text-sm text-neutral-500">
+            <p className=" text-xs text-neutral-500">
               Get notified when classes close
             </p>
           </div>
           <div className=" flex gap-12 ml-0 lg:gap-8 lg:mr-2 mt-2 lg:mt-0">
-            <Checkbox />
-            <Checkbox />
-            <Checkbox />
+            <Checkbox/>
+            <Checkbox/>
+            <Checkbox/>
           </div>
         </div>
+        <Separator className=""/>
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+          <div>
+            <p className=" text-sm font-semibold">Instructor Changes</p>
+            <p className=" text-xs text-neutral-500">
+              Get notified when instructors change for a class
+            </p>
+          </div>
+          <div className=" flex gap-12 ml-0 lg:gap-8 lg:mr-2 mt-2 lg:mt-0">
+            <Checkbox/>
+            <Checkbox/>
+            <Checkbox/>
+          </div>
+        </div>
+
       </div>
     </div>
   );
