@@ -10,7 +10,7 @@ import { useSession } from "next-auth/react";
 import { SectionHowdy } from "@/lib/howdy-types";
 
 const fetchSectionDetails = async (term: string, crn: string) => {
-  const url = `/api/data/sections?crn=${crn}&term=${term}`;
+  const url = `/api/data/sections?crn=${ crn }&term=${ term }`;
   const response = await fetch(url);
   if (response.status === 200) {
     return await response.json();
@@ -29,7 +29,7 @@ const getTitle = async (path: string) => {
     if (data) {
       return {
         title:
-          `${data.SUBJECT_CODE} ${data.COURSE_NUMBER} / ${data.SECTION_NUMBER}` ||
+          `${ data.SUBJECT_CODE } ${ data.COURSE_NUMBER } / ${ data.SECTION_NUMBER }` ||
           "Course Details",
         subtitle: data.COURSE_TITLE || "",
       };
@@ -60,30 +60,33 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <SidebarProvider>
       <div className="flex w-full overflow-hidden">
-        <AppSidebar />
+        <AppSidebar/>
         <main className="flex flex-col w-full overflow-hidden">
-          <header className="flex flex-col justify-end h-48 flex-shrink-0 p-6 md:p-8">
-          <div className="py-10 -ml-1">
+          <header className="flex flex-col justify-between h-48 p-6 md:p-8">
+            <div>
               <SidebarTrigger/>
-          </div>
-            {title ? (
-              <>
-                <h1 className="font-bold text-3xl">{title.title}</h1>
-                <h2 className="font-medium text-base opacity-30">
-                  {title.subtitle}
-                </h2>
-              </>
-            ) : (
-              <>
-                <Skeleton className="h-6 rounded-full w-36 mb-2 bg-zinc-200" />
-                <Skeleton className="h-4 rounded-full w-52 bg-zinc-200 mb-1" />
-              </>
-            )}
+            </div>
+
+            <div>
+              { title ? (
+                <>
+                  <h1 className="font-bold text-3xl">{ title.title }</h1>
+                  <h2 className="font-medium text-base opacity-30">
+                    { title.subtitle }
+                  </h2>
+                </>
+              ) : (
+                <>
+                  <Skeleton className="h-6 rounded-full w-36 mb-2 bg-zinc-200"/>
+                  <Skeleton className="h-4 rounded-full w-52 bg-zinc-200 mb-1"/>
+                </>
+              ) }
+            </div>
           </header>
 
           <section className="flex-1 overflow-auto bg-zinc-100 p-6 md:p-8">
             <div className="w-full h-full min-h-full bg-white p-4 md:p-8 rounded-lg shadow-sm">
-              {children}
+              { children }
             </div>
           </section>
         </main>
