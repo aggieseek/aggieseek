@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import LoadingCircle from "@/components/loading-circle";
 import { ISectionHowdy } from "@/lib/types/howdy-types";
 import Link from "next/link";
-import { IoArrowBack } from "react-icons/io5";
 import { MdHome, MdOutlineAccessTimeFilled, MdPerson } from "react-icons/md";
 import { Instructor } from "@/lib/types/course-types";
 
@@ -49,7 +48,7 @@ export default function Section() {
 
   return (
     <div className="grid grid-cols-[3fr_1fr] gap-x-4 text-sm h-full">
-      <div>
+      <div className="translate-y-3 reset-transform">
             {back && (
             <Link href={"/dashboard/home"} className="flex gap-x-2 items-center font-bold mb-4 hover:underline">
               <MdHome/>
@@ -76,7 +75,7 @@ export default function Section() {
 
         <div className="flex items-center gap-x-4">
           <MdOutlineAccessTimeFilled className="w-4 h-4" />
-          <p><span className="font-semibold text-base">{courseData.BILL_HR_LOW}</span> credit hours</p>
+          <p><span className="font-semibold text-base">{courseData.HRS_LOW}</span> credit hours</p>
         </div>
       </div>
     </div>

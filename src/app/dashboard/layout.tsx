@@ -22,9 +22,8 @@ export default function Layout({ children }: { children: ReactNode }) {
       <div className="flex w-full overflow-hidden">
         <AppSidebar/>
         <div className="flex flex-col w-full overflow-hidden">
-          <DashboardHeader title={title} />
 
-          <main className="flex-1 overflow-auto bg-zinc-100 p-6 md:p-8">
+          <main className="flex-1 overflow-auto bg-zinc-100 p-6 md:p-8 md:pt-24">
             <div className="w-full h-full min-h-full bg-white p-4 md:p-8 rounded-lg shadow-sm">
               { children }
             </div>
