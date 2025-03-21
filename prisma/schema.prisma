@@ -8,16 +8,16 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(uuid())
-  name          String
-  email         String?   @unique
-  emailVerified DateTime? @map("email_verified")
-  image         String?
-  createdAt     DateTime  @default(now()) @map("created_at")
-  updatedAt     DateTime  @updatedAt @map("updated_at")
-
+  id                   String                @id @default(uuid())
+  name                 String
+  email                String?               @unique
+  emailVerified        DateTime?             @map("email_verified")
+  image                String?
+  createdAt            DateTime              @default(now()) @map("created_at")
+  updatedAt            DateTime              @updatedAt @map("updated_at")
   accounts             Account[]
   discordWebhooks      Webhook[]
+  feedback             Feedback[]
   notificationSettings NotificationSettings?
   profileSettings      ProfileSettings?
   sessions             Session[]
@@ -32,10 +32,10 @@ model Account {
   type              String?
   provider          String
   providerAccountId String   @map("provider_account_id")
-  token_type         String?
-  refresh_token      String?
-  access_token       String?
-  expires_at         Int?
+  token_type        String?
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
   scope             String?
   id_token          String?
   createdAt         DateTime @default(now()) @map("created_at")
@@ -83,32 +83,6 @@ model TrackedSection {
   @@map("tracked_sections")
 }
 
-/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
-model Section {
-  term            String           @db.VarChar(10)
-  crn             String           @db.VarChar(5)
-  title           String           @db.VarChar(100)
-  subject         String           @db.VarChar(10)
-  course          String           @db.VarChar(10)
-  section         String           @db.VarChar(3)
-  creditHours     Decimal          @map("credit_hours") @db.Decimal
-  subject_desc    String
-  instructorJson  Json?            @map("instructor_json") @db.Json
-  meetingsJson    Json?            @map("meetings_json") @db.Json
-  attributes      String?          @db.VarChar(500)
-  instructionType String?          @map("instruction_type") @db.VarChar(50)
-  schedule_type   String           @map("schedule_type") @db.VarChar(10)
-  session         String           @db.VarChar(50)
-  site            String?          @db.VarChar(50)
-  isSectionOpen   Boolean          @map("section_open")
-  updatedAt       DateTime         @default(now()) @map("updated_at") @db.Timestamp(6)
-  trackedSections TrackedSection[]
-
-  @@id([term, crn])
-  @@unique([term, subject, course, section], map: "section_num_key")
-  @@map("sections")
-}
-
 model Webhook {
   userId     String @map("user_id")
   webhookUrl String @map("webhook_url")
@@ -119,9 +93,9 @@ model Webhook {
 }
 
 model Major {
-  majorId          Int               @id @default(autoincrement()) @map("major_id")
-  name             String            @unique @db.VarChar(100)
-  profile_settings ProfileSettings[]
+  majorId         Int               @id @default(autoincrement()) @map("major_id")
+  name            String            @unique @db.VarChar(100)
+  profileSettings ProfileSettings[]
 
   @@map("majors")
 }
@@ -146,6 +120,53 @@ model ProfileSettings {
   @@map("profile_settings")
 }
 
+model Feedback {
+  feedbackId Int           @id @default(autoincrement()) @map("feedback_id")
+  userId     String        @map("user_id")
+  title      String        @db.VarChar(100)
+  priority   PriorityLevel
+  createdAt  DateTime?     @default(now()) @map("created_at") @db.Timestamp(6)
+  body       String        @db.VarChar(100)
+  users      User          @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@map("feedback")
+}
+
+/// This table is a partition table and requires additional setup for migrations. Visit https://pris.ly/d/partition-tables for more info.
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model Section {
+  term             String           @db.VarChar(10)
+  crn              String           @db.VarChar(5)
+  title            String           @db.VarChar(100)
+  subject          String           @db.VarChar(10)
+  course           String           @db.VarChar(10)
+  section          String           @db.VarChar(3)
+  creditHours      Decimal          @map("credit_hours") @db.Decimal
+  subjectDesc      String           @map("subject_desc")
+  instructorJson   Json?            @map("instructor_json") @db.Json
+  meetingsJson     Json?            @map("meetings_json") @db.Json
+  attributes       String?          @db.VarChar(500)
+  instructionType  String?          @map("instruction_type") @db.VarChar(50)
+  scheduleOpen     String           @map("schedule_type") @db.VarChar(10)
+  session          String           @db.VarChar(50)
+  site             String?          @db.VarChar(50)
+  isSectionOpen    Boolean          @map("section_open")
+  updatedAt        DateTime         @default(now()) @map("updated_at") @db.Timestamp(6)
+  tracked_sections TrackedSection[]
+
+  @@id([term, crn])
+  @@index([term, crn], map: "idx_term_crn")
+  @@map("section")
+}
+
+model Instructor {
+  instructorId String   @id @map("instructor_id") @db.VarChar(20)
+  name         String?  @db.VarChar(200)
+  hasCv        Boolean? @map("has_cv")
+
+  @@map("instructor")
+}
+
 enum Class {
   Freshman
   Sophomore
@@ -154,4 +175,12 @@ enum Class {
   Other
 
   @@map("class")
+}
+
+enum PriorityLevel {
+  Low
+  Medium
+  High
+
+  @@map("priority_level")
 }
