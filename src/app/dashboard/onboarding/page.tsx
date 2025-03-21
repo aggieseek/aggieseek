@@ -28,8 +28,9 @@ export default function Onboarding() {
   };
 
   const handleExit = () => {
-    router.push("/dashboard");
+    router.push("/dashboard/home");
   };
+
   return (
     <>
       <Dialog defaultOpen={true}>
@@ -37,7 +38,7 @@ export default function Onboarding() {
           onInteractOutside={(e) => e.preventDefault()}
           onPointerDownOutside={(e) => e.preventDefault()}
           onEscapeKeyDown={(e) => e.preventDefault()}
-          onCloseAutoFocus={() => router.push("/dashboard")}
+          onCloseAutoFocus={() => router.push("/dashboard/home")}
         >
           <CurrentStepComponent
             onNext={handleNext}
