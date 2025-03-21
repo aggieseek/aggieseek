@@ -26,7 +26,7 @@ export default function NotificationsTab() {
   const [phoneNumber, setPhoneNumber] = useState<string | null>(null);
   const [webhooks, setWebhooks] = useState<string[]>([]);
   const [webhookInput, setWebhookInput] = useState<string>("");
-  const {data: session} = useSession();
+  const { data: session } = useSession();
 
   const addWebhook = (webhookUrl: string) => {
     fetch("/api/users/webhooks", {
@@ -78,11 +78,7 @@ export default function NotificationsTab() {
           <FaEnvelope />
           Email Address
         </Label>
-        <Input
-          className={"w-64"}
-          value={session?.user?.email || ""}
-          disabled
-        />
+        <Input className={"w-64"} value={session?.user?.email || ""} disabled />
       </div>
       <div className="flex flex-col gap-2">
         <Label className={"flex gap-x-2"}>
@@ -143,8 +139,8 @@ export default function NotificationsTab() {
       </div>
       <div className=" flex flex-col gap-2">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2">
-          <Label className={ "flex gap-x-2 mb-2" }>
-            <FaBell/>
+          <Label className={"flex gap-x-2 mb-2"}>
+            <FaBell />
             Notification Preferences
           </Label>
           <div className="flex gap-4 text-neutral-500 text-sm font-semibold">
@@ -153,7 +149,7 @@ export default function NotificationsTab() {
             <p>Email</p>
           </div>
         </div>
-        <Separator/>
+        <Separator />
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
           <div>
             <p className=" text-sm font-semibold">Class Openings</p>
@@ -162,12 +158,12 @@ export default function NotificationsTab() {
             </p>
           </div>
           <div className="flex gap-12 ml-0 lg:gap-8 lg:mr-2 mt-2 lg:mt-0">
-            <Checkbox/>
-            <Checkbox/>
-            <Checkbox/>
+            <Checkbox />
+            <Checkbox />
+            <Checkbox />
           </div>
         </div>
-        <Separator className=""/>
+        <Separator className="" />
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
           <div>
             <p className=" text-sm font-semibold">Class Closings</p>
@@ -176,12 +172,12 @@ export default function NotificationsTab() {
             </p>
           </div>
           <div className=" flex gap-12 ml-0 lg:gap-8 lg:mr-2 mt-2 lg:mt-0">
-            <Checkbox/>
-            <Checkbox/>
-            <Checkbox/>
+            <Checkbox />
+            <Checkbox />
+            <Checkbox />
           </div>
         </div>
-        <Separator className=""/>
+        <Separator className="" />
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
           <div>
             <p className=" text-sm font-semibold">Instructor Changes</p>
@@ -190,12 +186,11 @@ export default function NotificationsTab() {
             </p>
           </div>
           <div className=" flex gap-12 ml-0 lg:gap-8 lg:mr-2 mt-2 lg:mt-0">
-            <Checkbox/>
-            <Checkbox/>
-            <Checkbox/>
+            <Checkbox />
+            <Checkbox />
+            <Checkbox />
           </div>
         </div>
-
       </div>
     </div>
   );

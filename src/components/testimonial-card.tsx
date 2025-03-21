@@ -7,7 +7,12 @@ interface TestimonialCardProps {
   feedback: string;
 }
 
-export default function TestimonialCard({ name, rating, date, feedback }: TestimonialCardProps) {
+export default function TestimonialCard({
+  name,
+  rating,
+  date,
+  feedback,
+}: TestimonialCardProps) {
   return (
     <div className="bg-[#F4F4F4] p-8 rounded-xl shadow-lg">
       {/* Name */}
@@ -16,7 +21,11 @@ export default function TestimonialCard({ name, rating, date, feedback }: Testim
       {/* Stars */}
       <div className="flex">
         {[...Array(rating)].map((_, index) => (
-          <Star key={index} className="size-5 fill-[#502F2F]" color="#502F2F]" />
+          <Star
+            key={index}
+            className="size-5 fill-[#502F2F]"
+            color="#502F2F]"
+          />
         ))}
       </div>
 

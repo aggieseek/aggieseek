@@ -10,7 +10,7 @@ import Image from "next/image";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { FaDiscord, FaPhone, FaEnvelope} from "react-icons/fa6";
+import { FaDiscord, FaPhone, FaEnvelope } from "react-icons/fa6";
 
 async function getDataFromRoute(endpoint: string) {
   try {
