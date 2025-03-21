@@ -16,7 +16,6 @@ import {
   ChevronDown,
   Home,
   Info,
-  LayoutDashboard,
   MessageCircleQuestion,
   Phone,
   Search,

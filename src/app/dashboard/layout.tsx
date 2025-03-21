@@ -2,7 +2,6 @@
 
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
-import { usePathname, useSearchParams } from "next/navigation";
 import { ReactNode, useState } from "react";
 import { useSession } from "next-auth/react";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -10,8 +9,6 @@ import { PageTitleProvider } from "@/contexts/title-context";
 import { DashboardTitle } from "@/lib/dashboard-titles";
 
 export default function Layout({ children }: { children: ReactNode }) {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
   const [title, setTitle] = useState<DashboardTitle | null>(null);
 
   useSession({
