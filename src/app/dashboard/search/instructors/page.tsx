@@ -14,7 +14,7 @@ const fetchInstructor = async (id: string) => {
   return null;
 };
 
-export default function Instructor() {
+function InstructorPage() {
   const searchParams = useSearchParams();
   const instructorId = searchParams.get("id");
   const router = useRouter();
@@ -38,10 +38,16 @@ export default function Instructor() {
   }, [instructorId, router, setTitle]);
 
   return (
+    <div className="space-y-4">
+      <p>{instructorData?.name}</p>
+    </div>
+  );
+}
+
+export default function Instructor() {
+  return (
     <Suspense>
-      <div className="space-y-4">
-        <p>{instructorData?.name}</p>
-      </div>
+      <InstructorPage />
     </Suspense>
   );
 }
