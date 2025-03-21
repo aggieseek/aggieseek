@@ -1,31 +1,37 @@
 import { DashboardTitle } from "@/lib/dashboard-titles";
 import { createContext, ReactNode, useContext } from "react";
 
-interface TitleContextType {
-  title: DashboardTitle | null;
-  setTitle: (title: DashboardTitle | null) => void;
+interface PageTitleContextType {
+  pageTitle: DashboardTitle | null;
+  setPageTitle: (title: DashboardTitle | null) => void;
 }
 
-const TitleContext = createContext<TitleContextType | null>(null);
+const PageTitleContext = createContext<PageTitleContextType | null>(null);
 
-export const useTitle = () => {
-  const context = useContext(TitleContext);
+export const usePageTitle = () => {
+  const context = useContext(PageTitleContext);
   if (!context) {
     throw new Error("PageTitle must be used within a TitleProvider");
   }
   return context;
 };
 
-interface TitleProviderProps {
-  children: ReactNode,
-  title: DashboardTitle | null,
-  setTitle: (title: DashboardTitle | null) => void;
+interface PageTitleProviderProps {
+  children: ReactNode;
+  pageTitle: DashboardTitle | null;
+  setPageTitle: (pageTitle: DashboardTitle | null) => void;
 }
 
-export const TitleProvider = ({ children, title, setTitle }: TitleProviderProps) => {
+export const PageTitleProvider = ({
+  children,
+  pageTitle,
+  setPageTitle,
+}: PageTitleProviderProps) => {
   return (
-    <TitleContext.Provider value={{ title, setTitle }}>
+    <PageTitleContext.Provider
+      value={{ pageTitle: pageTitle, setPageTitle: setPageTitle }}
+    >
       {children}
-    </TitleContext.Provider>
+    </PageTitleContext.Provider>
   );
 };

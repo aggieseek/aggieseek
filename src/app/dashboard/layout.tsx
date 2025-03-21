@@ -6,7 +6,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { ReactNode, useState } from "react";
 import { useSession } from "next-auth/react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { TitleProvider } from "@/contexts/title-context";
+import { PageTitleProvider } from "@/contexts/title-context";
 import { DashboardTitle } from "@/lib/dashboard-titles";
 
 export default function Layout({ children }: { children: ReactNode }) {
@@ -20,7 +20,7 @@ export default function Layout({ children }: { children: ReactNode }) {
 
   return (
     <SidebarProvider>
-      <TitleProvider title={title} setTitle={setTitle}>
+      <PageTitleProvider pageTitle={title} setPageTitle={setTitle}>
         <div className="flex w-full overflow-hidden">
           <AppSidebar />
           <main className="flex w-full flex-col overflow-auto bg-zinc-100 p-6 md:p-8 md:pt-4">
@@ -42,7 +42,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             </div>
           </main>
         </div>
-      </TitleProvider>
+      </PageTitleProvider>
     </SidebarProvider>
   );
 }

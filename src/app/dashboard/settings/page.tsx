@@ -12,11 +12,11 @@ import {
 import ProfileTab from "@/components/settings/profile-tab";
 import NotificationsTab from "@/components/settings/notifications-tab";
 import AccountTab from "@/components/settings/account-tab";
-import { useTitle } from "@/contexts/title-context";
+import { usePageTitle } from "@/contexts/title-context";
 
 export default function Settings() {
   const [activeTab, setActiveTab] = useState("notifications");
-  const { setTitle } = useTitle();
+  const { setPageTitle: setTitle } = usePageTitle();
 
   const handleValueChange = (value: string) => {
     setActiveTab(value);

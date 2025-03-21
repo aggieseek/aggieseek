@@ -126,6 +126,7 @@ model Feedback {
   title      String        @db.VarChar(100)
   priority   PriorityLevel
   createdAt  DateTime?     @default(now()) @map("created_at") @db.Timestamp(6)
+  body       String        @db.VarChar(100)
   users      User          @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@map("feedback")
@@ -161,7 +162,7 @@ model Section {
 model Instructor {
   instructorId String   @id @map("instructor_id") @db.VarChar(20)
   name         String?  @db.VarChar(200)
-  hasCv       Boolean?  @map("has_cv")
+  hasCv        Boolean? @map("has_cv")
 
   @@map("instructor")
 }

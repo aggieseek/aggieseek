@@ -5,13 +5,13 @@ import { useRouter } from "next/navigation";
 import Intro from "@/components/onboarding/intro";
 import Contact from "@/components/onboarding/contact";
 import Preferences from "@/components/onboarding/preferences";
-import { useTitle } from "@/contexts/title-context";
+import { usePageTitle } from "@/contexts/title-context";
 
 const steps = [Intro, Contact, Preferences];
 export default function Onboarding() {
   const router = useRouter();
   const [stepIndex, setStepIndex] = useState(0);
-  const { setTitle } = useTitle();
+  const { setPageTitle: setTitle } = usePageTitle();
 
   const isLastStep = stepIndex === steps.length - 1;
   const isFirstStep = stepIndex === 0;

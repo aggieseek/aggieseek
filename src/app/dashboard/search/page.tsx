@@ -1,10 +1,10 @@
 "use client";
 
-import { useTitle } from "@/contexts/title-context";
+import { usePageTitle } from "@/contexts/title-context";
 import { useEffect } from "react";
 
 export default function Search() {
-  const { setTitle } = useTitle();
+  const { setPageTitle: setTitle } = usePageTitle();
 
   useEffect(() => {
     setTitle({ title: "Search" });

@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { Instructor } from "@prisma/client";
-import { useTitle } from "@/contexts/title-context";
+import { usePageTitle } from "@/contexts/title-context";
 
 const fetchInstructor = async (id: string) => {
   const url = `/api/data/instructors?id=${id}`;
@@ -19,7 +19,7 @@ export default function Instructor() {
   const instructorId = searchParams.get("id");
   const router = useRouter();
   const [instructorData, setInstructorData] = useState<Instructor | null>(null);
-  const { setTitle } = useTitle();
+  const { setPageTitle: setTitle } = usePageTitle();
 
   useEffect(() => {
     setTitle(null);

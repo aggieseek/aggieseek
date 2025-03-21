@@ -7,7 +7,7 @@ import { ISectionHowdy } from "@/lib/types/howdy-types";
 import Link from "next/link";
 import { MdHome, MdOutlineAccessTimeFilled, MdPerson } from "react-icons/md";
 import { Instructor } from "@/lib/types/course-types";
-import { useTitle } from "@/contexts/title-context";
+import { usePageTitle } from "@/contexts/title-context";
 import { convertTermCode } from "@/lib/utils";
 
 const fetchSectionDetails = async (term: string, crn: string) => {
@@ -29,7 +29,7 @@ export default function Section() {
   const [courseData, setCourseData] = useState<ISectionHowdy | null>(null);
   const [instructors, setInstructors] = useState<Instructor[]>([]);
 
-  const { setTitle } = useTitle();
+  const { setPageTitle: setTitle } = usePageTitle();
 
   useEffect(() => {
     setTitle(null);
