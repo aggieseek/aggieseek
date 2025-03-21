@@ -158,6 +158,14 @@ model Section {
   @@map("section")
 }
 
+model Instructor {
+  instructorId String   @id @map("instructor_id") @db.VarChar(20)
+  name         String?  @db.VarChar(200)
+  hasCv       Boolean?  @map("has_cv")
+
+  @@map("instructor")
+}
+
 enum Class {
   Freshman
   Sophomore

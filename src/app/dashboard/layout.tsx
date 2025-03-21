@@ -2,7 +2,7 @@
 
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { ReactNode } from "react";
 import { useSession } from "next-auth/react";
 import usePageTitle from "@/hooks/use-page-title";
@@ -10,7 +10,8 @@ import DashboardHeader from "@/components/dashboard-header";
 
 export default function Layout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const title = usePageTitle(pathname);
+  const searchParams = useSearchParams();
+  const title = usePageTitle(pathname, searchParams);
 
   useSession({
     required: true,

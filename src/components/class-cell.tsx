@@ -45,11 +45,11 @@ export default function ClassCell({ section, onDeleteAction }: ClassCellProps) {
           <div className="grid grid-cols-1 sm:grid-cols-[3fr_2fr_2fr] gap-x-4 text-xs opacity-50">
             <div className="flex items-center">
               <IoPerson className="w-4 h-4 mr-2" />
-              <p className="truncate hover:underline">
+              <Link href={`/dashboard/search/instructors?id=${(JSON.parse(section.instructorJson as string)[0] as Instructor).MORE}`} className="truncate hover:underline">
                 {section.instructorJson
                 ? (JSON.parse(section.instructorJson as string)[0] as Instructor).NAME.replace("(P)", "")
                 : "Not assigned"}
-              </p>
+              </Link>
             </div>
 
             <div className="flex items-center">
@@ -60,7 +60,7 @@ export default function ClassCell({ section, onDeleteAction }: ClassCellProps) {
                   jetbrainsMono.className
                 )}
               >
-                <Link href={`/dashboard/search/sections/${CURRENT_TERM}${section.crn}`}>
+                <Link href={`/dashboard/search/sections?term=${CURRENT_TERM}&crn=${section.crn}`}>
                   {section.crn}
                 </Link>
               </p>

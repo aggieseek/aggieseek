@@ -3,7 +3,7 @@ import { SidebarTrigger } from "./ui/sidebar";
 import { Skeleton } from "./ui/skeleton";
 
 interface DashboardHeaderProps {
-  title: DashboardTitle
+  title: DashboardTitle | null
 }
 
 export default function DashboardHeader({ title }: DashboardHeaderProps) {

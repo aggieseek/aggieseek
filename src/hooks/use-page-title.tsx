@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { DashboardTitle, titles } from "@/lib/dashboard-titles";
 import { ISectionHowdy } from "@/lib/types/howdy-types";
 import { convertTermCode } from "@/lib/utils";
+import { ReadonlyURLSearchParams } from "next/navigation";
+import { Instructor } from "@prisma/client";
 
 const fetchSectionDetails = async (term: string, crn: string) => {
   const url = `/api/data/sections?crn=${crn}&term=${term}`;
@@ -12,7 +14,16 @@ const fetchSectionDetails = async (term: string, crn: string) => {
   return null;
 };
 
-const usePageTitle = (path: string) => {
+const fetchInstructor = async (id: string) => {
+  const url = `/api/data/instructors?id=${id}`;
+  const response = await fetch(url);
+  if (response.status === 200) {
+    return await response.json();
+  }
+  return null;
+};
+
+const usePageTitle = (path: string, searchParams: ReadonlyURLSearchParams) => {
   const [title, setTitle] = useState<DashboardTitle | null>(null);
 
   useEffect(() => {
@@ -22,22 +33,44 @@ const usePageTitle = (path: string) => {
         return;
       }
 
-      if (path.startsWith("/dashboard/search/sections/")) {
-        const term = path.substring("/dashboard/search/sections/".length, 33);
-        const crn = path.substring("/dashboard/search/sections/XXXXXX".length);
+      if (path.startsWith("/dashboard/search/sections")) {
+        const term = searchParams.get("term") ?? "";
+        const crn = searchParams.get("crn") ?? "";
+        
         const data: ISectionHowdy = await fetchSectionDetails(term, crn);
 
-        if (data) {
+        if (Object.keys(data).length === 0) {
+          setTitle({
+            title: "Oops!",
+            subtitle: "The section specified was not found."
+          });
+        } else {
           setTitle({
             title: `${data.SUBJECT_CODE} ${data.COURSE_NUMBER}-${data.SECTION_NUMBER}`,
             subtitle: data.COURSE_TITLE || "",
             term: convertTermCode(term)
           });
         }
+      } else if (path.startsWith("/dashboard/search/instructors")) {
+        const id = searchParams.get("id") ?? "";
+
+        const data: Instructor = await fetchInstructor(id);
+
+        if (Object.keys(data).length === 0) {
+          setTitle({
+            title: "Oops!",
+            subtitle: "The instructor specified was not found."
+          });
+        } else {
+          setTitle({
+            title: data.name ?? "",
+            subtitle: data.instructorId
+          });
+        }
       }
     };
     fetchTitle();
-  }, [path]);
+  }, [path, searchParams]);
 
   return title;
 };
