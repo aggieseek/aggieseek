@@ -6,7 +6,8 @@ import LoadingCircle from "@/components/loading-circle";
 import { ISectionHowdy } from "@/lib/types/howdy-types";
 import Link from "next/link";
 import { IoArrowBack } from "react-icons/io5";
-import { MdHome, MdOutlineAccessTimeFilled } from "react-icons/md";
+import { MdHome, MdOutlineAccessTimeFilled, MdPerson } from "react-icons/md";
+import { Instructor } from "@/lib/types/course-types";
 
 const fetchSectionDetails = async (term: string, crn: string) => {
   const url = `/api/data/sections?crn=${crn}&term=${term}`;
@@ -23,7 +24,9 @@ export default function Section() {
   const crn = searchParams.get("crn");
   const back = searchParams.get("back") === "true";
   const router = useRouter();
+  
   const [courseData, setCourseData] = useState<ISectionHowdy | null>(null);
+  const [instructors, setInstructors] = useState<Instructor[]>([]);
 
   useEffect(() => {
     if (!term || !crn) {
@@ -33,6 +36,8 @@ export default function Section() {
 
     fetchSectionDetails(term, crn).then((data) => {
       setCourseData(data);
+      if (data.SWV_CLASS_SEARCH_INSTRCTR_JSON !== null)
+        setInstructors(JSON.parse(data.SWV_CLASS_SEARCH_INSTRCTR_JSON));
     });
   }, [crn, router, term]);
 
@@ -52,14 +57,25 @@ export default function Section() {
             </Link>
             )}
 
-          <p className="text-base font-semibold">{courseData.COURSE_TITLE}</p>
-          <p className="text-gray-500">{courseData.COURSE_DESCRIPTION}</p>
+          <p className="text-2xl tracking-widest border-b pb-3 font-semibold">{courseData.COURSE_TITLE}</p>
+          <p className="text-gray-500 mt-3">{courseData.COURSE_DESCRIPTION}</p>
 
         </div>
 
       <div className="h-full flex flex-col gap-y-2 p-6 bg-black/5">
+        {instructors.length > 0 ?
+        instructors.map(instructor =>
+          <div key={instructor.MORE} className="flex items-center gap-x-4">
+            <MdPerson className="w-4 h-4" />
+            <Link className="hover:underline" href={`/dashboard/search/instructors?id=${instructor.MORE}`}>{instructor.NAME}</Link>
+          </div>) :
         <div className="flex items-center gap-x-4">
-          <MdOutlineAccessTimeFilled />
+          <MdPerson className="w-4 h-4" />
+          <p>Not assigned</p>
+        </div>}
+
+        <div className="flex items-center gap-x-4">
+          <MdOutlineAccessTimeFilled className="w-4 h-4" />
           <p><span className="font-semibold text-base">{courseData.BILL_HR_LOW}</span> credit hours</p>
         </div>
       </div>
