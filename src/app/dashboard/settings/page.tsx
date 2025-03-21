@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Select,
@@ -12,9 +12,11 @@ import {
 import ProfileTab from "@/components/settings/profile-tab";
 import NotificationsTab from "@/components/settings/notifications-tab";
 import AccountTab from "@/components/settings/account-tab";
+import { useTitle } from "@/contexts/title-context";
 
 export default function Settings() {
   const [activeTab, setActiveTab] = useState("notifications");
+  const { setTitle } = useTitle();
 
   const handleValueChange = (value: string) => {
     setActiveTab(value);
@@ -32,6 +34,10 @@ export default function Settings() {
         return null;
     }
   };
+
+  useEffect(() => {
+    setTitle({ title: "Settings" });
+  }, [setTitle]);
 
   return (
     <div className="w-full">

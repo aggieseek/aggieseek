@@ -30,6 +30,6 @@ export interface ISectionHowdy {
   CREDIT_HR_IND: number | null;
   CREDIT_HRS: number | null;
   NUMBER_OF_UNITS: number | null;
-  SWV_CLASS_SEARCH_INSTRUCTOR_JSON: string;
+  SWV_CLASS_SEARCH_INSTRCTR_JSON: string;
   SWV_CLASS_SEARCH_JSON_CLOB: string;
 }

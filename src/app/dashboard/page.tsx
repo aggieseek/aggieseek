@@ -5,9 +5,9 @@ import { useEffect, useState } from "react";
 import LoadingCircle from "@/components/loading-circle";
 import { useSession } from "next-auth/react";
 import { Section, TrackedSection } from "@prisma/client";
-import { cn, CURRENT_TERM } from "@/lib/utils";
-import Link from "next/link";
-import { MdOutlineAdd, MdRefresh, MdSearch } from "react-icons/md";
+import { CURRENT_TERM } from "@/lib/utils";
+import { useTitle } from "@/contexts/title-context";
+import DashboardHeader from "@/components/dashboard-header";
 
 enum PageState {
   LOADING, IDLE, ERROR, REFRESHING
@@ -21,11 +21,10 @@ export default function Dashboard() {
 
   const [sections, setSections] = useState<SectionInfo[]>([]);
   const [pageState, setPageState] = useState<PageState>(PageState.LOADING);
-  const [addInProgress, setAddInProgress] = useState<boolean>(false);
   const { status } = useSession();
+  const { setTitle } = useTitle();
 
   const addSection = (crn: string) => {
-    setAddInProgress(true);
     fetch('/api/users/sections', {
       method: "POST",
       body: JSON.stringify({ crn: crn, term: CURRENT_TERM })
@@ -36,8 +35,7 @@ export default function Dashboard() {
       })
       .catch(err => {
         console.error(err);
-      })
-      .finally(() => setAddInProgress(false));
+      });
   };
 
   const getSections = () => {
@@ -71,6 +69,10 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
+    setTitle({ title: "Dashboard" });
+  }, [setTitle]);
+
+  useEffect(() => {
     if (status === "authenticated") {
       getSections();
     }
@@ -91,27 +93,7 @@ export default function Dashboard() {
 
   return (
     <>
-      <div className={ "flex justify-between sm:items-center mb-6 border-b pb-4" }>
-        <div className="flex gap-x-12">
-          <h3 className="font-bold text-xl">
-            Your Courses
-          </h3>
-
-          <Link href={"/dashboard/search"} className="text-sm flex items-center gap-x-2 font-semibold hover:underline">
-            <MdSearch />
-            Search for Sections
-          </Link>
-
-          <div onClick={handleClick} className="text-sm flex items-center gap-x-2 font-semibold hover:underline hover:cursor-pointer">
-            <MdOutlineAdd />
-            Add by CRN
-          </div>
-        </div>
-
-        <div className={pageState === PageState.REFRESHING ? "animate-spin opacity-50" : "hover:cursor-pointer"} onClick={refreshScreen}>
-          <MdRefresh className="w-5 h-5" />
-        </div>
-      </div>
+      <DashboardHeader onAdd={handleClick} onRefresh={refreshScreen} isRefreshing={pageState === PageState.REFRESHING} />
 
       <div className="flex justify-between flex-wrap gap-y-4">
         { pageState === PageState.IDLE

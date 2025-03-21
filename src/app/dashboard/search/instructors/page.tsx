@@ -3,6 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { Instructor } from "@prisma/client";
+import { useTitle } from "@/contexts/title-context";
 
 const fetchInstructor = async (id: string) => {
   const url = `/api/data/instructors?id=${id}`;
@@ -18,17 +19,23 @@ export default function Instructor() {
   const instructorId = searchParams.get("id");
   const router = useRouter();
   const [instructorData, setInstructorData] = useState<Instructor | null>(null);
+  const { setTitle } = useTitle();
 
   useEffect(() => {
+    setTitle(null);
     if (!instructorId) {
       router.push("/dashboard/search");
       return;
-    };
+    }
 
-    fetchInstructor(instructorId).then((data) => {
+    fetchInstructor(instructorId).then((data: Instructor) => {
       setInstructorData(data);
+      setTitle({
+        title: data.name ?? "",
+        subtitle: data.instructorId,
+      });
     });
-  }, [instructorId, router]);
+  }, [instructorId, router, setTitle]);
 
   return (
     <div className="space-y-4">

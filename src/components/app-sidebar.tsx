@@ -14,6 +14,7 @@ import {
 import {
   Banknote,
   ChevronDown,
+  Home,
   Info,
   LayoutDashboard,
   MessageCircleQuestion,
@@ -69,15 +70,15 @@ export function AppSidebar() {
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild>
                       <Link
-                        href={"/dashboard/home"}
+                        href={"/dashboard"}
                         className={
-                          pathname.startsWith("/dashboard/home")
+                          pathname === '/dashboard'
                             ? "border-l-2"
                             : undefined
                         }
                       >
-                        <LayoutDashboard />
-                        <span>Dashboard</span>
+                        <Home />
+                        <span>Home</span>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>

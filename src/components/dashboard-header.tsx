@@ -1,34 +1,29 @@
-"use client";
+import { MdOutlineAdd, MdRefresh, MdSearch } from "react-icons/md";
 
-import { DashboardTitle } from "@/lib/dashboard-titles";
-import { SidebarTrigger } from "./ui/sidebar";
-import { Skeleton } from "./ui/skeleton";
+export default function DashboardHeader({ onAdd, onRefresh, isRefreshing }: {
+  onAdd: () => void;
+  onRefresh: () => void;
+  isRefreshing: boolean;
+}) {
+  return (
+    <div className="flex justify-between sm:items-center mb-6 border-b pb-4">
+      <div className="flex gap-x-12">
+        <h3 className="font-bold text-xl">Your Courses</h3>
 
-interface DashboardHeaderProps {
-  title: DashboardTitle | null
-}
+        <a href="/dashboard/search" className="text-sm flex items-center gap-x-2 font-semibold hover:underline">
+          <MdSearch />
+          Search for Sections
+        </a>
 
-export default function DashboardHeader({ title }: DashboardHeaderProps) {
+        <div onClick={onAdd} className="text-sm flex items-center gap-x-2 font-semibold hover:underline hover:cursor-pointer">
+          <MdOutlineAdd />
+          Add by CRN
+        </div>
+      </div>
 
-  return <header className="flex flex-col justify-between h-48 p-6 md:p-8">
-
-    <SidebarTrigger/>
-
-    <div className="flex flex-col justify-end">
-      { title ? (
-        <>
-          <p className="font-semibold opacity-30">{ title.term }</p>
-          <h1 className="font-bold text-3xl">{ title.title }</h1>
-          <h2 className="font-medium text-base opacity-30">
-            { title.subtitle }
-          </h2>
-        </>
-      ) : (
-        <>
-          <Skeleton className="h-6 rounded-full w-36 mb-2 bg-zinc-200"/>
-          <Skeleton className="h-4 rounded-full w-52 bg-zinc-200 mb-1"/>
-        </>
-      ) }
+      <div className={isRefreshing ? "animate-spin opacity-50" : "hover:cursor-pointer"} onClick={onRefresh}>
+        <MdRefresh className="w-5 h-5" />
+      </div>
     </div>
-  </header>;
-} 
+  );
+}
