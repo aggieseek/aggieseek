@@ -45,7 +45,7 @@ export function AppSidebar() {
                                 <SidebarMenu className="text-white">
                                     <SidebarMenuItem>
                                         <SidebarMenuButton asChild>
-                                            <Link href={"/dashboard"} className={pathname.startsWith("/dashboard") ? "border-l-2" : undefined}>
+                                            <Link href={"/home/dashboard"} className={pathname.startsWith("/dashboard") ? "border-l-2" : undefined}>
                                                 <LayoutDashboard />
                                                 <span>Dashboard</span>
                                             </Link>
@@ -53,7 +53,7 @@ export function AppSidebar() {
                                     </SidebarMenuItem>
                                     <SidebarMenuItem>
                                         <SidebarMenuButton asChild>
-                                            <Link href={"/search"} className={pathname.startsWith("/search") ? "border-l-2" : undefined}>
+                                            <Link href={"/home/search"} className={pathname.startsWith("/search") ? "border-l-2" : undefined}>
                                                 <Search />
                                                 <span>Search</span>
                                             </Link>
@@ -61,7 +61,7 @@ export function AppSidebar() {
                                     </SidebarMenuItem>
                                     <SidebarMenuItem>
                                         <SidebarMenuButton asChild>
-                                            <Link href={"/settings"} className={pathname.startsWith("/settings") ? "border-l-2" : undefined}>
+                                            <Link href={"/home/settings"} className={pathname.startsWith("/settings") ? "border-l-2" : undefined}>
                                                 <Settings />
                                                 <span>Settings</span>
                                             </Link>
@@ -86,7 +86,7 @@ export function AppSidebar() {
                                 <SidebarMenu className="text-white">
                                     <SidebarMenuItem>
                                         <SidebarMenuButton asChild className={pathname.startsWith("/about") ? "border-l-2" : undefined}>
-                                            <Link href={"/about"}>
+                                            <Link href={"/home/about"}>
                                                 <Info />
                                                 <span>About</span>
                                             </Link>
@@ -94,7 +94,7 @@ export function AppSidebar() {
                                     </SidebarMenuItem>
                                     <SidebarMenuItem>
                                         <SidebarMenuButton asChild>
-                                            <Link href={"/contact"} className={pathname.startsWith("/contact") ? "border-l-2" : undefined}>
+                                            <Link href={"/home/contact"} className={pathname.startsWith("/contact") ? "border-l-2" : undefined}>
                                                 <Phone />
                                                 <span>Contact</span>
                                             </Link>
@@ -102,7 +102,7 @@ export function AppSidebar() {
                                     </SidebarMenuItem>
                                     <SidebarMenuItem>
                                         <SidebarMenuButton asChild>
-                                            <Link href={"/feedback"} className={pathname.startsWith("/feedback") ? "border-l-2" : undefined}>
+                                            <Link href={"/home/feedback"} className={pathname.startsWith("/feedback") ? "border-l-2" : undefined}>
                                                 <MessageCircleQuestion />
                                                 <span>Feedback</span>
                                             </Link>
