@@ -1,4 +1,4 @@
-export interface SectionHowdy {
+export interface ISectionHowdy {
   TERM_CODE: string;
   CRN: string;
   SSBSECT_PTRM_CODE: string;
@@ -30,4 +30,6 @@ export interface SectionHowdy {
   CREDIT_HR_IND: number | null;
   CREDIT_HRS: number | null;
   NUMBER_OF_UNITS: number | null;
+  SWV_CLASS_SEARCH_INSTRUCTOR_JSON: string;
+  SWV_CLASS_SEARCH_JSON_CLOB: string;
 }

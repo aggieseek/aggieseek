@@ -62,7 +62,7 @@ export default function Home() {
                 animate={{ opacity: 1, translateY: 0 }}
                 transition={{ type: "spring", duration: 2 }}
               >
-                <Link href={"/home/dashboard"}>
+                <Link href={"/dashboard/home"}>
                   <Button
                     className={
                       "transition-transform bg-[#3c1817] hover:bg-[#2d0908] active:scale-[0.97]"
@@ -74,7 +74,7 @@ export default function Home() {
               </motion.div>
             ) : (
               <Button
-                onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+                onClick={() => signIn("google", { callbackUrl: "/dashboard/home" })}
                 className={
                   "transition-transform p-1 pr-4 bg-[#502F2F] hover:bg-[#2d0908] active:scale-[0.97]"
                 }
@@ -97,7 +97,7 @@ export default function Home() {
             )}
           </div>
 
-          <div className=" relative w-full h-[400px] sm:h-[300px] md:h-[500px] lg:w-[800px] lg:h-[500px] overflow-hidden rounded-md shadow-xl">
+          <div className="relative w-full h-[400px] sm:h-[300px] md:h-[500px] lg:w-[800px] lg:h-[500px] overflow-hidden rounded-md shadow-xl">
             <Image
               src="/images/aggieseek-ss.png"
               alt="Dashboard"

@@ -3,7 +3,7 @@
 import {useParams} from "next/navigation";
 import {useEffect, useState} from "react";
 import LoadingCircle from "@/components/loading-circle";
-import { SectionHowdy } from "@/lib/howdy-types";
+import { ISectionHowdy } from "@/lib/types/howdy-types";
 
 const fetchSectionDetails = async (term: string, crn: string) => {
   const url = `/api/data/sections?crn=${crn}&term=${term}`;
@@ -18,7 +18,7 @@ export default function Section() {
 
   const params = useParams(); // This will get the dynamic parameters
   const {crn} = params;
-  const [courseData, setCourseData] = useState<SectionHowdy | null>(null);
+  const [courseData, setCourseData] = useState<ISectionHowdy | null>(null);
 
   useEffect(() => {
     if (typeof crn != "string") return;
@@ -39,6 +39,10 @@ export default function Section() {
         : <div className={ "flex justify-center" }>
         <LoadingCircle/>
         </div>}
+
+      <p>
+        {courseData?.SWV_CLASS_SEARCH_INSTRUCTOR_JSON}
+      </p>
     </div>
   );
 } 

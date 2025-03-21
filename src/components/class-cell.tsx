@@ -6,21 +6,18 @@ import { MdNumbers } from "react-icons/md";
 import Link from "next/link";
 import { X } from "lucide-react";
 import { cn, CURRENT_TERM } from "@/lib/utils";
-import { JetBrains_Mono } from "next/font/google";
 import { Section } from "@prisma/client";
-import { Instructor } from "@/lib/course-types";
 import AttributeBadge from "@/components/attribute-badge";
+import { Instructor } from "@/lib/types/course-types";
+import { jetbrainsMono } from "@/lib/fonts";
 
 interface ClassCellProps {
   section: Section;
   onDeleteAction: (crn: string) => void;
 }
 
-export const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-});
-
 export default function ClassCell({ section, onDeleteAction }: ClassCellProps) {
+
   return (
     <div className="transition-transform select-none flex flex-col sm:flex-row items-start sm:items-center w-full min-h-[3.5rem] bg-zinc-100 border-l-4 border-l-zinc-400 px-3 py-2 shadow-sm cursor-pointer hover:scale-[1.01]">
       <div className="w-full grid grid-cols-1 sm:grid-cols-[1fr_auto]">
@@ -50,10 +47,8 @@ export default function ClassCell({ section, onDeleteAction }: ClassCellProps) {
               <IoPerson className="w-4 h-4 mr-2" />
               <p className="truncate hover:underline">
                 {section.instructorJson
-                  ? (
-                      section.instructorJson as unknown as Instructor[]
-                    )[0].NAME.replaceAll("(P)", "")
-                  : "Not assigned"}
+                ? (JSON.parse(section.instructorJson as string)[0] as Instructor).NAME.replace("(P)", "")
+                : "Not assigned"}
               </p>
             </div>
 
@@ -65,7 +60,7 @@ export default function ClassCell({ section, onDeleteAction }: ClassCellProps) {
                   jetbrainsMono.className
                 )}
               >
-                <Link href={`/search/sections/${CURRENT_TERM}${section.crn}`}>
+                <Link href={`/dashboard/search/sections/${CURRENT_TERM}${section.crn}`}>
                   {section.crn}
                 </Link>
               </p>

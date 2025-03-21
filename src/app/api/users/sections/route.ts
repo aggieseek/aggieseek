@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession, Session } from "next-auth";
 import prisma from "@/lib/prisma-client";
 import { authOptions } from "@/lib/auth-options";
+import { Section } from "@prisma/client";
 
 async function getUserId(session: Session) {
   if (!session.user) return null;

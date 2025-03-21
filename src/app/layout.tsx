@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
-import { Inter } from 'next/font/google';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import SessionWrapper from "@/components/session-wrapper";
 import { ReactNode } from "react";
-
-const inter = Inter({ subsets: ['latin'] });
+import { inter } from "@/lib/fonts";
 
 export const metadata: Metadata = {
   title: "AggieSeek",
@@ -14,9 +12,7 @@ export const metadata: Metadata = {
   keywords: "aggieseek, aggie, seek, aggie seek, aggies"
 };
 
-export default function RootLayout({
-                                     children,
-                                   }: Readonly<{
+export default function RootLayout({ children }: Readonly<{
   children: ReactNode;
 }>) {
   return (
