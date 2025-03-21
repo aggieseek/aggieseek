@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import LoadingCircle from "@/components/loading-circle";
 import { ISectionHowdy } from "@/lib/types/howdy-types";
 import Link from "next/link";
@@ -40,7 +40,7 @@ const fetchWatchers = async (term: string, crn: string) => {
   return null;
 };
 
-export default function Section() {
+function SectionPage() {
   const searchParams = useSearchParams();
   const term = searchParams.get("term");
   const crn = searchParams.get("crn");
@@ -169,5 +169,13 @@ export default function Section() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function Section() {
+  return (
+    <Suspense>
+      <SectionPage />
+    </Suspense>
   );
 }

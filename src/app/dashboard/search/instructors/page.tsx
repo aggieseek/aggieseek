@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import type { Instructor } from "@prisma/client";
 import { usePageTitle } from "@/contexts/title-context";
 
@@ -38,8 +38,10 @@ export default function Instructor() {
   }, [instructorId, router, setTitle]);
 
   return (
-    <div className="space-y-4">
-      <p>{instructorData?.name}</p>
-    </div>
+    <Suspense>
+      <div className="space-y-4">
+        <p>{instructorData?.name}</p>
+      </div>
+    </Suspense>
   );
 }
