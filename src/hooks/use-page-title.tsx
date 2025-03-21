@@ -47,8 +47,7 @@ const usePageTitle = (path: string, searchParams: ReadonlyURLSearchParams) => {
         } else {
           setTitle({
             title: `${data.SUBJECT_CODE} ${data.COURSE_NUMBER}-${data.SECTION_NUMBER}`,
-            subtitle: data.COURSE_TITLE || "",
-            term: convertTermCode(term)
+            subtitle: `${convertTermCode(term)} / ${data.CRN}`,
           });
         }
       } else if (path.startsWith("/dashboard/search/instructors")) {

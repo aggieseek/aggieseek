@@ -2,14 +2,15 @@
 
 import ClassCell from "@/components/class-cell";
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
 import LoadingCircle from "@/components/loading-circle";
 import { useSession } from "next-auth/react";
 import { Section, TrackedSection } from "@prisma/client";
-import { CURRENT_TERM } from "@/lib/utils";
+import { cn, CURRENT_TERM } from "@/lib/utils";
+import Link from "next/link";
+import { MdOutlineAdd, MdRefresh, MdSearch } from "react-icons/md";
 
 enum PageState {
-  LOADING, IDLE, ERROR
+  LOADING, IDLE, ERROR, REFRESHING
 }
 
 interface SectionInfo extends TrackedSection {
@@ -75,6 +76,11 @@ export default function Dashboard() {
     }
   }, [status]);
 
+  const refreshScreen = () => {
+    setPageState(PageState.REFRESHING);
+    getSections();
+  };
+
   const handleClick = () => {
     const input = prompt('Enter a CRN');
     if (!input) return;
@@ -85,26 +91,36 @@ export default function Dashboard() {
 
   return (
     <>
-      <div className={ "flex flex-col gap-2 sm:flex-row gap-x-12 sm:items-center mb-6" }>
-        <h3 className="font-bold text-xl">
-          Your Courses
-        </h3>
+      <div className={ "flex justify-between sm:items-center mb-6 border-b pb-4" }>
+        <div className="flex gap-x-12">
+          <h3 className="font-bold text-xl">
+            Your Courses
+          </h3>
 
-        <Button variant={ 'default' } onClick={ handleClick } className={ "h-8 w-16" }>
-          {addInProgress ?
-          <LoadingCircle /> :
-          "Add"}
-        </Button>
+          <Link href={"/dashboard/search"} className="text-sm flex items-center gap-x-2 font-semibold hover:underline">
+            <MdSearch />
+            Search for Sections
+          </Link>
+
+          <div onClick={handleClick} className="text-sm flex items-center gap-x-2 font-semibold hover:underline hover:cursor-pointer">
+            <MdOutlineAdd />
+            Add by CRN
+          </div>
+        </div>
+
+        <div className={pageState === PageState.REFRESHING ? "animate-spin opacity-50" : "hover:cursor-pointer"} onClick={refreshScreen}>
+          <MdRefresh className="w-5 h-5" />
+        </div>
       </div>
 
-      <div className="flex flex-col space-y-2">
+      <div className="flex justify-between flex-wrap gap-y-4">
         { pageState === PageState.IDLE
           ?
           sections.map(section => (
             <ClassCell onDeleteAction={ crn => deleteSection(crn) } key={ section.crn } section={section.section}/>
           ))
           :
-          <div className="flex justify-center items-center space-y-2">
+          <div className="flex justify-center items-center w-full space-y-2">
             <div className={ "inline-block" }>
               <LoadingCircle/>
             </div>

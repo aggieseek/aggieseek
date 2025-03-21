@@ -46,7 +46,7 @@ export function AppSidebar() {
         <Link href={"/"} className="z-10">
           <div className="transition-transform hover:scale-105 active:scale-95 hover:cursor-pointer">
             <Image
-              src={"/images/logo-white.png"}
+              src={"/images/logo-white-beta.png"}
               alt="AggieSeek"
               width={225}
               height={225}
@@ -141,7 +141,7 @@ export function AppSidebar() {
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
-                  <SidebarMenuItem>
+                  <SidebarMenuItem className={"hidden"}>
                     <SidebarMenuButton asChild>
                       <Link
                         href={"/dashboard/contact"}
@@ -171,7 +171,7 @@ export function AppSidebar() {
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
-                  <SidebarMenuItem>
+                  <SidebarMenuItem className={"hidden"}>
                     <SidebarMenuButton asChild>
                       <Link
                         href={"https://ko-fi.com/aggieseek"}

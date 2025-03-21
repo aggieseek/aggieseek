@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { signOut } from "next-auth/react";
 
 export default function AccountTab() {
 
@@ -35,11 +36,12 @@ export default function AccountTab() {
   return (
     <>
       <div className={ "flex flex-col pt-4 gap-y-4" }>
+        <Button onClick={() => signOut({ callbackUrl: "/" })} className={"w-40"} variant={ "default" }>Log Out</Button>
         <Button onClick={() => setDialogOpen(true)} className={"w-40"} variant={ "destructive" }>Delete Account</Button>
       </div>
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent onCloseAutoFocus={() => setClicks(2)}>
+        <DialogContent className="w-96" onCloseAutoFocus={() => setClicks(2)}>
           <DialogHeader>
             <div className="space-y-2">
               <DialogTitle>Are you absolutely sure?</DialogTitle>

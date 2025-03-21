@@ -1,4 +1,6 @@
-;import { DashboardTitle } from "@/lib/dashboard-titles";
+"use client";
+
+import { DashboardTitle } from "@/lib/dashboard-titles";
 import { SidebarTrigger } from "./ui/sidebar";
 import { Skeleton } from "./ui/skeleton";
 

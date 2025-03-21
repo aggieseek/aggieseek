@@ -19,15 +19,16 @@ interface ClassCellProps {
 export default function ClassCell({ section, onDeleteAction }: ClassCellProps) {
 
   return (
-    <div className="transition-transform select-none flex flex-col sm:flex-row items-start sm:items-center w-full min-h-[3.5rem] bg-zinc-100 border-l-4 border-l-zinc-400 px-3 py-2 shadow-sm cursor-pointer hover:scale-[1.01]">
+    <div className="transition-transform select-none flex flex-col sm:flex-row items-start sm:items-center md:w-[calc(50%-1rem)] min-h-[3.5rem] bg-zinc-100 border-l-4 border-l-zinc-400 px-3 py-2 shadow-sm cursor-pointer hover:scale-[1.01]">
       <div className="w-full grid grid-cols-1 sm:grid-cols-[1fr_auto]">
-        <div className="space-y-2 sm:space-y-0">
-          <div className="flex items-center gap-2 justify-between">
-            <div className="flex space-x-2">
+        <div className="space-y-2 sm:space-y-0 w-full">
+          <div className="flex items-center gap-2 justify-between w-full">
+            <div className="flex justify-start space-x-2 w-full">
               <h3 className="font-bold text-sm">
-                {section.subject} {section.course} -{" "}
-                {section.title.replaceAll("HNR-", "")}
+              {section.subject} {section.course} -{" "}
+              {section.title.replaceAll("HNR-", "")}
               </h3>
+
               <div className="flex flex-wrap gap-1">
                 {section.attributes?.split("|").map((attr, index) => (
                   <AttributeBadge attribute={attr.trim()} key={index} />
@@ -42,14 +43,19 @@ export default function ClassCell({ section, onDeleteAction }: ClassCellProps) {
             </button>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-[3fr_2fr_2fr] gap-x-4 text-xs opacity-50">
+          <div className="flex flex-col gap-y-1 text-xs">
             <div className="flex items-center">
               <IoPerson className="w-4 h-4 mr-2" />
-              <Link href={`/dashboard/search/instructors?id=${(JSON.parse(section.instructorJson as string)[0] as Instructor).MORE}`} className="truncate hover:underline">
-                {section.instructorJson
-                ? (JSON.parse(section.instructorJson as string)[0] as Instructor).NAME.replace("(P)", "")
-                : "Not assigned"}
-              </Link>
+              {
+                section.instructorJson
+                ? <Link href={`/dashboard/search/instructors?id=${(section.instructorJson as unknown as Instructor[])[0].MORE}`} className="truncate hover:underline">
+                    {(section.instructorJson as unknown as Instructor[])[0].NAME.replace("(P)", "")}
+                  </Link>
+                : <p>
+                    Not assigned
+                  </p>
+              }
+              
             </div>
 
             <div className="flex items-center">
@@ -60,18 +66,18 @@ export default function ClassCell({ section, onDeleteAction }: ClassCellProps) {
                   jetbrainsMono.className
                 )}
               >
-                <Link href={`/dashboard/search/sections?term=${CURRENT_TERM}&crn=${section.crn}`}>
+                <Link href={`/dashboard/search/sections?term=${CURRENT_TERM}&crn=${section.crn}&back=true`}>
                   {section.crn}
                 </Link>
               </p>
             </div>
 
             <div className="flex items-center">
-              <p className="truncate">
+              <p className="truncate font-semibold">
                 {section.isSectionOpen ? (
-                  "Open"
+                  "OPEN"
                 ) : (
-                  <span className="text-red-500">Closed</span>
+                  <span className="text-red-500">CLOSED</span>
                 )}
               </p>
             </div>
