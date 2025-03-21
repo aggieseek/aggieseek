@@ -1,6 +1,6 @@
 "use client";
 
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { usePathname, useSearchParams } from "next/navigation";
 import { ReactNode, useState } from "react";
@@ -24,6 +24,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         <div className="flex w-full overflow-hidden">
           <AppSidebar />
           <main className="flex w-full flex-col overflow-auto bg-zinc-100 p-6 md:p-8 md:pt-4">
+            <SidebarTrigger className="transition-transform -ml-1 mt-2 hover:scale-110 active:scale-95" />
             <div className="bg-transparent h-24 flex pb-4 flex-col justify-end">
               {title ? (
                 <div>

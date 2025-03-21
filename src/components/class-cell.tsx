@@ -18,7 +18,7 @@ interface ClassCellProps {
 
 export default function ClassCell({ section, onDeleteAction }: ClassCellProps) {
   return (
-    <div className="transition-transform select-none flex flex-col sm:flex-row items-start sm:items-center md:w-[calc(50%-1rem)] min-h-[3.5rem] bg-zinc-100 border-l-4 border-l-zinc-400 px-3 py-2 shadow-sm cursor-pointer hover:scale-[1.01]">
+    <div className="transition-transform select-none flex flex-col sm:flex-row items-start sm:items-center w-full lg:w-[calc(50%-1rem)] min-h-[3.5rem] bg-zinc-100 border-l-4 border-l-zinc-400 px-3 py-2 shadow-sm cursor-pointer hover:scale-[1.01]">
       <div className="w-full grid grid-cols-1 sm:grid-cols-[1fr_auto]">
         <div className="space-y-2 sm:space-y-0 w-full">
           <div className="flex items-center gap-2 justify-between w-full">

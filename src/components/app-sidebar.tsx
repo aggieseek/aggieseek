@@ -72,9 +72,7 @@ export function AppSidebar() {
                       <Link
                         href={"/dashboard"}
                         className={
-                          pathname === '/dashboard'
-                            ? "border-l-2"
-                            : undefined
+                          pathname === "/dashboard" ? "border-l-2" : undefined
                         }
                       >
                         <Home />
@@ -129,14 +127,16 @@ export function AppSidebar() {
             <CollapsibleContent>
               <SidebarGroupContent>
                 <SidebarMenu className="text-white">
-                  <SidebarMenuItem>
+                  <SidebarMenuItem className="hidden">
                     <SidebarMenuButton
                       asChild
                       className={
-                        pathname.startsWith("/dashboard/about") ? "border-l-2" : undefined
+                        pathname.startsWith("/dashboard/about")
+                          ? "border-l-2"
+                          : undefined
                       }
                     >
-                      <Link href={"/dashboard/about"}>
+                      <Link href={"/about"}>
                         <Info />
                         <span>About</span>
                       </Link>

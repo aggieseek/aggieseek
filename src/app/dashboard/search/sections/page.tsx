@@ -5,13 +5,34 @@ import { useEffect, useState } from "react";
 import LoadingCircle from "@/components/loading-circle";
 import { ISectionHowdy } from "@/lib/types/howdy-types";
 import Link from "next/link";
-import { MdHome, MdOutlineAccessTimeFilled, MdPerson } from "react-icons/md";
+import {
+  MdHome,
+  MdOutlineAccessTimeFilled,
+  MdPerson,
+  MdSearch,
+} from "react-icons/md";
+import { PiDetectiveFill } from "react-icons/pi";
 import { Instructor } from "@/lib/types/course-types";
 import { usePageTitle } from "@/contexts/title-context";
 import { convertTermCode } from "@/lib/utils";
 
+enum PageState {
+  LOADING,
+  IDLE,
+  ERROR,
+}
+
 const fetchSectionDetails = async (term: string, crn: string) => {
   const url = `/api/data/sections?crn=${crn}&term=${term}`;
+  const response = await fetch(url);
+  if (response.status === 200) {
+    return await response.json();
+  }
+  return null;
+};
+
+const fetchWatchers = async (term: string, crn: string) => {
+  const url = `/api/data/sections/watching?crn=${crn}&term=${term}`;
   const response = await fetch(url);
   if (response.status === 200) {
     return await response.json();
@@ -27,7 +48,9 @@ export default function Section() {
   const router = useRouter();
 
   const [courseData, setCourseData] = useState<ISectionHowdy | null>(null);
+  const [numWatching, setNumWatching] = useState<number | null>(null);
   const [instructors, setInstructors] = useState<Instructor[]>([]);
+  const [pageState, setPageState] = useState<PageState>(PageState.LOADING);
 
   const { setPageTitle: setTitle } = usePageTitle();
 
@@ -40,6 +63,15 @@ export default function Section() {
     }
 
     fetchSectionDetails(term, crn).then((data: ISectionHowdy) => {
+      if (Object.keys(data).length === 0) {
+        setTitle({
+          title: "Unknown Section",
+          subtitle: `${convertTermCode(term)}`,
+        });
+        setPageState(PageState.ERROR);
+        return;
+      }
+
       setCourseData(data);
       setTitle({
         title: `${data.SUBJECT_CODE} ${data.COURSE_NUMBER}-${data.SECTION_NUMBER}`,
@@ -47,10 +79,31 @@ export default function Section() {
       });
       if (data.SWV_CLASS_SEARCH_INSTRCTR_JSON !== null)
         setInstructors(JSON.parse(data.SWV_CLASS_SEARCH_INSTRCTR_JSON));
+
+      fetchWatchers(term, crn).then((data) => {
+        setNumWatching(data.count);
+      });
+      setPageState(PageState.IDLE);
     });
   }, [crn, router, term, setTitle]);
 
-  if (courseData === null) {
+  if (pageState === PageState.ERROR) {
+    return (
+      <Link
+        href={"/dashboard/search"}
+        className="inline-flex gap-x-2 w-auto items-center font-bold mb-4 hover:underline"
+      >
+        <MdSearch />
+        Back to Search
+      </Link>
+    );
+  }
+
+  if (
+    pageState === PageState.LOADING ||
+    courseData === null ||
+    numWatching === null
+  ) {
     return (
       <div className="flex justify-center">
         <LoadingCircle />
@@ -104,6 +157,14 @@ export default function Section() {
               {courseData.HRS_LOW}
             </span>{" "}
             credit hours
+          </p>
+        </div>
+
+        <div className="flex items-center gap-x-4">
+          <PiDetectiveFill className="w-4 h-4" />
+          <p>
+            <span className="font-semibold text-base">{numWatching}</span>{" "}
+            student{numWatching === 1 ? "" : "s"} watching
           </p>
         </div>
       </div>

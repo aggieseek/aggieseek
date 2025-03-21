@@ -28,7 +28,7 @@ const submitFeedback = async (
 };
 
 export default function Feedback() {
-  const [isSubmitting, setSubmitting] = useState<boolean>(false);
+  const [isSubmitted, setSubmitted] = useState<boolean>(false);
 
   const [priority, setPriority] = useState<string>("Low");
   const [description, setDescription] = useState<string>("");
@@ -40,28 +40,29 @@ export default function Feedback() {
     setPageTitle({ title: "Feedback" });
   }, [setPageTitle]);
 
-  const resetForm = () => {
-    setSubmitting(false);
-    setPriority("Low");
-    setTitle("");
-    setDescription("");
-  };
-
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
+    setSubmitted(true);
     submitFeedback(title, description, priority).then((res) => {
       if (res.status != 201) console.error("feedback submit failed");
-      resetForm();
     });
   };
+
+  if (isSubmitted) {
+    return (
+      <div className="p-4 font-semibold">
+        Your feedback has been submitted. Thank you!
+      </div>
+    );
+  }
 
   return (
     <>
       <div className=" border p-4 rounded-lg">
-        <p className=" text-lg font-semibold">Submit Issue</p>
+        <p className=" text-lg font-semibold">Submit Feedback</p>
         <p className=" text-sm text-neutral-500">
-          Please provide details about the issue you&apos;re experiencing.
+          Please provide details regarding your feedback.
         </p>
         <form onSubmit={(e) => handleSubmit(e)} className="space-y-4 mt-2">
           <div className="space-y-2">
@@ -70,10 +71,10 @@ export default function Feedback() {
               id="title"
               name="title"
               value={title}
-              disabled={isSubmitting}
+              disabled={isSubmitted}
               required
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="Brief description of the issue"
+              placeholder="Brief description"
             />
           </div>
           <div className="space-y-2">
@@ -82,9 +83,9 @@ export default function Feedback() {
               id="description"
               name="description"
               value={description}
-              disabled={isSubmitting}
+              disabled={isSubmitted}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Provide more details about the issue"
+              placeholder="Provide more details"
               required
               rows={4}
             />
@@ -93,7 +94,7 @@ export default function Feedback() {
             <Label htmlFor="priority">Priority</Label>
             <Select
               name="priority"
-              disabled={isSubmitting}
+              disabled={isSubmitted}
               value={priority}
               onValueChange={setPriority}
             >
@@ -107,7 +108,7 @@ export default function Feedback() {
               </SelectContent>
             </Select>
           </div>
-          <Button type="submit" className=" w-40" disabled={isSubmitting}>
+          <Button type="submit" className=" w-40" disabled={isSubmitted}>
             Submit
           </Button>
         </form>

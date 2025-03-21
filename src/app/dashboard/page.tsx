@@ -101,7 +101,7 @@ export default function Dashboard() {
         isRefreshing={pageState === PageState.REFRESHING}
       />
 
-      <div className="flex justify-between flex-wrap gap-y-4">
+      <div className="flex flex-col lg:flex-row justify-between lg:flex-wrap gap-y-4">
         {pageState === PageState.IDLE ? (
           sections.map((section) => (
             <ClassCell
