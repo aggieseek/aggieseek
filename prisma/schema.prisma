@@ -76,7 +76,7 @@ model TrackedSection {
   crn       String   @db.VarChar(5)
   createdAt DateTime @default(now()) @map("created_at")
   term      String   @db.VarChar(10)
-  section   Section  @relation(fields: [term, crn], references: [term, crn], onDelete: NoAction, onUpdate: NoAction)
+  section   Section  @relation(fields: [term, crn], references: [term, crn], onDelete: Cascade, onUpdate: NoAction)
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([userId, term, crn])

@@ -26,14 +26,16 @@ export default function ClassCell({ section, onDeleteAction }: ClassCellProps) {
       <div className="w-full grid grid-cols-1 sm:grid-cols-[1fr_auto]">
         <div className="space-y-2 sm:space-y-0">
           <div className="flex items-center gap-2 justify-between">
-            <h3 className="font-bold text-sm">
-              {section.subject} {section.course} -{" "}
-              {section.title.replaceAll("HNR-", "")}
-            </h3>
-            <div className="flex flex-wrap gap-1">
-              {section.attributes?.split("|").map((attr, index) => (
-                <AttributeBadge attribute={attr.trim()} key={index} />
-              ))}
+            <div className="flex space-x-2">
+              <h3 className="font-bold text-sm">
+                {section.subject} {section.course} -{" "}
+                {section.title.replaceAll("HNR-", "")}
+              </h3>
+              <div className="flex flex-wrap gap-1">
+                {section.attributes?.split("|").map((attr, index) => (
+                  <AttributeBadge attribute={attr.trim()} key={index} />
+                ))}
+              </div>
             </div>
             <button
               className="transition-transform hover:scale-110 active:scale-90 justify-end"
