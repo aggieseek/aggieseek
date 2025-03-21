@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { MdOutlineAdd, MdRefresh, MdSearch } from "react-icons/md";
 
 export default function DashboardHeader({
@@ -14,13 +15,13 @@ export default function DashboardHeader({
       <div className="flex flex-col md:flex-row gap-x-12">
         <h3 className="font-bold mb-2 md:mb-0 text-xl">Your Courses</h3>
 
-        <a
+        <Link
           href="/dashboard/search"
           className="text-sm flex items-center gap-x-2 font-semibold hover:underline"
         >
           <MdSearch />
           Search for Sections
-        </a>
+        </Link>
 
         <div
           onClick={onAdd}
