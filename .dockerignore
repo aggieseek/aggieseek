@@ -4,4 +4,3 @@ README.md
 .dockerignore
 .git
 .next
-.kamal/secrets*
