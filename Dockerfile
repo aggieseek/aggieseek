@@ -1,37 +1,45 @@
-FROM node:20-alpine AS builder
+FROM node:20-alpine AS base
 
+# == DEPS ==
+# Install dependencies as needed
+FROM base AS deps
+
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-RUN apk update && apk upgrade
-RUN apk add curl
+# Install dependencies
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* .npmrc* ./
+RUN npm ci
 
-COPY package.json package-lock.json ./
-RUN npm install
-
+# == BUILDER ==
+# Build the source code
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Build prisma and Next.js app
 RUN npx prisma generate
 RUN npm run build
 
-# Runner service
-FROM node:18-alpine AS runner
-
+# == RUNNER ==
+# Run source code from production build
+FROM base AS runner
 WORKDIR /app
 
-# Create nonroot user
-RUN addgroup -S nonroot && adduser -S nonroot -G nonroot
-USER nonroot
-
-# Restructure build files
-COPY --from=builder --chown=nonroot:nonroot /app/.next/standalone ./
-COPY --from=builder --chown=nonroot:nonroot /app/public ./public
-COPY --from=builder --chown=nonroot:nonroot /app/.next/static ./.next/static
-
-ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
-ENV HOSTNAME="0.0.0.0"
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+COPY --from=builder /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+USER nextjs
 
 EXPOSE 3000
+
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
 
 CMD ["node", "server.js"]
