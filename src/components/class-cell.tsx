@@ -49,7 +49,7 @@ export default function ClassCell({ section, onDeleteAction }: ClassCellProps) {
                 <Link
                   href={`/dashboard/search/instructors?id=${
                     (section.instructorJson as unknown as Instructor[])[0].MORE
-                  }`}
+                  }&source=dashboard`}
                   className="truncate hover:underline"
                 >
                   {(
@@ -76,7 +76,7 @@ export default function ClassCell({ section, onDeleteAction }: ClassCellProps) {
                   )}
                 >
                   <Link
-                    href={`/dashboard/search/sections?term=${CURRENT_TERM}&crn=${section.crn}&back=true`}
+                    href={`/dashboard/search/sections?term=${CURRENT_TERM}&crn=${section.crn}&source=dashboard`}
                   >
                     {section.crn}
                   </Link>

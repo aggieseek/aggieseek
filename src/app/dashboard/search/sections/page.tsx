@@ -14,7 +14,14 @@ import {
 import { PiDetectiveFill } from "react-icons/pi";
 import { Instructor } from "@/lib/types/course-types";
 import { usePageTitle } from "@/contexts/title-context";
-import { convertTermCode } from "@/lib/utils";
+import { cn, convertTermCode, CURRENT_TERM } from "@/lib/utils";
+import { IoIosEye, IoIosEyeOff } from "react-icons/io";
+import useTrackedSectionsStore, {
+  LoadingState,
+} from "@/stores/useTrackedSectionsStore";
+import { useSession } from "next-auth/react";
+import ScheduleDisplay from "@/components/schedule-display";
+import { FaChalkboardTeacher } from "react-icons/fa";
 
 enum PageState {
   LOADING,
@@ -40,19 +47,69 @@ const fetchWatchers = async (term: string, crn: string) => {
   return null;
 };
 
+const SectionButton = ({ crn, courseData }) => {
+  const { loadState, trackedSections, addSection, deleteSection } =
+    useTrackedSectionsStore();
+  const isLoading = loadState === LoadingState.FETCHING;
+  const isTracked = trackedSections.some((section) => section.crn === crn);
+
+  const handleClick = isLoading
+    ? () => deleteSection(courseData.CRN)
+    : isTracked
+    ? () => deleteSection(courseData.CRN)
+    : () => addSection(courseData.CRN);
+
+  const icon = isLoading ? (
+    <LoadingCircle />
+  ) : isTracked ? (
+    <IoIosEyeOff className="w-6 h-6" />
+  ) : (
+    <IoIosEye className="w-6 h-6" />
+  );
+  const text = isLoading ? null : isTracked ? "Untrack" : "Track";
+
+  return (
+    <div
+      className={cn(
+        "transition-colors duration-100 px-6 py-2 font-semibold hover:cursor-pointer",
+        isLoading
+          ? "bg-black/5"
+          : isTracked
+          ? "bg-red-500/25 hover:bg-red-500/35 active:bg-red-500/45"
+          : "bg-black/5 hover:bg-black/10 active:bg-black/20"
+      )}
+      onClick={handleClick}
+    >
+      <div className="flex justify-center items-center gap-x-2">
+        {icon}
+        {text && <span>{text}</span>}
+      </div>
+    </div>
+  );
+};
+
 function SectionPage() {
   const searchParams = useSearchParams();
   const term = searchParams.get("term");
   const crn = searchParams.get("crn");
-  const back = searchParams.get("back") === "true";
+  const source = searchParams.get("source");
   const router = useRouter();
+  const { status } = useSession();
 
   const [courseData, setCourseData] = useState<ISectionHowdy | null>(null);
   const [numWatching, setNumWatching] = useState<number | null>(null);
   const [instructors, setInstructors] = useState<Instructor[]>([]);
   const [pageState, setPageState] = useState<PageState>(PageState.LOADING);
 
+  const { fetchSections } = useTrackedSectionsStore();
+
   const { setPageTitle: setTitle } = usePageTitle();
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      fetchSections();
+    }
+  }, [status]);
 
   useEffect(() => {
     setTitle(null);
@@ -112,61 +169,100 @@ function SectionPage() {
   }
 
   return (
-    <div className="grid grid-cols-[3fr_1fr] gap-x-4 text-sm h-full">
+    <div className="flex flex-col gap-y-2 lg:grid lg:grid-cols-[5fr_2fr] xl:grid-cols-[3fr_1fr] lg:gap-x-4 lg:gap-y-0 text-sm h-full">
       <div className="translate-y-3 reset-transform">
-        {back && (
+        {source === "dashboard" && (
           <Link
             href={"/dashboard"}
-            className="flex gap-x-2 items-center font-bold mb-4 hover:underline"
+            className="inline-flex gap-x-2 items-center font-bold mb-4 hover:underline"
           >
             <MdHome />
             Back to Dashboard
           </Link>
         )}
 
-        <p className="text-2xl tracking-widest border-b pb-3 font-semibold">
-          {courseData.COURSE_TITLE}
-        </p>
-        <p className="text-gray-500 mt-3">{courseData.COURSE_DESCRIPTION}</p>
+        <div className="border-b pb-3 relative">
+          <div className="text-2xl tracking-widest font-semibold">
+            {courseData.COURSE_TITLE}
+          </div>
+          <div
+            className={
+              "xl:flex hidden flex-col items-end uppercase opacity-25 font-bold text-xs/3 absolute right-0 bottom-3"
+            }
+          >
+            {courseData.ATTRIBUTES.map((attr) => (
+              <div key={attr.SSRATTR_ATTR_CODE}>{attr.STVATTR_DESC}</div>
+            ))}
+          </div>
+        </div>
+        <div className="text-gray-500 space-y-6 py-5">
+          <p className="text">{courseData.COURSE_DESCRIPTION}</p>
+
+          <ScheduleDisplay
+            schedules={JSON.parse(courseData.SWV_CLASS_SEARCH_JSON_CLOB)}
+          />
+        </div>
       </div>
 
-      <div className="h-full flex flex-col gap-y-2 p-6 bg-black/5">
-        {instructors.length > 0 ? (
-          instructors.map((instructor) => (
-            <div key={instructor.MORE} className="flex items-center gap-x-4">
-              <MdPerson className="w-4 h-4" />
-              <Link
-                className="hover:underline"
-                href={`/dashboard/search/instructors?id=${instructor.MORE}`}
-              >
-                {instructor.NAME}
-              </Link>
-            </div>
-          ))
-        ) : (
-          <div className="flex items-center gap-x-4">
-            <MdPerson className="w-4 h-4" />
-            <p>Not assigned</p>
+      <div className="flex flex-col h-full gap-y-2">
+        <div className="flex flex-1 flex-col gap-y-2 p-6 bg-black/5">
+          <div className="border-b pb-2 border-b-neutral-300">
+            {instructors.length > 0 ? (
+              instructors.map((instructor) => (
+                <div
+                  key={instructor.MORE}
+                  className="flex items-center gap-x-4"
+                >
+                  <MdPerson className="w-4 h-4" />
+                  <Link
+                    className="hover:underline"
+                    href={`/dashboard/search/instructors?id=${instructor.MORE}`}
+                  >
+                    {instructor.NAME}
+                  </Link>
+                </div>
+              ))
+            ) : (
+              <div className="flex items-center gap-x-4 ">
+                <MdPerson className="w-4 h-4" />
+                <p>Not assigned</p>
+              </div>
+            )}
           </div>
+
+          <div className="flex items-center gap-x-4 border-b pb-2 border-b-neutral-300">
+            <MdOutlineAccessTimeFilled className="w-4 h-4" />
+            <p>
+              <span className="font-semibold text-base">
+                {courseData.HRS_LOW}
+              </span>{" "}
+              {courseData.HRS_HIGH && (
+                <span className="font-semibold text-base">
+                  - {courseData.HRS_HIGH}
+                </span>
+              )}{" "}
+              credit hour
+              {(courseData.HRS_LOW !== 1 || courseData.HRS_HIGH) && "s"}
+            </p>
+          </div>
+
+          <div className="flex items-center gap-x-4 border-b pb-2 border-b-neutral-300">
+            <FaChalkboardTeacher className="w-4 h-4" />
+            <p>{courseData.INSTRUCTIONAL_METHOD}</p>
+          </div>
+
+          <div className="flex items-center gap-x-4">
+            <PiDetectiveFill className="w-4 h-4" />
+            <p>
+              <span className="font-semibold text-base">{numWatching}</span>{" "}
+              student{numWatching !== 1 && "s"} watching
+            </p>
+          </div>
+        </div>
+
+        {courseData.TERM_CODE === CURRENT_TERM && (
+          <SectionButton crn={crn} courseData={courseData} />
         )}
-
-        <div className="flex items-center gap-x-4">
-          <MdOutlineAccessTimeFilled className="w-4 h-4" />
-          <p>
-            <span className="font-semibold text-base">
-              {courseData.HRS_LOW}
-            </span>{" "}
-            credit hours
-          </p>
-        </div>
-
-        <div className="flex items-center gap-x-4">
-          <PiDetectiveFill className="w-4 h-4" />
-          <p>
-            <span className="font-semibold text-base">{numWatching}</span>{" "}
-            student{numWatching === 1 ? "" : "s"} watching
-          </p>
-        </div>
       </div>
     </div>
   );

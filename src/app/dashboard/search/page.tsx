@@ -12,7 +12,7 @@ export default function Search() {
 
   return (
     <>
-      <h3 className="font-bold text-xl">Search Courses</h3>
+      <h3 className="font-bold text-xl border-b pb-4">Search Courses</h3>
     </>
   );
 }

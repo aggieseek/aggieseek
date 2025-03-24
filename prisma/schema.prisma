@@ -143,8 +143,8 @@ model Section {
   section          String           @db.VarChar(3)
   creditHours      Decimal          @map("credit_hours") @db.Decimal
   subjectDesc      String           @map("subject_desc")
-  instructorJson   Json?            @map("instructor_json") @db.Json
-  meetingsJson     Json?            @map("meetings_json") @db.Json
+  instructorJson   Json?            @map("instructor_json")
+  meetingsJson     Json?            @map("meetings_json")
   attributes       String?          @db.VarChar(500)
   instructionType  String?          @map("instruction_type") @db.VarChar(50)
   scheduleOpen     String           @map("schedule_type") @db.VarChar(10)
