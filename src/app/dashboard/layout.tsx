@@ -7,7 +7,6 @@ import { useSession } from "next-auth/react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PageTitleProvider } from "@/contexts/title-context";
 import { DashboardTitle } from "@/lib/dashboard-titles";
-import { Input } from "@/components/ui/input";
 
 export default function Layout({ children }: { children: ReactNode }) {
   const [title, setTitle] = useState<DashboardTitle | null>(null);
