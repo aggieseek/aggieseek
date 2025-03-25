@@ -20,8 +20,6 @@ import { cn } from "@/lib/utils";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useEffect, useState } from "react";
 
-const subjects = ["CSCE", "STAT", "MATH"];
-
 export default function Search() {
   const { setPageTitle: setTitle } = usePageTitle();
   const [selectedSubject, setSelectedSubject] = useState<string>("");
