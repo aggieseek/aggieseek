@@ -1,17 +1,11 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
+import { ReactNode, Suspense, useEffect, useState } from "react";
 import LoadingCircle from "@/components/loading-circle";
 import { ISectionHowdy } from "@/lib/types/howdy-types";
 import Link from "next/link";
-import {
-  MdHome,
-  MdOutlineAccessTimeFilled,
-  MdPerson,
-  MdSearch,
-} from "react-icons/md";
-import { PiDetectiveFill } from "react-icons/pi";
+import { MdHome, MdSearch } from "react-icons/md";
 import { Instructor } from "@/lib/types/course-types";
 import { usePageTitle } from "@/contexts/title-context";
 import { cn, convertTermCode, CURRENT_TERM } from "@/lib/utils";
@@ -21,7 +15,9 @@ import useTrackedSectionsStore, {
 } from "@/stores/useTrackedSectionsStore";
 import { useSession } from "next-auth/react";
 import ScheduleDisplay from "@/components/schedule-display";
-import { FaChalkboardTeacher } from "react-icons/fa";
+import SectionSidebar from "@/components/section-sidebar";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 enum PageState {
   LOADING,
@@ -51,42 +47,64 @@ const SectionButton = ({ crn, courseData }) => {
   const { loadState, trackedSections, addSection, deleteSection } =
     useTrackedSectionsStore();
   const isLoading = loadState === LoadingState.FETCHING;
+  const isProcessing =
+    loadState === LoadingState.ADDING || loadState === LoadingState.DELETING;
   const isTracked = trackedSections.some((section) => section.crn === crn);
 
   const handleClick = isLoading
-    ? () => deleteSection(courseData.CRN)
+    ? () => {}
     : isTracked
     ? () => deleteSection(courseData.CRN)
     : () => addSection(courseData.CRN);
 
-  const icon = isLoading ? (
-    <LoadingCircle />
-  ) : isTracked ? (
-    <IoIosEyeOff className="w-6 h-6" />
-  ) : (
-    <IoIosEye className="w-6 h-6" />
-  );
-  const text = isLoading ? null : isTracked ? "Untrack" : "Track";
+  const icon =
+    isLoading || isProcessing ? (
+      <LoadingCircle />
+    ) : isTracked ? (
+      <IoIosEyeOff className="w-6 h-6" />
+    ) : (
+      <IoIosEye className="w-6 h-6" />
+    );
+
+  const text = isLoading
+    ? null
+    : isProcessing
+    ? ""
+    : isTracked
+    ? "Untrack Section"
+    : "Track Section";
 
   return (
-    <div
+    <Button
       className={cn(
-        "transition-colors duration-100 px-6 py-2 font-semibold hover:cursor-pointer",
-        isLoading
-          ? "bg-black/5"
-          : isTracked
-          ? "bg-red-500/25 hover:bg-red-500/35 active:bg-red-500/45"
-          : "bg-black/5 hover:bg-black/10 active:bg-black/20"
+        "transition-colors duration-100 px-6 py-2 font-semibold hover:cursor-pointer"
       )}
       onClick={handleClick}
+      disabled={isLoading}
+      variant={isTracked ? "destructive" : "default"}
     >
       <div className="flex justify-center items-center gap-x-2">
         {icon}
         {text && <span>{text}</span>}
       </div>
-    </div>
+    </Button>
   );
 };
+
+function SectionPanel({
+  children,
+  title,
+}: {
+  children: ReactNode;
+  title: string;
+}) {
+  return (
+    <div className="">
+      <h2 className="font-semibold text-black text-lg border-b">{title}</h2>
+      <div className="py-4">{children}</div>
+    </div>
+  );
+}
 
 function SectionPage() {
   const searchParams = useSearchParams();
@@ -181,84 +199,41 @@ function SectionPage() {
           </Link>
         )}
 
-        <div className="border-b pb-3 relative">
-          <div className="text-2xl tracking-widest font-semibold">
+        <div className="border-b pb-3">
+          <div className="text-2xl tracking-wide font-bold bg-gradient-to-r from-red-950 via-red-900 to-orange-950 inline-block text-transparent bg-clip-text">
             {courseData.COURSE_TITLE}
           </div>
-          <div
-            className={
-              "xl:flex hidden flex-col items-end uppercase opacity-25 font-bold text-xs/3 absolute right-0 bottom-3"
-            }
-          >
-            {courseData.ATTRIBUTES.map((attr) => (
-              <div key={attr.SSRATTR_ATTR_CODE}>{attr.STVATTR_DESC}</div>
-            ))}
-          </div>
         </div>
-        <div className="text-gray-500 space-y-6 py-5">
-          <p className="text">{courseData.COURSE_DESCRIPTION}</p>
+        <div className="text-gray-500 flex flex-col gap-y-2">
+          <p className="text py-4">{courseData.COURSE_DESCRIPTION}</p>
 
-          <ScheduleDisplay
-            schedules={JSON.parse(courseData.SWV_CLASS_SEARCH_JSON_CLOB)}
-          />
+          <SectionPanel title="Schedule">
+            <ScheduleDisplay
+              schedules={JSON.parse(courseData.SWV_CLASS_SEARCH_JSON_CLOB)}
+            />
+          </SectionPanel>
+
+          <SectionPanel title="Attributes">
+            <div className="flex gap-x-2 -mt-2">
+              {courseData.ATTRIBUTES.map((attr) => (
+                <Badge
+                  className=" bg-red-950 hover:bg-red-900 text-xs hover:cursor-pointer"
+                  key={attr.SSRATTR_ATTR_CODE}
+                >
+                  {attr.STVATTR_DESC}
+                </Badge>
+              ))}
+            </div>
+          </SectionPanel>
         </div>
       </div>
 
       <div className="flex flex-col h-full gap-y-2">
-        <div className="flex flex-1 flex-col gap-y-2 p-6 bg-black/5">
-          <div className="border-b pb-2 border-b-neutral-300">
-            {instructors.length > 0 ? (
-              instructors.map((instructor) => (
-                <div
-                  key={instructor.MORE}
-                  className="flex items-center gap-x-4"
-                >
-                  <MdPerson className="w-4 h-4" />
-                  <Link
-                    className="hover:underline"
-                    href={`/dashboard/search/instructors?id=${instructor.MORE}`}
-                  >
-                    {instructor.NAME}
-                  </Link>
-                </div>
-              ))
-            ) : (
-              <div className="flex items-center gap-x-4 ">
-                <MdPerson className="w-4 h-4" />
-                <p>Not assigned</p>
-              </div>
-            )}
-          </div>
-
-          <div className="flex items-center gap-x-4 border-b pb-2 border-b-neutral-300">
-            <MdOutlineAccessTimeFilled className="w-4 h-4" />
-            <p>
-              <span className="font-semibold text-base">
-                {courseData.HRS_LOW}
-              </span>{" "}
-              {courseData.HRS_HIGH && (
-                <span className="font-semibold text-base">
-                  - {courseData.HRS_HIGH}
-                </span>
-              )}{" "}
-              credit hour
-              {(courseData.HRS_LOW !== 1 || courseData.HRS_HIGH) && "s"}
-            </p>
-          </div>
-
-          <div className="flex items-center gap-x-4 border-b pb-2 border-b-neutral-300">
-            <FaChalkboardTeacher className="w-4 h-4" />
-            <p>{courseData.INSTRUCTIONAL_METHOD}</p>
-          </div>
-
-          <div className="flex items-center gap-x-4">
-            <PiDetectiveFill className="w-4 h-4" />
-            <p>
-              <span className="font-semibold text-base">{numWatching}</span>{" "}
-              student{numWatching !== 1 && "s"} watching
-            </p>
-          </div>
-        </div>
+        <SectionSidebar
+          courseData={courseData}
+          instructors={instructors}
+          numWatching={numWatching}
+        />
 
         {courseData.TERM_CODE === CURRENT_TERM && (
           <SectionButton crn={crn} courseData={courseData} />

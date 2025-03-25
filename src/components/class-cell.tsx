@@ -10,13 +10,17 @@ import { Section } from "@prisma/client";
 import AttributeBadge from "@/components/attribute-badge";
 import { Instructor } from "@/lib/types/course-types";
 import { jetbrainsMono } from "@/lib/fonts";
+import useTrackedSectionsStore, {
+  LoadingState,
+} from "@/stores/useTrackedSectionsStore";
 
 interface ClassCellProps {
   section: Section;
-  onDeleteAction: (crn: string) => void;
 }
 
-export default function ClassCell({ section, onDeleteAction }: ClassCellProps) {
+export default function ClassCell({ section }: ClassCellProps) {
+  const { deleteSection, loadState } = useTrackedSectionsStore();
+
   return (
     <div className="transition-transform select-none flex flex-col sm:flex-row items-start sm:items-center w-full lg:w-[calc(50%-1rem)] min-h-[3.5rem] bg-zinc-100 border-l-4 border-l-zinc-400 px-3 py-2 shadow-sm cursor-pointer hover:scale-[1.01]">
       <div className="w-full grid grid-cols-1 sm:grid-cols-[1fr_auto]">
@@ -36,14 +40,15 @@ export default function ClassCell({ section, onDeleteAction }: ClassCellProps) {
             </div>
             <button
               className="transition-transform hover:scale-110 active:scale-90 justify-end"
-              onClick={() => onDeleteAction(section.crn)}
+              onClick={() => deleteSection(section.crn)}
+              disabled={loadState === LoadingState.DELETING}
             >
-              <X />
+              <X className="w-5 h-5" />
             </button>
           </div>
 
           <div className="flex flex-col gap-y-1 text-xs">
-            <div className="flex items-center">
+            <div className="flex items-center mt-0.5">
               <IoPerson className="w-4 h-4 mr-2" />
               {section.instructorJson ? (
                 <Link

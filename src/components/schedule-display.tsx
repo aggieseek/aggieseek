@@ -32,11 +32,6 @@ export default function ScheduleDisplay({
               schedule.SSRMEET_MTYP_CODE === "Examination" && "opacity-50"
             )}
           >
-            <td className="pr-4">
-              <div className="font-bold text-sm text-end">
-                {schedule.SSRMEET_MTYP_CODE}
-              </div>
-            </td>
             <td className="py-3">
               <div className="flex gap-x-2">
                 <DayBox
@@ -63,17 +58,14 @@ export default function ScheduleDisplay({
             </td>
             <td className="pl-4">
               <div className="flex flex-col text-xs font-semibold">
-                <p>
-                  {schedule.SSRMEET_START_DATE} {schedule.SSRMEET_END_DATE}
-                </p>
-                {schedule.SSRMEET_BLDG_CODE && (
-                  <p>
-                    {schedule.SSRMEET_BLDG_CODE} {schedule.SSRMEET_ROOM_CODE}
-                  </p>
-                )}
                 {schedule.SSRMEET_BEGIN_TIME && (
                   <p>
                     {schedule.SSRMEET_BEGIN_TIME} - {schedule.SSRMEET_END_TIME}
+                  </p>
+                )}
+                {schedule.SSRMEET_BLDG_CODE && (
+                  <p>
+                    {schedule.SSRMEET_BLDG_CODE} {schedule.SSRMEET_ROOM_CODE}
                   </p>
                 )}
               </div>

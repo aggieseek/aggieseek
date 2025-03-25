@@ -11,7 +11,7 @@ import useTrackedSectionsStore, {
 } from "@/stores/useTrackedSectionsStore";
 
 export default function Dashboard() {
-  const { trackedSections, loadState, deleteSection, fetchSections } =
+  const { trackedSections, loadState, fetchSections } =
     useTrackedSectionsStore();
   const { status } = useSession();
   const { setPageTitle: setTitle } = usePageTitle();
@@ -26,25 +26,14 @@ export default function Dashboard() {
     }
   }, [status]);
 
-  const refreshScreen = () => {
-    fetchSections();
-  };
-
   return (
     <>
-      <DashboardHeader
-        onRefresh={refreshScreen}
-        isLoading={loadState === LoadingState.FETCHING}
-      />
+      <DashboardHeader />
 
       <div className="flex flex-col lg:flex-row justify-between lg:flex-wrap gap-y-4">
-        {loadState === LoadingState.IDLE ? (
+        {loadState !== LoadingState.FETCHING ? (
           trackedSections.map((section) => (
-            <ClassCell
-              onDeleteAction={(crn) => deleteSection(crn)}
-              key={section.crn}
-              section={section.section}
-            />
+            <ClassCell key={section.crn} section={section.section} />
           ))
         ) : (
           <div className="flex justify-center items-center w-full space-y-2">

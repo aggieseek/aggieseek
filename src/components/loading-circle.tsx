@@ -1,9 +1,9 @@
 import { LoaderCircle } from "lucide-react";
 
-export default function LoadingCircle() {
+export default function LoadingCircle({ className }: { className?: string }) {
   return (
     <div className={"animate-spin inline-block"}>
-      <LoaderCircle />
+      <LoaderCircle className={className} />
     </div>
   );
 }

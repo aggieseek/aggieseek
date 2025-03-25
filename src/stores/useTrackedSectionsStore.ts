@@ -11,7 +11,7 @@ export enum LoadingState {
   IDLE,
   ERROR,
   ADDING,
-  REMOVING,
+  DELETING,
 }
 
 interface TrackedSectionsState {
@@ -19,6 +19,7 @@ interface TrackedSectionsState {
   loadState: LoadingState;
   addSection: (crn: string) => Promise<void>;
   deleteSection: (crn: string) => Promise<void>;
+  deleteSectionImmediately: (crn: string) => Promise<void>;
   fetchSections: () => void;
   refresh: () => void;
 }
@@ -27,18 +28,29 @@ const useTrackedSectionsStore = create<TrackedSectionsState>((set) => ({
   trackedSections: [],
   loadState: LoadingState.FETCHING,
   addSection: async (crn: string) => {
-    const res = await fetch("/api/users/sections", {
-      method: "POST",
-      body: JSON.stringify({ crn, term: CURRENT_TERM }),
-      headers: { "Content-Type": "application/json" },
-    });
-    if (!res.ok) throw new Error("");
-    set((state) => {
-      state.refresh();
-      return state;
-    });
+    set({ loadState: LoadingState.ADDING });
+
+    try {
+      const res = await fetch("/api/users/sections", {
+        method: "POST",
+        body: JSON.stringify({ crn, term: CURRENT_TERM }),
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (!res.ok) throw new Error("Failed to add section.");
+      set((state) => {
+        state.refresh();
+        return state;
+      });
+    } catch (error) {
+      console.error("Error adding section:", error);
+      set({ loadState: LoadingState.IDLE });
+      throw error;
+    }
   },
-  deleteSection: async (crn: string) => {
+  deleteSectionImmediately: async (crn: string) => {
+    set({ loadState: LoadingState.DELETING });
+
     try {
       const res = await fetch("/api/users/sections", {
         method: "DELETE",
@@ -46,7 +58,7 @@ const useTrackedSectionsStore = create<TrackedSectionsState>((set) => ({
         headers: { "Content-Type": "application/json" },
       });
 
-      if (!res.ok) throw new Error("Failed to delete section");
+      if (!res.ok) throw new Error("Failed to delete section.");
 
       set((state) => ({
         trackedSections: state.trackedSections.filter(
@@ -58,8 +70,32 @@ const useTrackedSectionsStore = create<TrackedSectionsState>((set) => ({
         state.refresh();
         return state;
       });
-    } catch (err) {
-      console.error("Error deleting section:", err);
+    } catch (error) {
+      console.error("Error adding section:", error);
+      set({ loadState: LoadingState.IDLE });
+      throw error;
+    }
+  },
+  deleteSection: async (crn: string) => {
+    set({ loadState: LoadingState.DELETING });
+
+    try {
+      const res = await fetch("/api/users/sections", {
+        method: "DELETE",
+        body: JSON.stringify({ crn, term: CURRENT_TERM }),
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (!res.ok) throw new Error("Failed to delete section.");
+
+      set((state) => {
+        state.refresh();
+        return state;
+      });
+    } catch (error) {
+      console.error("Error adding section:", error);
+      set({ loadState: LoadingState.IDLE });
+      throw error;
     }
   },
   fetchSections: async () => {
@@ -73,17 +109,22 @@ const useTrackedSectionsStore = create<TrackedSectionsState>((set) => ({
     });
   },
   refresh: async () => {
-    const res = await fetch(`/api/users/sections?term=${CURRENT_TERM}`, {
-      method: "GET",
-    });
+    try {
+      const res = await fetch(`/api/users/sections?term=${CURRENT_TERM}`, {
+        method: "GET",
+      });
 
-    if (!res.ok) throw new Error("Failed to fetch sections");
+      if (!res.ok) throw new Error("Failed to fetch sections.");
 
-    const data = await res.json();
-    set(() => ({
-      loadState: LoadingState.IDLE,
-      trackedSections: data,
-    }));
+      const data = await res.json();
+      set({
+        loadState: LoadingState.IDLE,
+        trackedSections: data,
+      });
+    } catch (error) {
+      console.error(error);
+      set({ loadState: LoadingState.ERROR });
+    }
   },
 }));
 

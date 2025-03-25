@@ -1,28 +1,64 @@
 "use client";
 
 import Link from "next/link";
-import { MdAdd, MdOutlineAdd, MdRefresh, MdSearch } from "react-icons/md";
+import {
+  MdAdd,
+  MdCheck,
+  MdError,
+  MdOutlineAdd,
+  MdRefresh,
+  MdSearch,
+} from "react-icons/md";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import useTrackedSectionsStore from "@/stores/useTrackedSectionsStore";
+import useTrackedSectionsStore, {
+  LoadingState,
+} from "@/stores/useTrackedSectionsStore";
 import { FormEvent, useState } from "react";
+import { toast } from "sonner";
+import LoadingCircle from "./loading-circle";
 
-export default function DashboardHeader({
-  onRefresh,
-  isLoading,
-}: {
-  onRefresh: () => void;
-  isLoading: boolean;
-}) {
-  const { addSection } = useTrackedSectionsStore();
+export default function DashboardHeader() {
+  const { addSection, trackedSections, fetchSections, loadState } =
+    useTrackedSectionsStore();
+  const isLoading = loadState === LoadingState.FETCHING;
+  const isAdding = loadState === LoadingState.ADDING;
   const [crnInput, setCrnInput] = useState<string>("");
 
   const handleAdd = (e: FormEvent) => {
     e.preventDefault();
-    addSection(crnInput).catch(() => {
-      alert("failed");
-    });
+    if (crnInput.trim() === "") return;
+    if (trackedSections.some((section) => section.crn === crnInput)) {
+      toast(
+        <div className="flex items-center">
+          <MdError className="w-4 h-4 mr-2" />
+          You are already tracking section {crnInput}.
+        </div>,
+        {}
+      );
+      return;
+    }
+
+    addSection(crnInput)
+      .then(() => {
+        toast(
+          <div className="flex items-center">
+            <MdCheck className="w-4 h-4 mr-2" />
+            Added section {crnInput}.
+          </div>,
+          {}
+        );
+      })
+      .catch(() => {
+        toast(
+          <div className="flex items-center">
+            <MdError className="w-4 h-4 mr-2" />
+            Failed to add section {crnInput}.
+          </div>,
+          {}
+        );
+      });
     setCrnInput("");
   };
 
@@ -52,12 +88,13 @@ export default function DashboardHeader({
                 className="flex-1 w-40"
                 placeholder="#####"
                 value={crnInput}
+                required
                 onChange={(e) => setCrnInput(e.target.value)}
                 maxLength={5}
                 inputMode="numeric"
               />
-              <Button>
-                <MdAdd />
+              <Button disabled={isAdding}>
+                {isAdding ? <LoadingCircle /> : <MdAdd />}
               </Button>
             </form>
           </PopoverContent>
@@ -68,7 +105,7 @@ export default function DashboardHeader({
         className={
           isLoading ? "animate-spin opacity-50" : "hover:cursor-pointer"
         }
-        onClick={onRefresh}
+        onClick={fetchSections}
       >
         <MdRefresh className="w-5 h-5" />
       </div>
