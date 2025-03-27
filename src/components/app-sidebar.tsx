@@ -10,17 +10,14 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
+  SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { RiHome3Line, RiSearch2Line, RiSettings2Line } from "react-icons/ri";
 import {
-  Banknote,
-  ChevronDown,
-  Info,
-  MessageCircleQuestion,
-  Phone,
-  Search,
-  Settings,
-} from "lucide-react";
+  RiArrowDownSLine,
+  RiHome3Line,
+  RiSearch2Line,
+  RiSettings2Line,
+} from "react-icons/ri";
 import Image from "next/image";
 import {
   Collapsible,
@@ -44,7 +41,7 @@ function MenuCategory({
         <SidebarGroupLabel asChild>
           <CollapsibleTrigger className="text-white">
             {title}
-            <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
+            <RiArrowDownSLine className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
           </CollapsibleTrigger>
         </SidebarGroupLabel>
         <CollapsibleContent>
@@ -71,12 +68,15 @@ function MenuItem({
   const pathname = usePathname();
 
   return (
-    <SidebarMenuItem>
+    <SidebarMenuItem
+      className={
+        active(pathname)
+          ? "sidebar-selected bg-sidebar-accent"
+          : "sidebar-hover"
+      }
+    >
       <SidebarMenuButton asChild>
-        <Link
-          href={href}
-          className={active(pathname) ? "border-l-2" : undefined}
-        >
+        <Link href={href}>
           {icon}
           <span>{name}</span>
         </Link>
@@ -142,6 +142,7 @@ export function AppSidebar() {
       </SidebarContent>
       <SidebarFooter />
       <SidebarRail />
+      <SidebarTrigger className="transition-opacity border rounded-md bg-gray-50 absolute top-3 opacity-50 hover:opacity-100 -right-10 shadow-lg" />
     </Sidebar>
   );
 }

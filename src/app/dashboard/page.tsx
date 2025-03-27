@@ -30,16 +30,14 @@ export default function Dashboard() {
     <>
       <DashboardHeader />
 
-      <div className="flex flex-col lg:flex-row justify-between lg:flex-wrap gap-y-4">
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:flex-wrap gap-y-4">
         {loadState !== LoadingState.FETCHING ? (
           trackedSections.map((section) => (
             <ClassCell key={section.crn} section={section.section} />
           ))
         ) : (
           <div className="flex justify-center items-center w-full space-y-2">
-            <div className={"inline-block"}>
-              <LoadingCircle />
-            </div>
+            <LoadingCircle />
           </div>
         )}
       </div>

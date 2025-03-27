@@ -6,8 +6,8 @@ import type { Instructor, Section } from "@prisma/client";
 import { usePageTitle } from "@/contexts/title-context";
 import Link from "next/link";
 import { CURRENT_TERM } from "@/lib/utils";
-import { MdHome } from "react-icons/md";
 import LoadingCircle from "@/components/loading-circle";
+import { RiHome3Line } from "react-icons/ri";
 
 const fetchInstructor = async (id: string) => {
   const url = `/api/data/instructors?id=${id}`;
@@ -98,9 +98,9 @@ function InstructorPage() {
         {source === "dashboard" && (
           <Link
             href={"/dashboard"}
-            className="inline-flex self-start gap-x-2 items-center font-bold mb-4 hover:underline"
+            className="inline-flex self-start gap-x-2 items-center font-bold mb-4 group"
           >
-            <MdHome />
+            <RiHome3Line className="w-4 h-4 group-hover:w-5 group-hover:h-5 transition-all" />
             Back to Dashboard
           </Link>
         )}

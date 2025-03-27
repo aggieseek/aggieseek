@@ -5,10 +5,15 @@ import { NotificationSettings } from "@prisma/client";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { FaDiscord, FaPhone, FaEnvelope, FaBell } from "react-icons/fa6";
 import { Separator } from "@/components/ui/separator";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useSession } from "next-auth/react";
+import {
+  RiDiscordFill,
+  RiMailOpenFill,
+  RiNotification2Fill,
+  RiPhoneFill,
+} from "react-icons/ri";
 
 async function getDataFromRoute(endpoint: string) {
   try {
@@ -75,14 +80,14 @@ export default function NotificationsTab() {
     <div className={"flex flex-col gap-y-8 md:gap-y-6 pt-4"}>
       <div className="flex flex-col gap-2">
         <Label className={"flex gap-x-2"}>
-          <FaEnvelope />
+          <RiMailOpenFill />
           Email Address
         </Label>
         <Input className={"w-64"} value={session?.user?.email || ""} disabled />
       </div>
       <div className="flex flex-col gap-2">
         <Label className={"flex gap-x-2"}>
-          <FaPhone />
+          <RiPhoneFill />
           Phone Number
         </Label>
         <Input
@@ -95,7 +100,7 @@ export default function NotificationsTab() {
       </div>
       <div className=" flex flex-col gap-2">
         <Label htmlFor={"webhook"} className={"flex gap-x-2"}>
-          <FaDiscord />
+          <RiDiscordFill />
           Discord Webhooks
         </Label>
         <div className={"flex rounded-md flex-col border p-4 gap-y-4"}>
@@ -140,7 +145,7 @@ export default function NotificationsTab() {
       <div className=" flex flex-col gap-2">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2">
           <Label className={"flex gap-x-2 mb-2"}>
-            <FaBell />
+            <RiNotification2Fill />
             Notification Preferences
           </Label>
           <div className="flex gap-4 text-neutral-500 text-sm font-semibold">

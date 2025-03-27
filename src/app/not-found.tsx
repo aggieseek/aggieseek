@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { MdOutlineHome } from "react-icons/md";
+import { RiHome3Line } from "react-icons/ri";
 
 export default function NotFound() {
   return (
@@ -9,7 +9,7 @@ export default function NotFound() {
         href="/"
         className="font-medium flex gap-x-2 items-center text-sm hover:underline"
       >
-        <MdOutlineHome className="w-5 h-5" />
+        <RiHome3Line className="w-5 h-5" />
         Return Home
       </Link>
 

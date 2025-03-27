@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { FaUser, FaBook, FaGraduationCap } from "react-icons/fa6";
+import { RiBook2Fill, RiGraduationCapFill, RiUserFill } from "react-icons/ri";
 
 async function getDataFromRoute(endpoint: string) {
   try {
@@ -34,16 +34,16 @@ export default function ProfileTab() {
 
   return (
     <div className={"flex flex-col gap-y-6 pt-4"}>
-      <div className=" flex flex-col gap-2">
+      <div className="flex flex-col gap-2">
         <Label className=" flex gap-x-2">
-          <FaUser />
+          <RiUserFill />
           Name
         </Label>
         <Input className="w-64" placeholder={"First Last"} />
       </div>
-      <div className=" flex flex-col gap-2">
+      <div className="flex flex-col gap-2">
         <Label className=" flex gap-x-2">
-          <FaGraduationCap />
+          <RiGraduationCapFill />
           Class
         </Label>
         <div className="w-64">
@@ -63,7 +63,7 @@ export default function ProfileTab() {
       </div>
       <div className=" flex flex-col gap-2">
         <Label className=" flex gap-x-2">
-          <FaBook />
+          <RiBook2Fill />
           Major
         </Label>
         <div className=" min-w-64 max-w-96">

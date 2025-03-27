@@ -1,0 +1,2291 @@
+[
+  {
+    "number": 1602,
+    "abbreviation": "ORPK",
+    "name": "1111 Research Parkway Bldg",
+    "location": "Research Park",
+    "coverage": 100
+  },
+  {
+    "number": 1599,
+    "abbreviation": "TPRK",
+    "name": "2 Research Park",
+    "location": "Research Park",
+    "coverage": 100
+  },
+  {
+    "number": 2912,
+    "abbreviation": "MTRO",
+    "name": "3833 Texas Ave (Metro Center)",
+    "location": "Local Lease Area",
+    "coverage": 100
+  },
+  {
+    "number": 2941,
+    "abbreviation": "HMP2",
+    "name": "402 Harvey Mitchell (Valley Park II)",
+    "location": "Local Lease Area",
+    "coverage": 100
+  },
+  {
+    "number": 2917,
+    "abbreviation": "TRSV",
+    "name": "702 E University Bldg E",
+    "location": "Local Lease Area",
+    "coverage": 100
+  },
+  {
+    "number": 2939,
+    "abbreviation": "UNID",
+    "name": "702 E. University, Bldg D",
+    "location": "Local Lease Area",
+    "coverage": 100
+  },
+  {
+    "number": 462,
+    "abbreviation": "ACAD",
+    "name": "Academic Building",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1461,
+    "abbreviation": "ACTR",
+    "name": "Activity Building",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 448,
+    "abbreviation": "BAND",
+    "name": "Adams Band Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 4430,
+    "abbreviation": "TBC#",
+    "name": "AG Comm Print Ctr & Storage Bldg",
+    "location": "RELLIS Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1034,
+    "abbreviation": "AEPM",
+    "name": "AG Engineering Power & Machinery Building",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1535,
+    "abbreviation": "AGLS",
+    "name": "Agriculture and Life Sciences Building",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 3410,
+    "abbreviation": "FORH",
+    "name": "AgriLife Extension 4-H State Headquarters",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1536,
+    "abbreviation": "AGHD",
+    "name": "AgriLife Services Building",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 954,
+    "abbreviation": "AGRL",
+    "name": "Agronomy Field Lab",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 472,
+    "abbreviation": "ANIN",
+    "name": "AI Engineering Building",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1607,
+    "abbreviation": "BSHA",
+    "name": "Allen Building",
+    "location": "Bush Library",
+    "coverage": 100
+  },
+  {
+    "number": 1608,
+    "abbreviation": "BSHC",
+    "name": "Annenberg Presidential Conference Center",
+    "location": "Bush Library",
+    "coverage": 100
+  },
+  {
+    "number": 477,
+    "abbreviation": "ANTH",
+    "name": "Anthropology Building",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 293,
+    "abbreviation": "APPL",
+    "name": "Appelt Residence Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 359,
+    "abbreviation": "LANB",
+    "name": "Architecture Building B",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 432,
+    "abbreviation": "LANC",
+    "name": "Architecture Building C",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 447,
+    "abbreviation": "ASTN",
+    "name": "Aston Residence Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 7007,
+    "abbreviation": "ARRA",
+    "name": "Automated Fabrication and Design Lab",
+    "location": "RELLIS Campus",
+    "coverage": 100
+  },
+  {
+    "number": 965,
+    "abbreviation": "BEAS",
+    "name": "Beasley Laboratory",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 3199,
+    "abbreviation": "DCCT",
+    "name": "Becky Gates Children's Center",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 3190,
+    "abbreviation": "",
+    "name": "Becky Gates Children's Center Multipurpose Bldg",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 4002,
+    "abbreviation": "BEEF",
+    "name": "Beef Cattle Center Headquarters",
+    "location": "O.D. BUTLER, JR. Animal Sci",
+    "coverage": 100
+  },
+  {
+    "number": 520,
+    "abbreviation": "BEUT",
+    "name": "Beutel Health Center",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1507,
+    "abbreviation": "BICH",
+    "name": "Biochemistry/Biophysics Building",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1146,
+    "abbreviation": "BLCF",
+    "name": "Biological Control Facility",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 467,
+    "abbreviation": "BSBE",
+    "name": "Biological Sciences Bldg East",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 449,
+    "abbreviation": "BSBW",
+    "name": "Biological Sciences Bldg West",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 416,
+    "abbreviation": "BIZL",
+    "name": "Bizzell Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 524,
+    "abbreviation": "BLOC",
+    "name": "Blocker Building",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 480,
+    "abbreviation": "BLTN",
+    "name": "Bolton Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1513,
+    "abbreviation": "PLNT",
+    "name": "Borlaug Center for Southern Crop Improvement",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 402,
+    "abbreviation": "BRIG",
+    "name": "Briggs Hall - Dorm 3",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 353,
+    "abbreviation": "HRBB",
+    "name": "Bright Building",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 361,
+    "abbreviation": "SZNE",
+    "name": "Bright Football Complex",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 3099,
+    "abbreviation": "TADD",
+    "name": "Business Management Services Building",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 465,
+    "abbreviation": "BTLR",
+    "name": "Butler Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1402,
+    "abbreviation": "BLLC",
+    "name": "Buzbee Leadership Learning Center",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1503,
+    "abbreviation": "CMAT",
+    "name": "Cater-Mattil Hall",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 385,
+    "abbreviation": "CVTW",
+    "name": "CE Office Building",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1605,
+    "abbreviation": "CENT",
+    "name": "Centeq Building",
+    "location": "Research Park",
+    "coverage": 100
+  },
+  {
+    "number": 1051,
+    "abbreviation": "ENT1",
+    "name": "Center for Urban and Structural Entomology (CUSE)",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 469,
+    "abbreviation": "CCPG",
+    "name": "Central Campus Parking Garage",
+    "location": "East Campus",
+    "coverage": 15
+  },
+  {
+    "number": 498,
+    "abbreviation": "UTIL",
+    "name": "Central Utility Plant",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 376,
+    "abbreviation": "CHEM",
+    "name": "Chemistry",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 484,
+    "abbreviation": "CHEM",
+    "name": "Chemistry",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 492,
+    "abbreviation": "CVEN",
+    "name": "Civil Engineering Building",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1427,
+    "abbreviation": "LNGG",
+    "name": "Civilian Lounge - A1",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1412,
+    "abbreviation": "LNGH",
+    "name": "Civilian Lounge - A2",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1415,
+    "abbreviation": "LNGI",
+    "name": "Civilian Lounge - A3",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1430,
+    "abbreviation": "LNGK",
+    "name": "Civilian Lounge - C1",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 548,
+    "abbreviation": "CLEM",
+    "name": "Clements Residence Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 461,
+    "abbreviation": "COKE",
+    "name": "Coke Building",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 440,
+    "abbreviation": "COMM",
+    "name": "Commons",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 516,
+    "abbreviation": "CSCE",
+    "name": "Computing Services Center",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 501,
+    "abbreviation": "MATL",
+    "name": "Concrete Materials Laboratory",
+    "location": "East Campus",
+    "coverage": 50
+  },
+  {
+    "number": 69,
+    "abbreviation": "SST3",
+    "name": "Conference Building #1",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 63,
+    "abbreviation": "SST4",
+    "name": "Conference Building #2",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 7064,
+    "abbreviation": "NAUT",
+    "name": "Conservation Projects",
+    "location": "RELLIS Campus",
+    "coverage": 100
+  },
+  {
+    "number": 7063,
+    "abbreviation": "",
+    "name": "Conservation Research Lab",
+    "location": "RELLIS Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1410,
+    "abbreviation": "LNGE",
+    "name": "Corps Lounge - E",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1411,
+    "abbreviation": "LNGF",
+    "name": "Corps Lounge - F",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1066,
+    "abbreviation": "BRED",
+    "name": "Cotton Ginning Lab",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 7065,
+    "abbreviation": "NAUT",
+    "name": "CRL Storage",
+    "location": "RELLIS Campus",
+    "coverage": 100
+  },
+  {
+    "number": 861,
+    "abbreviation": "ENIN",
+    "name": "CUSE-Chemistry",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 1050,
+    "abbreviation": "REAR",
+    "name": "CUSE-Research Labs",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 358,
+    "abbreviation": "FGYM",
+    "name": "Davis Football Player Development Center",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 415,
+    "abbreviation": "DGHL",
+    "name": "Davis-Gary Residence Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 62,
+    "abbreviation": "SST6",
+    "name": "Disability Services Bldg",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 513,
+    "abbreviation": "DRTY",
+    "name": "Doherty Building",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1603,
+    "abbreviation": "FSIS",
+    "name": "Donald L. Houston Building",
+    "location": "Research Park",
+    "coverage": 100
+  },
+  {
+    "number": 517,
+    "abbreviation": "TEAG",
+    "name": "DPC Annex",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 450,
+    "abbreviation": "DUNC",
+    "name": "Duncan Dining Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 442,
+    "abbreviation": "DUNN",
+    "name": "Dunn Residence Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1092,
+    "abbreviation": "HANG",
+    "name": "Easterwood Hangar 1092",
+    "location": "Airport Area",
+    "coverage": 100
+  },
+  {
+    "number": 1620,
+    "abbreviation": "ELEC",
+    "name": "Electron Beam Food Research Facility",
+    "location": "Research Park",
+    "coverage": 50
+  },
+  {
+    "number": 1370,
+    "abbreviation": "ETOC",
+    "name": "Emergency Operations TRNG Center",
+    "location": "Firemen Training School",
+    "coverage": 100
+  },
+  {
+    "number": 270,
+    "abbreviation": "ETB",
+    "name": "Emerging Technologies Building",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 6502,
+    "abbreviation": "ESYL",
+    "name": "Energy Systems Lab",
+    "location": "RELLIS Campus",
+    "coverage": 100
+  },
+  {
+    "number": 460,
+    "abbreviation": "EABA",
+    "name": "Engineering Activities Bldg A",
+    "location": "East Campus",
+    "coverage": 150
+  },
+  {
+    "number": 458,
+    "abbreviation": "EABC",
+    "name": "Engineering Activities Bldg C",
+    "location": "East Campus",
+    "coverage": 150
+  },
+  {
+    "number": "0518",
+    "abbreviation": "ZACH",
+    "name": "Engineering Education Complex/Zachry",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 499,
+    "abbreviation": "PRNT",
+    "name": "Engineering Innovation Center",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 815,
+    "abbreviation": "ENTO",
+    "name": "Entomology Research Lab",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 292,
+    "abbreviation": "EPPR",
+    "name": "Eppright Residence Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 171,
+    "abbreviation": "EQUI",
+    "name": "Equine Initiative Barn",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 174,
+    "abbreviation": "EQUI",
+    "name": "Equine Initiative Concessions/Locker Bldg",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 177,
+    "abbreviation": "EQUI",
+    "name": "Equine Initiative Education Bldg",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 175,
+    "abbreviation": "EQUI",
+    "name": "Equine Initiative Equestrian/Locker Bldg",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 178,
+    "abbreviation": "EQUI",
+    "name": "Equine Initiative Outreach Bldg",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 1358,
+    "abbreviation": "ESTI",
+    "name": "ESTI Business Office",
+    "location": "Firemen Training School",
+    "coverage": 100
+  },
+  {
+    "number": 1345,
+    "abbreviation": "OPCX",
+    "name": "ESTI H. D. Smith Operations Complex",
+    "location": "Firemen Training School",
+    "coverage": 100
+  },
+  {
+    "number": 1144,
+    "abbreviation": "ICLS",
+    "name": "ESTI Industrial Classroom",
+    "location": "Firemen Training School",
+    "coverage": 100
+  },
+  {
+    "number": 344,
+    "abbreviation": "RCFS",
+    "name": "ESTI Recruit Classroom/Fire Station",
+    "location": "Firemen Training School",
+    "coverage": 100
+  },
+  {
+    "number": 468,
+    "abbreviation": "EVAN",
+    "name": "Evans Library",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1156,
+    "abbreviation": "PHPL",
+    "name": "Facilities Services",
+    "location": "Vet School Area",
+    "coverage": 75
+  },
+  {
+    "number": 482,
+    "abbreviation": "FERM",
+    "name": "Fermier Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 958,
+    "abbreviation": "TRAN",
+    "name": "Fleet Services",
+    "location": "Vet School Area",
+    "coverage": 25
+  },
+  {
+    "number": 8525,
+    "abbreviation": "GPLB",
+    "name": "Food Protein R&D Center",
+    "location": "RELLIS Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1042,
+    "abbreviation": "FSLB",
+    "name": "Forest Science Laboratory Building",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 403,
+    "abbreviation": "FOUN",
+    "name": "Fountain Hall - Dorm 4",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 427,
+    "abbreviation": "FOWL",
+    "name": "Fowler Residence Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 476,
+    "abbreviation": "FRAN",
+    "name": "Francis Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 404,
+    "abbreviation": "GAIN",
+    "name": "Gainer Hall - Dorm 5",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1800,
+    "abbreviation": "GSC1",
+    "name": "General Services Complex",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 1246,
+    "abbreviation": "USBG",
+    "name": "Generator Storage Building",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 1561,
+    "abbreviation": "TNIS",
+    "name": "George P. Mitchell '40 Outdoor Tennis Center",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 3051,
+    "abbreviation": "GERG",
+    "name": "GERG East Lab & Office Building",
+    "location": "Local Non-lease",
+    "coverage": 100
+  },
+  {
+    "number": 3050,
+    "abbreviation": "GERG",
+    "name": "GERG Main Office Building",
+    "location": "Local Non-lease",
+    "coverage": 100
+  },
+  {
+    "number": 3053,
+    "abbreviation": "GREM",
+    "name": "GERG Portable Building",
+    "location": "Local Non-lease",
+    "coverage": 100
+  },
+  {
+    "number": 3054,
+    "abbreviation": "GREH",
+    "name": "GERG Warehouse",
+    "location": "Local Non-lease",
+    "coverage": 100
+  },
+  {
+    "number": 1611,
+    "abbreviation": "ERBL",
+    "name": "Giesecke Engineering Research Building",
+    "location": "Research Park",
+    "coverage": 100
+  },
+  {
+    "number": 672,
+    "abbreviation": "GOLF",
+    "name": "Golf Course Clubhouse",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 8901,
+    "abbreviation": "DARS",
+    "name": "GSC Portable Building",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 1699,
+    "abbreviation": "ORMB",
+    "name": "GTE Optical Remote Module (ODM) Facility @ Researc",
+    "location": "Research Park",
+    "coverage": 100
+  },
+  {
+    "number": 1403,
+    "abbreviation": "LEON",
+    "name": "H. Grady Ash, Jr. '58 Leadership Learning Center",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 549,
+    "abbreviation": "HAAS",
+    "name": "Haas Residence Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 490,
+    "abbreviation": "HALB",
+    "name": "Halbouty Geosciences Building",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 407,
+    "abbreviation": "HRRL",
+    "name": "Harrell Hall - Dorm 8",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 438,
+    "abbreviation": "HECC",
+    "name": "Harrington Education Center Classroom Building",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 435,
+    "abbreviation": "EDCT",
+    "name": "Harrington Education Center Office Tower",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 410,
+    "abbreviation": "HARR",
+    "name": "Harrington Hall - Dorm 11",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 417,
+    "abbreviation": "HART",
+    "name": "Hart Residence Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 481,
+    "abbreviation": "HEAT",
+    "name": "Heaton Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1502,
+    "abbreviation": "HPCT",
+    "name": "HEEP Center",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 511,
+    "abbreviation": "HEEP",
+    "name": "HEEP Laboratory Building",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 521,
+    "abbreviation": "HELD",
+    "name": "Heldenfels Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 425,
+    "abbreviation": "HEND",
+    "name": "Henderson Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 3102,
+    "abbreviation": "HMHA",
+    "name": "HIRSHFELD COTTAGE",
+    "location": "Austin",
+    "coverage": 100
+  },
+  {
+    "number": 3103,
+    "abbreviation": "HMHA",
+    "name": "HIRSHFELD GARAGE APT",
+    "location": "Austin",
+    "coverage": 100
+  },
+  {
+    "number": 3101,
+    "abbreviation": "HMHA",
+    "name": "HIRSHFELD MANSION",
+    "location": "Austin",
+    "coverage": 100
+  },
+  {
+    "number": 653,
+    "abbreviation": "HOBB",
+    "name": "Hobby Residence Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 6884,
+    "abbreviation": "BEES",
+    "name": "Honey Bee/Apiary Services Building",
+    "location": "RELLIS Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1506,
+    "abbreviation": "HFSB",
+    "name": "Horticulture/Forest Science Building",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 424,
+    "abbreviation": "HOTD",
+    "name": "Hotard Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 173,
+    "abbreviation": "EQUI",
+    "name": "Houston Livestock Show & Rodeo Western Arena",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 426,
+    "abbreviation": "HUGH",
+    "name": "Hughes Residence Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1416,
+    "abbreviation": "NSRH",
+    "name": "Hullabaloo Residence Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 176,
+    "abbreviation": "EQUI",
+    "name": "Hunt Seat Arena",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 8236,
+    "abbreviation": "IMSR",
+    "name": "Instructional Materials Serv",
+    "location": "RELLIS Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1530,
+    "abbreviation": "ILSB",
+    "name": "Interdisciplinary Life Sciences Building",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 386,
+    "abbreviation": "JEBB",
+    "name": "Jack E. Brown Chemical Engineering Building",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 473,
+    "abbreviation": "SYST",
+    "name": "Jack K. Williams Administration Building",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 391,
+    "abbreviation": "ENPH",
+    "name": "James J. Cain '51 Building",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 387,
+    "abbreviation": "RICH",
+    "name": "Joe C. Richardson Petroleum Engineering Building",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 393,
+    "abbreviation": "PRES",
+    "name": "John H. Lindsey Building",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1565,
+    "abbreviation": "WCTF",
+    "name": "Johnson Track & Field",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 8520,
+    "abbreviation": "JLFB",
+    "name": "Joint Library Facility with UT",
+    "location": "RELLIS Campus",
+    "coverage": 50
+  },
+  {
+    "number": 1566,
+    "abbreviation": "WCTF",
+    "name": "Julia And Mark Ellis '79 Soccer Building",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 428,
+    "abbreviation": "KEAT",
+    "name": "Keathley Residence Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 401,
+    "abbreviation": "KIES",
+    "name": "Kiest Hall - Dorm 2",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1274,
+    "abbreviation": "WTEB",
+    "name": "Klebanoff-Saric Wind Tunnel (Unsteady Wind Tunnel)",
+    "location": "Airport Area",
+    "coverage": 100
+  },
+  {
+    "number": 1501,
+    "abbreviation": "KLCT",
+    "name": "Kleberg Center",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 383,
+    "abbreviation": "STSB",
+    "name": "Koldus Building",
+    "location": "East Campus",
+    "coverage": 95
+  },
+  {
+    "number": 441,
+    "abbreviation": "KRUG",
+    "name": "Krueger Residence Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 367,
+    "abbreviation": "ZONE",
+    "name": "Kyle Field",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 972,
+    "abbreviation": "LARR",
+    "name": "Laboratory Animal Care Building",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 405,
+    "abbreviation": "LACY",
+    "name": "Lacy Hall - Dorm 6",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 398,
+    "abbreviation": "LANG",
+    "name": "Langford Architecture Center Building A",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1450,
+    "abbreviation": "",
+    "name": "Laundry @ The Gardens",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 294,
+    "abbreviation": "LECH",
+    "name": "Lechner Residence Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 419,
+    "abbreviation": "LEGT",
+    "name": "Legett Residence Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 406,
+    "abbreviation": "LEON",
+    "name": "Leonard Hall - Dorm 7",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 275,
+    "abbreviation": "LAAH",
+    "name": "Liberal Arts and Arts & Humanities Building",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 550,
+    "abbreviation": "MCFD",
+    "name": "McFadden Residence Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1547,
+    "abbreviation": "IFUT",
+    "name": "McFerrin Athletic Center-Indoor Football",
+    "location": "East Campus",
+    "coverage": 30
+  },
+  {
+    "number": 1548,
+    "abbreviation": "IRUN",
+    "name": "McFerrin Athletic Center-Indoor Track",
+    "location": "East Campus",
+    "coverage": 30
+  },
+  {
+    "number": 1262,
+    "abbreviation": "MCKN",
+    "name": "McKenzie Terminal Building",
+    "location": "Airport Area",
+    "coverage": 50
+  },
+  {
+    "number": 392,
+    "abbreviation": "EPOF",
+    "name": "Mechanical Engineering Office Building",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1509,
+    "abbreviation": "MEDL",
+    "name": "Medical Sciences Library",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 470,
+    "abbreviation": "HIST",
+    "name": "Melbern G. Glasscock Building",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 454,
+    "abbreviation": "MSCE",
+    "name": "Memorial Student Center",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 456,
+    "abbreviation": "MILS",
+    "name": "Military Sciences Building",
+    "location": "East Campus",
+    "coverage": 150
+  },
+  {
+    "number": 420,
+    "abbreviation": "MILN",
+    "name": "Milner Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 296,
+    "abbreviation": "SILO",
+    "name": "Mitchell Inst for Fundamental Phys & Astronomy",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 297,
+    "abbreviation": "MICH",
+    "name": "Mitchell Physics Building",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1569,
+    "abbreviation": "TNIS",
+    "name": "Mitchell Tennis Center Ticket Booth",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 519,
+    "abbreviation": "KAMU",
+    "name": "Moore Communications Center",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 3200,
+    "abbreviation": "STHQ",
+    "name": "Moore-Connally Building",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 412,
+    "abbreviation": "MOSE",
+    "name": "Moses Residence Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 433,
+    "abbreviation": "MOSH",
+    "name": "Mosher Residence Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1043,
+    "abbreviation": "MRBL",
+    "name": "Mosquito Research Lab",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 1911,
+    "abbreviation": "MSRB",
+    "name": "Multi-Species Research Building",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 514,
+    "abbreviation": "MASS",
+    "name": "Munnerlyn Astronomy & Space Sciences Engineering",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 506,
+    "abbreviation": "NGLE",
+    "name": "Nagle Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1910,
+    "abbreviation": "NCTM",
+    "name": "National Center for Therapeutics Manufacturing",
+    "location": "Vet School Area",
+    "coverage": 50
+  },
+  {
+    "number": 1271,
+    "abbreviation": "WTSB",
+    "name": "Nat'l Aerothermochemistry Lab, Bldg 2",
+    "location": "Airport Area",
+    "coverage": 100
+  },
+  {
+    "number": 652,
+    "abbreviation": "NEEL",
+    "name": "Neeley Residence Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 759,
+    "abbreviation": "WIND",
+    "name": "Nicks Low Speed Wind Tunnel",
+    "location": "Airport Area",
+    "coverage": 100
+  },
+  {
+    "number": 388,
+    "abbreviation": "NSPK",
+    "name": "Northside Parking Garage",
+    "location": "East Campus",
+    "coverage": 15
+  },
+  {
+    "number": 1525,
+    "abbreviation": "NMRF",
+    "name": "Nuclear Magnetic Resonance Facility",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1095,
+    "abbreviation": "NUCK",
+    "name": "Nuclear Science Cntr",
+    "location": "Airport Area",
+    "coverage": 100
+  },
+  {
+    "number": 1027,
+    "abbreviation": "",
+    "name": "Nursery Floral Field Laboratory",
+    "location": "East Campus",
+    "coverage": 50
+  },
+  {
+    "number": 443,
+    "abbreviation": "OCME",
+    "name": "Oceanography & Meteorology Building",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1810,
+    "abbreviation": "TXSC",
+    "name": "Office of the State Chemist Building",
+    "location": "Vet School Area",
+    "coverage": 60
+  },
+  {
+    "number": 1604,
+    "abbreviation": "OTRC",
+    "name": "Offshore Technology Research Center",
+    "location": "Research Park",
+    "coverage": 100
+  },
+  {
+    "number": 1550,
+    "abbreviation": "OLSN",
+    "name": "Olsen Field at Bluebell Park",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1570,
+    "abbreviation": "TNIS",
+    "name": "Omar Smith Instructional Tennis Center",
+    "location": "West Campus",
+    "coverage": 150
+  },
+  {
+    "number": 356,
+    "abbreviation": "ZBOX",
+    "name": "Parking Booth At PA35",
+    "location": "East Campus",
+    "coverage": 75
+  },
+  {
+    "number": 471,
+    "abbreviation": "PAVL",
+    "name": "Pavilion",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1556,
+    "abbreviation": "PENB",
+    "name": "Penberthy Intramural Sports Center",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1578,
+    "abbreviation": "PRSP",
+    "name": "Penberthy RecSports Pavilion",
+    "location": "West Campus",
+    "coverage": 150
+  },
+  {
+    "number": 956,
+    "abbreviation": "PPAT",
+    "name": "Perennial Grass Breeding and Genetics",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 444,
+    "abbreviation": "PETR",
+    "name": "Peterson Building",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1540,
+    "abbreviation": "PEAP",
+    "name": "Physical Education Activity Program Building",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1239,
+    "abbreviation": "OBSV",
+    "name": "Physics Teaching Observatory",
+    "location": "Airport Area",
+    "coverage": 100
+  },
+  {
+    "number": 1203,
+    "abbreviation": "PSNP",
+    "name": "Poultry Sci Nutrition & Phys",
+    "location": "Airport Area",
+    "coverage": 100
+  },
+  {
+    "number": 1201,
+    "abbreviation": "POSC",
+    "name": "Poultry Science Headquarters",
+    "location": "Airport Area",
+    "coverage": 100
+  },
+  {
+    "number": 634,
+    "abbreviation": "PREZ",
+    "name": "President's Residence",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1508,
+    "abbreviation": "AREL",
+    "name": "Price Hobgood Ag. Engineering Research Lab",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 463,
+    "abbreviation": "PSYC",
+    "name": "Psychology Building",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 957,
+    "abbreviation": "PRCH",
+    "name": "Purchasing & Stores",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 1183,
+    "abbreviation": "RANG",
+    "name": "Range Science Field Lab",
+    "location": "Airport Area",
+    "coverage": 100
+  },
+  {
+    "number": 1554,
+    "abbreviation": "RENA",
+    "name": "Reed Arena",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1161,
+    "abbreviation": "REED",
+    "name": "Reed House",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 436,
+    "abbreviation": "RDMC",
+    "name": "Reed-McDonald Building",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 64,
+    "abbreviation": "SST5",
+    "name": "Residence Life Bldg",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1610,
+    "abbreviation": "CSTL",
+    "name": "Reta and Bill Haynes '46 Coastal Engineering Lab",
+    "location": "Research Park",
+    "coverage": 80
+  },
+  {
+    "number": 1238,
+    "abbreviation": "OBSR",
+    "name": "Robotic Observatory",
+    "location": "Airport Area",
+    "coverage": 100
+  },
+  {
+    "number": 1804,
+    "abbreviation": "RENT",
+    "name": "Rollins Urban and Structural Entomology Facility",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 1505,
+    "abbreviation": "MSTC",
+    "name": "Rosenthal Meat Science & Technology Center",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 291,
+    "abbreviation": "RDHL",
+    "name": "Rudder Residence Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 446,
+    "abbreviation": "RUDD",
+    "name": "Rudder Tower",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 384,
+    "abbreviation": "CORP",
+    "name": "Sam Houston Sanders Corps of Cadets Center",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1498,
+    "abbreviation": "WST1",
+    "name": "Satellite Utility Plant No. 1",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1499,
+    "abbreviation": "WST2",
+    "name": "Satellite Utility Plant No. 2",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 377,
+    "abbreviation": "SUP3",
+    "name": "Satellite Utility Plant No. 3",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 495,
+    "abbreviation": "SBSA",
+    "name": "Sbisa Dining Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 165,
+    "abbreviation": "SEBH",
+    "name": "Schubot Exotic Bird Health Center",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 430,
+    "abbreviation": "SCHU",
+    "name": "Schuhmacher Residence Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 2944,
+    "abbreviation": "SCIP",
+    "name": "Science Park Bldg (Suite 700)",
+    "location": "Local Lease Area",
+    "coverage": 20
+  },
+  {
+    "number": 478,
+    "abbreviation": "SCTS",
+    "name": "Scoates Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1567,
+    "abbreviation": "WCTF",
+    "name": "Softball Building",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 378,
+    "abbreviation": "SPRK",
+    "name": "South Side Parking Garage",
+    "location": "East Campus",
+    "coverage": 5
+  },
+  {
+    "number": 400,
+    "abbreviation": "SPEN",
+    "name": "Spence Hall - Dorm 1",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 464,
+    "abbreviation": "STCH",
+    "name": "State Chemist Building",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 66,
+    "abbreviation": "SCT8",
+    "name": "Student Counseling Service Bldg #1",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 67,
+    "abbreviation": "SCT9",
+    "name": "Student Counseling Service Bldg #2",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 65,
+    "abbreviation": "SCT7",
+    "name": "Student Counseling Service Reception Bldg",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 70,
+    "abbreviation": "SST1",
+    "name": "Student Life Bldg #1",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 68,
+    "abbreviation": "SST2",
+    "name": "Student Life Bldg #2",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1560,
+    "abbreviation": "STRC",
+    "name": "Student Recreation Center",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 457,
+    "abbreviation": "TAES",
+    "name": "TAES Annex Building",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 3801,
+    "abbreviation": "LAWS",
+    "name": "TAMU Law - Sheraton Fort Worth",
+    "location": "Ft. Worth",
+    "coverage": 100
+  },
+  {
+    "number": 3802,
+    "abbreviation": "LAWS",
+    "name": "TAMU Law - Star-Telegram",
+    "location": "Ft. Worth",
+    "coverage": 100
+  },
+  {
+    "number": 445,
+    "abbreviation": "TEAG",
+    "name": "Teague Research Center",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 2922,
+    "abbreviation": "GRP2",
+    "name": "TEES State Headquarters Bldg",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 7752,
+    "abbreviation": "WGYM",
+    "name": "TEEX - PS&S Gym",
+    "location": "RELLIS Campus",
+    "coverage": 100
+  },
+  {
+    "number": 7751,
+    "abbreviation": "GPFA",
+    "name": "TEEX - PS&S Office Bldg",
+    "location": "RELLIS Campus",
+    "coverage": 100
+  },
+  {
+    "number": 7240,
+    "abbreviation": "RWDC",
+    "name": "TEEX Copy Center",
+    "location": "RELLIS Campus",
+    "coverage": 100
+  },
+  {
+    "number": 6030,
+    "abbreviation": "TUTH",
+    "name": "TEEX Hangar/Classrooms",
+    "location": "RELLIS Campus",
+    "coverage": 100
+  },
+  {
+    "number": 8000,
+    "abbreviation": "RCET",
+    "name": "TEEX ITSI Garage & Offices",
+    "location": "RELLIS Campus",
+    "coverage": 100
+  },
+  {
+    "number": 7900,
+    "abbreviation": "TOES",
+    "name": "TEEX ITSI Offices",
+    "location": "RELLIS Campus",
+    "coverage": 100
+  },
+  {
+    "number": 8004,
+    "abbreviation": "TXWW",
+    "name": "TEEX ITSI Offices - Water Lab",
+    "location": "RELLIS Campus",
+    "coverage": 100
+  },
+  {
+    "number": 7439,
+    "abbreviation": "RSFH",
+    "name": "Telecommunications Optical Remote Bldg-Riverside",
+    "location": "RELLIS Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1900,
+    "abbreviation": "TIGM",
+    "name": "Texas A&M Institute For Genomic Medicine",
+    "location": "Vet School Area",
+    "coverage": 50
+  },
+  {
+    "number": 1904,
+    "abbreviation": "TIPS",
+    "name": "Texas A&M Institute for Preclinical Studies A",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 1905,
+    "abbreviation": "TIPS",
+    "name": "Texas A&M Institute for Preclinical Studies B",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 1906,
+    "abbreviation": "TIPS",
+    "name": "Texas A&M Institute for Preclinical Studies C",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 3800,
+    "abbreviation": "LAWS",
+    "name": "Texas A&M Law School Building",
+    "location": "Ft. Worth",
+    "coverage": 100
+  },
+  {
+    "number": 3205,
+    "abbreviation": "SAGO",
+    "name": "Texas A&M System Agency Office Building",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1538,
+    "abbreviation": "AGVC",
+    "name": "The AgriLife Center",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1454,
+    "abbreviation": "UABF",
+    "name": "The Gardens F",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1455,
+    "abbreviation": "UABG",
+    "name": "The Gardens G",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1456,
+    "abbreviation": "UABH",
+    "name": "The Gardens H",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1451,
+    "abbreviation": "UABJ",
+    "name": "The Gardens J",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1452,
+    "abbreviation": "UABK",
+    "name": "The Gardens K",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1453,
+    "abbreviation": "UABL",
+    "name": "The Gardens L",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1457,
+    "abbreviation": "UABM",
+    "name": "The Gardens M",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1458,
+    "abbreviation": "UABN",
+    "name": "The Gardens N",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1459,
+    "abbreviation": "UABP",
+    "name": "The Gardens P",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1460,
+    "abbreviation": "UABQ",
+    "name": "The Gardens Q",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 483,
+    "abbreviation": "THOM",
+    "name": "Thompson Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1557,
+    "abbreviation": "WCTF",
+    "name": "Track & Field CTR Ticket Booth",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1555,
+    "abbreviation": "",
+    "name": "Track & Field Support Center",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1720,
+    "abbreviation": "",
+    "name": "Traditions Golf Learning Center",
+    "location": "RELLIS Campus",
+    "coverage": 100
+  },
+  {
+    "number": 969,
+    "abbreviation": "BUSO",
+    "name": "Transit Services",
+    "location": "Vet School Area",
+    "coverage": 50
+  },
+  {
+    "number": 7091,
+    "abbreviation": "TTIS",
+    "name": "TTI Office Building",
+    "location": "RELLIS Campus",
+    "coverage": 25
+  },
+  {
+    "number": 8510,
+    "abbreviation": "ENRG",
+    "name": "TTI Pavements Research Facility",
+    "location": "RELLIS Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1298,
+    "abbreviation": "TURB",
+    "name": "Turbo Lab Support Building",
+    "location": "Airport Area",
+    "coverage": 100
+  },
+  {
+    "number": 1299,
+    "abbreviation": "TURB",
+    "name": "Turbomachinery Laboratory",
+    "location": "Airport Area",
+    "coverage": 100
+  },
+  {
+    "number": 979,
+    "abbreviation": "TURF",
+    "name": "Turfgrass Field Lab",
+    "location": "Vet School Area",
+    "coverage": 50
+  },
+  {
+    "number": 4542,
+    "abbreviation": "WILD",
+    "name": "TVMC-Wildlife & Exotic Animals",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 394,
+    "abbreviation": "UNDW",
+    "name": "Underwood Residence Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 3198,
+    "abbreviation": "UACC",
+    "name": "University Apartments Community Center",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 3197,
+    "abbreviation": "UACM",
+    "name": "University Apts Community Maintenance Bldg",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 379,
+    "abbreviation": "CCPG",
+    "name": "University Center Parking Garage",
+    "location": "East Campus",
+    "coverage": 15
+  },
+  {
+    "number": 3400,
+    "abbreviation": "TIPL",
+    "name": "University Services Building",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 2929,
+    "abbreviation": "PROD",
+    "name": "USAR Gateway Facility",
+    "location": "Local Non-lease",
+    "coverage": 100
+  },
+  {
+    "number": 411,
+    "abbreviation": "UTAY",
+    "name": "Utay Hall - Dorm 12",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1497,
+    "abbreviation": "PPUT",
+    "name": "Utilities & Energy Services Business Office",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 496,
+    "abbreviation": "PPBG",
+    "name": "Utilities & Energy Services Central Office",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1089,
+    "abbreviation": "OWWF",
+    "name": "Utilities & Energy Services Energy Office",
+    "location": "Airport Area",
+    "coverage": 100
+  },
+  {
+    "number": 1244,
+    "abbreviation": "ULYO",
+    "name": "Utilities Inventory Warehouse Building 1",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 4634,
+    "abbreviation": "SEED",
+    "name": "Variety Testing and Sorghum Breeding",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 1568,
+    "abbreviation": "WCTF",
+    "name": "Varsity Soccer Press Box",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 357,
+    "abbreviation": "PAVL",
+    "name": "Vending Machine Booth",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 507,
+    "abbreviation": "VMHO",
+    "name": "Veterinary Medical Sciences Building",
+    "location": "Vet School Area",
+    "coverage": 50
+  },
+  {
+    "number": 1812,
+    "abbreviation": "VENI",
+    "name": "Veterinary Medicine Building 1",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 1813,
+    "abbreviation": "VIDI",
+    "name": "Veterinary Medicine Building 2",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 1814,
+    "abbreviation": "VICI",
+    "name": "Veterinary Medicine Building 3",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 508,
+    "abbreviation": "VMDC",
+    "name": "Veterinary Teaching Hospital",
+    "location": "Vet School Area",
+    "coverage": 50
+  },
+  {
+    "number": 630,
+    "abbreviation": "VPRZ",
+    "name": "Vice President's Residence",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1047,
+    "abbreviation": "VVRL",
+    "name": "Virus-Vector Research Lab",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 1020,
+    "abbreviation": "VIVR",
+    "name": "Vivarium III",
+    "location": "Vet School Area",
+    "coverage": 100
+  },
+  {
+    "number": 422,
+    "abbreviation": "WALT",
+    "name": "Walton Residence Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1157,
+    "abbreviation": "PPWH",
+    "name": "Warehouse",
+    "location": "Vet School Area",
+    "coverage": 75
+  },
+  {
+    "number": 8512,
+    "abbreviation": "NUCR",
+    "name": "Warehouse",
+    "location": "RELLIS Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1510,
+    "abbreviation": "WHEN",
+    "name": "Wehner Building",
+    "location": "West Campus",
+    "coverage": 150
+  },
+  {
+    "number": 290,
+    "abbreviation": "WELL",
+    "name": "Wells Residence Hall",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1511,
+    "abbreviation": "BUSL",
+    "name": "West Campus Library Facility",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1559,
+    "abbreviation": "WCPG",
+    "name": "West Campus Parking Garage",
+    "location": "West Campus",
+    "coverage": 5
+  },
+  {
+    "number": 4001,
+    "abbreviation": "GRWV",
+    "name": "White (G.R.) Conference Center",
+    "location": "O.D. BUTLER, JR. Animal Sci Tea",
+    "coverage": "c 100"
+  },
+  {
+    "number": 1590,
+    "abbreviation": "WCAA",
+    "name": "White Creek Apartments #1",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1591,
+    "abbreviation": "WCAB",
+    "name": "White Creek Apartments #2",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1592,
+    "abbreviation": "WCAC",
+    "name": "White Creek Apartments #3",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1589,
+    "abbreviation": "WCCA",
+    "name": "White Creek Apartments Activity Center",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 409,
+    "abbreviation": "WHIT",
+    "name": "White Hall - Dorm 10",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 408,
+    "abbreviation": "WHTL",
+    "name": "Whitely Hall - Dorm 9",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 1562,
+    "abbreviation": "WCTF",
+    "name": "Wireless Telecommunications Facility",
+    "location": "West Campus",
+    "coverage": 100
+  },
+  {
+    "number": 682,
+    "abbreviation": "WERC",
+    "name": "Wisenbaker Engineering Building",
+    "location": "East Campus",
+    "coverage": 100
+  },
+  {
+    "number": 474,
+    "abbreviation": "YMCA",
+    "name": "YMCA Building",
+    "location": "East Campus",
+    "coverage": 100
+  }
+]

@@ -1,5 +1,29 @@
 import { IScheduleHowdy } from "@/lib/types/howdy-types";
 import { cn } from "@/lib/utils";
+import buildings from "../../public/data/buildings.json";
+
+function BuildingLink({ building }: { building: string }) {
+  const abbreviation = building.split(" ")[0];
+  const code = buildings.find(
+    (bld) => bld.abbreviation === abbreviation
+  )?.number;
+  const link = code ? `https://aggiemap.tamu.edu/?bldg=${code}` : null;
+
+  if (link === null) {
+    return <div>{building}</div>;
+  }
+
+  return (
+    <a
+      className="underline-anim self-start"
+      target="_blank"
+      rel="noopener noreferrer"
+      href={link}
+    >
+      {building}
+    </a>
+  );
+}
 
 function DayBox({ active, title }: { active: boolean; title: string }) {
   return (
@@ -64,9 +88,9 @@ export default function ScheduleDisplay({
                   </p>
                 )}
                 {schedule.SSRMEET_BLDG_CODE && (
-                  <p>
-                    {schedule.SSRMEET_BLDG_CODE} {schedule.SSRMEET_ROOM_CODE}
-                  </p>
+                  <BuildingLink
+                    building={`${schedule.SSRMEET_BLDG_CODE} ${schedule.SSRMEET_ROOM_CODE}`}
+                  />
                 )}
               </div>
             </td>
