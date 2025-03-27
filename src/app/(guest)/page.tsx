@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getSession, signIn } from "next-auth/react";
 import { useEffect, useState } from "react";
@@ -9,6 +8,7 @@ import { Session } from "next-auth";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import TestimonialCard from "@/components/testimonial-card";
+import { RiCheckFill, RiErrorWarningFill } from "react-icons/ri";
 
 export default function Home() {
   const [session, setSession] = useState<Session | null | undefined>(undefined);
@@ -21,7 +21,15 @@ export default function Home() {
 
   return (
     <div className="">
-      <div className="flex flex-col lg:flex-row mt-8 lg:mt-24 pl-8 lg:pl-24 gap-8">
+      <div className="border border-red-200 flex items-center font-semibold gap-x-3 bg-red-100 p-4 rounded-lg m-12 ">
+        <RiErrorWarningFill className="w-5 h-5" />
+        <div>
+          AggieSeek is currently in beta! Many important features such as SMS
+          notifications and class searching may not be available.
+        </div>
+      </div>
+
+      <div className="flex flex-col lg:flex-row mt-8 lg:mt-12 pl-8 lg:pl-24 gap-8">
         <div className="mt-10 mr-10">
           <Image
             src={"/images/logo-black.png"}
@@ -37,17 +45,17 @@ export default function Home() {
 
           <div className={"flex flex-col gap-y-2 my-8 "}>
             <div className={"flex gap-x-4 items-center"}>
-              <Check className={"w-5 h-5"} />
+              <RiCheckFill className={"w-5 h-5"} />
               <p>Notify you when courses open</p>
             </div>
 
             <div className={"flex gap-x-4 items-center"}>
-              <Check className={"w-5 h-5"} />
+              <RiCheckFill className={"w-5 h-5"} />
               <p>View course and instructor history</p>
             </div>
 
             <div className={"flex gap-x-4 items-center"}>
-              <Check className={"w-5 h-5"} />
+              <RiCheckFill className={"w-5 h-5"} />
               <p>Take your mind off of registration</p>
             </div>
           </div>

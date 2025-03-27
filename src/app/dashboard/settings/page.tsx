@@ -48,7 +48,7 @@ export default function Settings() {
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="notifications">Notifications</SelectItem>
-            <SelectItem value="profile">Profile</SelectItem>
+            {/* <SelectItem value="profile">Profile</SelectItem> */}
             <SelectItem value="account">Account</SelectItem>
           </SelectContent>
         </Select>
@@ -58,7 +58,7 @@ export default function Settings() {
         <Tabs value={activeTab} onValueChange={handleValueChange}>
           <TabsList className="">
             <TabsTrigger value="notifications">Notifications</TabsTrigger>
-            <TabsTrigger value="profile">Profile</TabsTrigger>
+            {/* <TabsTrigger value="profile">Profile</TabsTrigger> */}
             <TabsTrigger value="account">Account</TabsTrigger>
           </TabsList>
         </Tabs>

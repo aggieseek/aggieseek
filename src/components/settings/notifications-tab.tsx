@@ -10,6 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useSession } from "next-auth/react";
 import {
   RiDiscordFill,
+  RiErrorWarningFill,
   RiMailOpenFill,
   RiNotification2Fill,
   RiPhoneFill,
@@ -78,6 +79,11 @@ export default function NotificationsTab() {
 
   return (
     <div className={"flex flex-col gap-y-8 md:gap-y-6 pt-4"}>
+      <div className="flex items-center font-semibold gap-x-4 border rounded-lg border-red-200 bg-red-100 p-3">
+        <RiErrorWarningFill className="w-5 h-5" />
+        Only discord webhooks are supported at the moment.
+      </div>
+
       <div className="flex flex-col gap-2">
         <Label className={"flex gap-x-2"}>
           <RiMailOpenFill />
@@ -85,7 +91,7 @@ export default function NotificationsTab() {
         </Label>
         <Input className={"w-64"} value={session?.user?.email || ""} disabled />
       </div>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 hidden">
         <Label className={"flex gap-x-2"}>
           <RiPhoneFill />
           Phone Number
@@ -132,7 +138,7 @@ export default function NotificationsTab() {
               <p
                 onClick={() => deleteWebhook(webhook)}
                 className={
-                  "text-sm hover:line-through hover:cursor-pointer hover:text-red-600 break-words whitespace-normal  "
+                  "text-sm hover:line-through hover:cursor-pointer break-words whitespace-normal  "
                 }
                 key={index}
               >
@@ -142,7 +148,7 @@ export default function NotificationsTab() {
           </div>
         </div>
       </div>
-      <div className=" flex flex-col gap-2">
+      <div className=" flex flex-col gap-2 hidden">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2">
           <Label className={"flex gap-x-2 mb-2"}>
             <RiNotification2Fill />
@@ -197,6 +203,8 @@ export default function NotificationsTab() {
           </div>
         </div>
       </div>
+
+      <Button className="w-40 hidden">Save Changes</Button>
     </div>
   );
 }
