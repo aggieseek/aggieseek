@@ -204,6 +204,8 @@ export default function NotificationsTab() {
         </div>
       </div>
 
+      <Button></Button>
+
       <Button className="w-40 hidden">Save Changes</Button>
     </div>
   );
