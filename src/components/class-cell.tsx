@@ -67,7 +67,7 @@ export default function ClassCell({ section }: ClassCellProps) {
             {section.subject} {section.course}
           </span>
           <span className="hidden sm:inline">{": "}</span>
-          <span className="text-black inline line-clamp-1 font-bold text-base">
+          <span className="text-black inline line-clamp-1 font-semibold md:text-bold text-sm md:text-base">
             {section.title}
           </span>
         </div>

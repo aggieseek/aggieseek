@@ -18,6 +18,7 @@ import useTrackedSectionsStore, {
 import { FormEvent, useState } from "react";
 import { toast } from "sonner";
 import LoadingCircle from "./loading-circle";
+import { cn } from "@/lib/utils";
 
 export default function DashboardHeader() {
   const { addSection, trackedSections, fetchSections, loadState } =
@@ -105,14 +106,13 @@ export default function DashboardHeader() {
         </div>
       </div>
 
-      <div
-        className={
-          isLoading ? "animate-spin opacity-50" : "hover:cursor-pointer"
-        }
+      <RiRestartLine
         onClick={fetchSections}
-      >
-        <RiRestartLine className="w-5 h-5" />
-      </div>
+        className={cn(
+          "w-5 h-5",
+          isLoading ? "animate-spin opacity-50" : "hover:cursor-pointer"
+        )}
+      />
     </div>
   );
 }

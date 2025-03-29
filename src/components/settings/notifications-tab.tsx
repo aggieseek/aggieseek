@@ -115,6 +115,15 @@ function StatusMessage({ status }: { status: string | null }) {
     );
   }
 
+  if (status == "success") {
+    return (
+      <div className="flex items-center font-semibold gap-x-4 border rounded-lg border-green-200 bg-green-100 p-3">
+        <RiCheckboxCircleFill className="w-5 h-5" />
+        Successfully linked your discord account!
+      </div>
+    );
+  }
+
   if (status == "exists") {
     return (
       <div className="flex items-center font-semibold gap-x-4 border rounded-lg border-red-200 bg-red-100 p-3">
