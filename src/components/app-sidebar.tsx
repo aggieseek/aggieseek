@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/sidebar";
 import {
   RiArrowDownSLine,
+  RiDiscordLine,
   RiHome3Line,
   RiSearch2Line,
   RiSettings2Line,
@@ -57,15 +58,18 @@ function MenuCategory({
 function MenuItem({
   name,
   href,
+  external,
   active = (path) => path.startsWith(href),
   icon,
 }: {
   name: string;
   href: string;
+  external?: boolean;
   active: (path: string) => boolean;
   icon: ReactNode;
 }) {
   const pathname = usePathname();
+  console.log(external);
 
   return (
     <SidebarMenuItem
@@ -76,10 +80,17 @@ function MenuItem({
       }
     >
       <SidebarMenuButton asChild>
-        <Link href={href}>
-          {icon}
-          <span>{name}</span>
-        </Link>
+        {external ? (
+          <a href={href} target="_blank" rel={"noopener noreferrer"}>
+            {icon}
+            <span>{name}</span>
+          </a>
+        ) : (
+          <Link href={href}>
+            {icon}
+            <span>{name}</span>
+          </Link>
+        )}
       </SidebarMenuButton>
     </SidebarMenuItem>
   );
@@ -131,12 +142,19 @@ export function AppSidebar() {
           />
         </MenuCategory>
 
-        <MenuCategory title="Support">
+        <MenuCategory title="Other">
           <MenuItem
             name="Feedback"
             href="/dashboard/feedback"
             active={(path) => path === "/dashboard/feedback"}
             icon={<RiHome3Line />}
+          />
+          <MenuItem
+            name="Discord"
+            external={true}
+            href="https://discord.gg/t4rDRSCXBS"
+            active={() => false}
+            icon={<RiDiscordLine />}
           />
         </MenuCategory>
       </SidebarContent>

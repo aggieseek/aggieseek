@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useState } from "react";
 import { NotificationSettings } from "@prisma/client";
 import { Label } from "@/components/ui/label";
@@ -9,12 +7,17 @@ import { Separator } from "@/components/ui/separator";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useSession } from "next-auth/react";
 import {
+  RiCheckboxCircleFill,
+  RiCheckLine,
   RiDiscordFill,
   RiErrorWarningFill,
   RiMailOpenFill,
   RiNotification2Fill,
   RiPhoneFill,
 } from "react-icons/ri";
+import { useRouter, useSearchParams } from "next/navigation";
+import LoadingCircle from "../loading-circle";
+import { cn } from "@/lib/utils";
 
 async function getDataFromRoute(endpoint: string) {
   try {
@@ -26,13 +29,134 @@ async function getDataFromRoute(endpoint: string) {
   }
 }
 
+function DiscordButton({
+  discordId,
+  setDiscordId,
+}: {
+  discordId: string | undefined;
+  setDiscordId: (value: string | undefined) => void;
+}) {
+  const router = useRouter();
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseEnter = () => setIsHovered(true);
+  const handleMouseLeave = () => setIsHovered(false);
+
+  function handleDisconnect() {
+    fetch("/api/auth/discord/disconnect")
+      .then((res) => {
+        if (res.ok) {
+          getDataFromRoute("/api/users/discord").then((result) => {
+            setDiscordId(result.discordId);
+            router.push("?status=dcsuccess");
+          });
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  const buttonClasses = cn([
+    "transition-all w-max group p-1 pr-4 bg-[#7289da] active:scale-[0.97]",
+    discordId
+      ? "hover:bg-[#7289da] opacity-80 hover:opacity-100"
+      : "hover:bg-[#5b72c3]",
+  ]);
+
+  const buttonText = discordId
+    ? isHovered
+      ? "Unlink Discord"
+      : "Discord Linked"
+    : "Link Discord";
+
+  const icon = discordId ? (
+    isHovered ? (
+      <RiDiscordFill />
+    ) : (
+      <RiCheckLine />
+    )
+  ) : (
+    <RiDiscordFill />
+  );
+
+  return (
+    <Button
+      onClick={() =>
+        discordId
+          ? handleDisconnect()
+          : router.push("/api/auth/discord/connect")
+      }
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className={buttonClasses}
+    >
+      <div
+        className={
+          "transition-colors bg-[#4f68c1] p-2 group-hover:bg-[#4158ab] flex justify-center items-center text-white h-full aspect-square rounded-sm mr-2"
+        }
+      >
+        {icon}
+      </div>
+      <div className="w-28">
+        <p>{buttonText}</p>
+      </div>
+    </Button>
+  );
+}
+
+function StatusMessage({ status }: { status: string | null }) {
+  if (status == "failed") {
+    return (
+      <div className="flex items-center font-semibold gap-x-4 border rounded-lg border-red-200 bg-red-100 p-3">
+        <RiErrorWarningFill className="w-5 h-5" />
+        An error occurred while trying to link your discord account.
+      </div>
+    );
+  }
+
+  if (status == "exists") {
+    return (
+      <div className="flex items-center font-semibold gap-x-4 border rounded-lg border-red-200 bg-red-100 p-3">
+        <RiErrorWarningFill className="w-5 h-5" />
+        This discord account is linked to another user.
+      </div>
+    );
+  }
+
+  if (status == "dcerror") {
+    return (
+      <div className="flex items-center font-semibold gap-x-4 border rounded-lg border-red-200 bg-red-100 p-3">
+        <RiErrorWarningFill className="w-5 h-5" />
+        An error occurred while trying to unlink your discord account.
+      </div>
+    );
+  }
+
+  if (status == "dcsuccess") {
+    return (
+      <div className="flex items-center font-semibold gap-x-4 border rounded-lg border-green-200 bg-green-100 p-3">
+        <RiCheckboxCircleFill className="w-5 h-5" />
+        Successfully unlinked your discord account!
+      </div>
+    );
+  }
+
+  return <></>;
+}
+
 export default function NotificationsTab() {
   const [notificationSettings, setNotificationSettings] =
     useState<NotificationSettings | null>(null);
-  const [phoneNumber, setPhoneNumber] = useState<string | null>(null);
-  const [webhooks, setWebhooks] = useState<string[]>([]);
+  const [phoneNumber, setPhoneNumber] = useState<string | undefined>(undefined);
+  const [webhooks, setWebhooks] = useState<string[] | undefined>(undefined);
+  const [discordId, setDiscordId] = useState<string | undefined>(undefined);
+
   const [webhookInput, setWebhookInput] = useState<string>("");
+
+  const searchParams = useSearchParams();
   const { data: session } = useSession();
+  const status = searchParams.get("status");
 
   const addWebhook = (webhookUrl: string) => {
     fetch("/api/users/webhooks", {
@@ -42,7 +166,7 @@ export default function NotificationsTab() {
       .then((res) => {
         if (!res.ok) return;
         setWebhookInput("");
-        setWebhooks((prev) => [...prev, webhookUrl]);
+        setWebhooks((prev) => [...(prev ?? []), webhookUrl]);
       })
       .catch((err) => {
         console.error(err);
@@ -57,7 +181,7 @@ export default function NotificationsTab() {
       .then((res) => {
         if (!res.ok) return;
         setWebhookInput("");
-        setWebhooks(webhooks.filter((prev) => prev !== webhookUrl));
+        setWebhooks((webhooks ?? []).filter((prev) => prev !== webhookUrl));
       })
       .catch((err) => {
         console.error(err);
@@ -71,18 +195,30 @@ export default function NotificationsTab() {
     getDataFromRoute("/api/users/webhooks").then((result) =>
       setWebhooks(result)
     );
+    getDataFromRoute("/api/users/discord").then((result) => {
+      setDiscordId(result.discordId);
+    });
   }, []);
 
   useEffect(() => {
-    setPhoneNumber(notificationSettings?.phoneNumber || null);
+    setPhoneNumber(notificationSettings?.phoneNumber || "");
   }, [notificationSettings]);
+
+  if (
+    phoneNumber === undefined ||
+    webhooks === undefined ||
+    discordId === undefined
+  ) {
+    return (
+      <div className="flex justify-center mt-8">
+        <LoadingCircle />
+      </div>
+    );
+  }
 
   return (
     <div className={"flex flex-col gap-y-8 md:gap-y-6 pt-4"}>
-      <div className="flex items-center font-semibold gap-x-4 border rounded-lg border-red-200 bg-red-100 p-3">
-        <RiErrorWarningFill className="w-5 h-5" />
-        Only discord webhooks are supported at the moment.
-      </div>
+      <StatusMessage status={status} />
 
       <div className="flex flex-col gap-2">
         <Label className={"flex gap-x-2"}>
@@ -148,7 +284,7 @@ export default function NotificationsTab() {
           </div>
         </div>
       </div>
-      <div className=" flex flex-col gap-2 hidden">
+      <div className="flex flex-col gap-2 hidden">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2">
           <Label className={"flex gap-x-2 mb-2"}>
             <RiNotification2Fill />
@@ -204,7 +340,7 @@ export default function NotificationsTab() {
         </div>
       </div>
 
-      <Button></Button>
+      <DiscordButton discordId={discordId} setDiscordId={setDiscordId} />
 
       <Button className="w-40 hidden">Save Changes</Button>
     </div>

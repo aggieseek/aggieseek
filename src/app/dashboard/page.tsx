@@ -32,9 +32,15 @@ export default function Dashboard() {
 
       <div className="flex flex-col lg:flex-row justify-between items-start lg:flex-wrap gap-y-4">
         {loadState !== LoadingState.FETCHING ? (
-          trackedSections.map((section) => (
-            <ClassCell key={section.crn} section={section.section} />
-          ))
+          trackedSections.length > 0 ? (
+            trackedSections.map((section) => (
+              <ClassCell key={section.crn} section={section.section} />
+            ))
+          ) : (
+            <div className="w-full text-center font-medium">
+              You aren&apos;t tracking any sections at the moment.{" "}
+            </div>
+          )
         ) : (
           <div className="flex justify-center items-center w-full space-y-2">
             <LoadingCircle />

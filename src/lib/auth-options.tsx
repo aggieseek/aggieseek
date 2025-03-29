@@ -16,9 +16,9 @@ export const authOptions: AuthOptions = {
       await prisma.notificationSettings.create({
         data: {
           userId: user.user.id,
-          email: user.user.email
-        }
+          email: user.user.email,
+        },
       });
-    }
-  }
+    },
+  },
 };
