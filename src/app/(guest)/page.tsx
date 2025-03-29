@@ -7,11 +7,7 @@ import { useEffect, useState } from "react";
 import { Session } from "next-auth";
 import { motion } from "framer-motion";
 import TestimonialCard from "@/components/testimonial-card";
-import {
-  RiArrowRightLine,
-  RiCheckFill,
-  RiErrorWarningFill,
-} from "react-icons/ri";
+import { RiArrowRightLine, RiCheckFill } from "react-icons/ri";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
@@ -26,15 +22,7 @@ export default function Home() {
 
   return (
     <div className="">
-      <div className="border border-red-200 flex items-center font-semibold gap-x-3 bg-red-100 p-4 rounded-lg m-12 ">
-        <RiErrorWarningFill className="w-5 h-5" />
-        <div>
-          AggieSeek is currently in beta! Many important features may not be
-          available.
-        </div>
-      </div>
-
-      <div className="flex flex-col lg:flex-row mt-8 lg:mt-12 pl-8 lg:pl-24 gap-8">
+      <div className="flex flex-col lg:flex-row lg:mt-12 pl-8 lg:pl-24 gap-8">
         <div className="mt-10 mr-10">
           <motion.div
             initial={{ opacity: 0, translateY: 20 }}

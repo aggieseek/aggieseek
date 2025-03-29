@@ -14,6 +14,13 @@ export default function Search() {
   }, [setTitle]);
 
   return (
+    <div className="flex flex-col h-full mt-1">
+      <h3 className="font-bold text-xl pb-1">Work in Progress!</h3>
+      <p className="font-medium text-sm">Stay tuned :&#41;</p>
+    </div>
+  );
+
+  return (
     <div className="flex flex-col h-full">
       <h3 className="font-bold text-xl pb-1">Course Catalog</h3>
 
