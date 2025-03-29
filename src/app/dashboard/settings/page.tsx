@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Select,
@@ -25,7 +25,9 @@ export default function Settings() {
   const renderContent = () => {
     switch (activeTab) {
       case "notifications":
-        return <NotificationsTab />;
+        return <Suspense>
+          <NotificationsTab />
+        </Suspense>;
       case "profile":
         return <ProfileTab />;
       case "account":

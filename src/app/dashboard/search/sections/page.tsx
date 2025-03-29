@@ -144,7 +144,6 @@ function SectionPage() {
     }
 
     fetchSectionDetails(term, crn).then((data: ISectionHowdy) => {
-      console.log(data);
       if (Object.keys(data).length === 0) {
         setTitle({
           title: "Unknown Section",
