@@ -64,41 +64,45 @@ export default function DashboardHeader() {
 
   return (
     <div className="flex justify-between sm:items-center mb-6 border-b pb-4">
-      <div className="flex flex-col lg:flex-row gap-x-12 items-center">
-        <h3 className="font-bold mb-2 lg:mb-0 text-xl">Your Courses</h3>
+      <div className="flex flex-col lg:flex-row lg:gap-x-12 lg:items-center">
+        <h3 className="font-bold text-xl">Your Courses</h3>
 
-        <Link
-          href="/dashboard/search"
-          className="transition-colors text-sm flex items-center gap-x-2 font-semibold border bg-gray-50 hover:bg-gray-100 rounded-lg p-2"
-        >
+        <div className="flex items-center">
           <RiSearch2Line className="w-4 h-4" />
-          Search for Sections
-        </Link>
+          <Link
+            href="/dashboard/search"
+            className="group text-sm gap-x-2 font-semibold p-2"
+          >
+            <p className="underline-anim">Search for Sections</p>
+          </Link>
+        </div>
 
-        <Popover>
-          <PopoverTrigger>
-            <div className="text-sm flex items-center gap-x-2 font-semibold border bg-gray-50 rounded-lg p-2 hover:cursor-pointer">
-              <RiAddLine />
-              Add by CRN
-            </div>
-          </PopoverTrigger>
-          <PopoverContent className="rounded-none w-max" align="start">
-            <form onSubmit={(e) => handleAdd(e)} className="flex gap-x-2">
-              <Input
-                className="flex-1 w-40"
-                placeholder="#####"
-                value={crnInput}
-                required
-                onChange={(e) => setCrnInput(e.target.value)}
-                maxLength={5}
-                inputMode="numeric"
-              />
-              <Button disabled={isAdding}>
-                {isAdding ? <LoadingCircle /> : <RiAddFill />}
-              </Button>
-            </form>
-          </PopoverContent>
-        </Popover>
+        <div className="flex items-center">
+          <RiAddLine className="w-4 h-4 mr-2" />
+          <Popover>
+            <PopoverTrigger>
+              <div className="text-sm flex items-center gap-x-2 font-semibold  hover:cursor-pointer">
+                <p className="underline-anim">Add by CRN</p>
+              </div>
+            </PopoverTrigger>
+            <PopoverContent className="rounded-none w-max" align="start">
+              <form onSubmit={(e) => handleAdd(e)} className="flex gap-x-2">
+                <Input
+                  className="flex-1 w-40"
+                  placeholder="#####"
+                  value={crnInput}
+                  required
+                  onChange={(e) => setCrnInput(e.target.value)}
+                  maxLength={5}
+                  inputMode="numeric"
+                />
+                <Button disabled={isAdding}>
+                  {isAdding ? <LoadingCircle /> : <RiAddFill />}
+                </Button>
+              </form>
+            </PopoverContent>
+          </Popover>
+        </div>
       </div>
 
       <div
