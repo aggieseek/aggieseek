@@ -5,11 +5,9 @@ import { ReactNode, Suspense, useEffect, useState } from "react";
 import LoadingCircle from "@/components/loading-circle";
 import { ISectionHowdy } from "@/lib/types/howdy-types";
 import Link from "next/link";
-import { MdHome, MdSearch } from "react-icons/md";
 import { Instructor } from "@/lib/types/course-types";
 import { usePageTitle } from "@/contexts/title-context";
 import { cn, convertTermCode, CURRENT_TERM } from "@/lib/utils";
-import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import useTrackedSectionsStore, {
   LoadingState,
 } from "@/stores/useTrackedSectionsStore";
@@ -18,6 +16,12 @@ import ScheduleDisplay from "@/components/schedule-display";
 import SectionSidebar from "@/components/section-sidebar";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import {
+  RiEyeCloseFill,
+  RiEyeFill,
+  RiHome3Line,
+  RiSearch2Line,
+} from "react-icons/ri";
 
 enum PageState {
   LOADING,
@@ -61,9 +65,9 @@ const SectionButton = ({ crn, courseData }) => {
     isLoading || isProcessing ? (
       <LoadingCircle />
     ) : isTracked ? (
-      <IoIosEyeOff className="w-6 h-6" />
+      <RiEyeCloseFill className="w-6 h-6" />
     ) : (
-      <IoIosEye className="w-6 h-6" />
+      <RiEyeFill className="w-6 h-6" />
     );
 
   const text = isLoading
@@ -77,10 +81,10 @@ const SectionButton = ({ crn, courseData }) => {
   return (
     <Button
       className={cn(
-        "transition-colors duration-100 px-6 py-2 font-semibold hover:cursor-pointer"
+        "transition-colors duration-100 px-6 py-2 font-semibold hover:cursor-pointer",
+        isProcessing && "hover:cursor-default"
       )}
-      onClick={handleClick}
-      disabled={isLoading}
+      onClick={isProcessing ? () => {} : handleClick}
       variant={isTracked ? "destructive" : "default"}
     >
       <div className="flex justify-center items-center gap-x-2">
@@ -94,12 +98,14 @@ const SectionButton = ({ crn, courseData }) => {
 function SectionPanel({
   children,
   title,
+  className = "",
 }: {
   children: ReactNode;
   title: string;
+  className?: string;
 }) {
   return (
-    <div className="">
+    <div className={className}>
       <h2 className="font-semibold text-black text-lg border-b">{title}</h2>
       <div className="py-4">{children}</div>
     </div>
@@ -138,6 +144,7 @@ function SectionPage() {
     }
 
     fetchSectionDetails(term, crn).then((data: ISectionHowdy) => {
+      console.log(data);
       if (Object.keys(data).length === 0) {
         setTitle({
           title: "Unknown Section",
@@ -168,7 +175,7 @@ function SectionPage() {
         href={"/dashboard/search"}
         className="inline-flex gap-x-2 w-auto items-center font-bold mb-4 hover:underline"
       >
-        <MdSearch />
+        <RiSearch2Line />
         Back to Search
       </Link>
     );
@@ -187,20 +194,20 @@ function SectionPage() {
   }
 
   return (
-    <div className="flex flex-col gap-y-2 lg:grid lg:grid-cols-[5fr_2fr] xl:grid-cols-[3fr_1fr] lg:gap-x-4 lg:gap-y-0 text-sm h-full">
+    <div className="flex flex-col gap-y-2 lg:grid lg:grid-cols-[5fr_2fr] xl:grid-cols-[9fr_4fr] lg:gap-x-4 lg:gap-y-0 text-sm h-full">
       <div className="translate-y-3 reset-transform">
         {source === "dashboard" && (
           <Link
             href={"/dashboard"}
-            className="inline-flex gap-x-2 items-center font-bold mb-4 hover:underline"
+            className="inline-flex self-start gap-x-2 items-center font-bold mb-4 group"
           >
-            <MdHome />
+            <RiHome3Line className="w-4 h-4 group-hover:w-5 group-hover:h-5 transition-all" />
             Back to Dashboard
           </Link>
         )}
 
         <div className="border-b pb-3">
-          <div className="text-2xl tracking-wide font-bold bg-gradient-to-r from-red-950 via-red-900 to-orange-950 inline-block text-transparent bg-clip-text">
+          <div className="text-2xl tracking-wide font-black maroon-gradient inline-block text-transparent bg-clip-text">
             {courseData.COURSE_TITLE}
           </div>
         </div>

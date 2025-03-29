@@ -38,7 +38,11 @@ export async function GET(request: NextRequest) {
     const attributes = await attributesResponse.json();
 
     return NextResponse.json(
-      { ...details, ...jsons, ATTRIBUTES: attributes },
+      {
+        ...details,
+        ...jsons,
+        ...(attributes.length > 0 ? { ATTRIBUTES: attributes } : {}),
+      },
       { status: 200 }
     );
   } catch (err) {

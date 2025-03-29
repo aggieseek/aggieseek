@@ -10,17 +10,15 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
+  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import {
-  Banknote,
-  ChevronDown,
-  Home,
-  Info,
-  MessageCircleQuestion,
-  Phone,
-  Search,
-  Settings,
-} from "lucide-react";
+  RiArrowDownSLine,
+  RiDiscordLine,
+  RiHome3Line,
+  RiSearch2Line,
+  RiSettings2Line,
+} from "react-icons/ri";
 import Image from "next/image";
 import {
   Collapsible,
@@ -29,10 +27,76 @@ import {
 } from "./ui/collapsible";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ReactNode } from "react";
+
+function MenuCategory({
+  title,
+  children,
+}: {
+  title: string;
+  children: ReactNode;
+}) {
+  return (
+    <Collapsible defaultOpen className="group/collapsible">
+      <SidebarGroup>
+        <SidebarGroupLabel asChild>
+          <CollapsibleTrigger className="text-white">
+            {title}
+            <RiArrowDownSLine className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
+          </CollapsibleTrigger>
+        </SidebarGroupLabel>
+        <CollapsibleContent>
+          <SidebarGroupContent>
+            <SidebarMenu className="text-white">{children}</SidebarMenu>
+          </SidebarGroupContent>
+        </CollapsibleContent>
+      </SidebarGroup>
+    </Collapsible>
+  );
+}
+
+function MenuItem({
+  name,
+  href,
+  external,
+  active = (path) => path.startsWith(href),
+  icon,
+}: {
+  name: string;
+  href: string;
+  external?: boolean;
+  active: (path: string) => boolean;
+  icon: ReactNode;
+}) {
+  const pathname = usePathname();
+  console.log(external);
+
+  return (
+    <SidebarMenuItem
+      className={
+        active(pathname)
+          ? "sidebar-selected bg-sidebar-accent"
+          : "sidebar-hover"
+      }
+    >
+      <SidebarMenuButton asChild>
+        {external ? (
+          <a href={href} target="_blank" rel={"noopener noreferrer"}>
+            {icon}
+            <span>{name}</span>
+          </a>
+        ) : (
+          <Link href={href}>
+            {icon}
+            <span>{name}</span>
+          </Link>
+        )}
+      </SidebarMenuButton>
+    </SidebarMenuItem>
+  );
+}
 
 export function AppSidebar() {
-  const pathname = usePathname();
-
   return (
     <Sidebar>
       <SidebarHeader className="bg-[#492727] h-36 flex justify-center items-center">
@@ -55,142 +119,48 @@ export function AppSidebar() {
         </Link>
       </SidebarHeader>
       <SidebarContent>
-        <Collapsible defaultOpen className="group/collapsible">
-          <SidebarGroup>
-            <SidebarGroupLabel asChild>
-              <CollapsibleTrigger className="text-white">
-                Menu
-                <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
-              </CollapsibleTrigger>
-            </SidebarGroupLabel>
-            <CollapsibleContent>
-              <SidebarGroupContent>
-                <SidebarMenu className="text-white">
-                  <SidebarMenuItem>
-                    <SidebarMenuButton asChild>
-                      <Link
-                        href={"/dashboard"}
-                        className={
-                          pathname === "/dashboard" ? "border-l-2" : undefined
-                        }
-                      >
-                        <Home />
-                        <span>Home</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton asChild>
-                      <Link
-                        href={"/dashboard/search"}
-                        className={
-                          pathname.startsWith("/dashboard/search")
-                            ? "border-l-2"
-                            : undefined
-                        }
-                      >
-                        <Search />
-                        <span>Search</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton asChild>
-                      <Link
-                        href={"/dashboard/settings"}
-                        className={
-                          pathname.startsWith("/dashboard/settings")
-                            ? "border-l-2"
-                            : undefined
-                        }
-                      >
-                        <Settings />
-                        <span>Settings</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </CollapsibleContent>
-          </SidebarGroup>
-        </Collapsible>
+        <MenuCategory title="Menu">
+          <MenuItem
+            name="Home"
+            href="/dashboard"
+            active={(path) => path === "/dashboard"}
+            icon={<RiHome3Line />}
+          />
 
-        <Collapsible defaultOpen className="group/collapsible">
-          <SidebarGroup>
-            <SidebarGroupLabel asChild>
-              <CollapsibleTrigger className="text-white">
-                Support
-                <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
-              </CollapsibleTrigger>
-            </SidebarGroupLabel>
-            <CollapsibleContent>
-              <SidebarGroupContent>
-                <SidebarMenu className="text-white">
-                  <SidebarMenuItem className="hidden">
-                    <SidebarMenuButton
-                      asChild
-                      className={
-                        pathname.startsWith("/dashboard/about")
-                          ? "border-l-2"
-                          : undefined
-                      }
-                    >
-                      <Link href={"/about"}>
-                        <Info />
-                        <span>About</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  <SidebarMenuItem className={"hidden"}>
-                    <SidebarMenuButton asChild>
-                      <Link
-                        href={"/dashboard/contact"}
-                        className={
-                          pathname.startsWith("/dashboard/contact")
-                            ? "border-l-2"
-                            : undefined
-                        }
-                      >
-                        <Phone />
-                        <span>Contact</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton asChild>
-                      <Link
-                        href={"/dashboard/feedback"}
-                        className={
-                          pathname.startsWith("/dashboard/feedback")
-                            ? "border-l-2"
-                            : undefined
-                        }
-                      >
-                        <MessageCircleQuestion />
-                        <span>Feedback</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  <SidebarMenuItem className={"hidden"}>
-                    <SidebarMenuButton asChild>
-                      <Link
-                        href={"https://ko-fi.com/aggieseek"}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Banknote />
-                        <span>Donate</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </CollapsibleContent>
-          </SidebarGroup>
-        </Collapsible>
+          <MenuItem
+            name="Search"
+            href="/dashboard/search"
+            active={(path) => path.startsWith("/dashboard/search")}
+            icon={<RiSearch2Line />}
+          />
+
+          <MenuItem
+            name="Settings"
+            href="/dashboard/settings"
+            active={(path) => path.startsWith("/dashboard/settings")}
+            icon={<RiSettings2Line />}
+          />
+        </MenuCategory>
+
+        <MenuCategory title="Other">
+          <MenuItem
+            name="Feedback"
+            href="/dashboard/feedback"
+            active={(path) => path === "/dashboard/feedback"}
+            icon={<RiHome3Line />}
+          />
+          <MenuItem
+            name="Discord"
+            external={true}
+            href="https://discord.gg/t4rDRSCXBS"
+            active={() => false}
+            icon={<RiDiscordLine />}
+          />
+        </MenuCategory>
       </SidebarContent>
       <SidebarFooter />
       <SidebarRail />
+      <SidebarTrigger className="transition-opacity border rounded-md bg-gray-50 absolute top-3 opacity-50 hover:opacity-100 -right-10 shadow-lg" />
     </Sidebar>
   );
 }

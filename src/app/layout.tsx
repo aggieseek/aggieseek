@@ -4,7 +4,7 @@ import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import SessionWrapper from "@/components/session-wrapper";
 import { ReactNode } from "react";
-import { inter } from "@/lib/fonts";
+import { satoshi } from "@/lib/fonts";
 import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <SessionWrapper>
-        <body className={`${inter.className} antialiased`}>
+        <body className={`${satoshi.className} antialiased`}>
           {children}
           <Toaster />
           <SpeedInsights />

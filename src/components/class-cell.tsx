@@ -1,106 +1,102 @@
 "use client";
 
 import React from "react";
-import { IoPerson } from "react-icons/io5";
-import { MdNumbers } from "react-icons/md";
 import Link from "next/link";
-import { X } from "lucide-react";
-import { cn, CURRENT_TERM } from "@/lib/utils";
+import { CURRENT_TERM } from "@/lib/utils";
 import { Section } from "@prisma/client";
-import AttributeBadge from "@/components/attribute-badge";
 import { Instructor } from "@/lib/types/course-types";
-import { jetbrainsMono } from "@/lib/fonts";
-import useTrackedSectionsStore, {
-  LoadingState,
-} from "@/stores/useTrackedSectionsStore";
+import useTrackedSectionsStore from "@/stores/useTrackedSectionsStore";
+import { JsonValue } from "@prisma/client/runtime/library";
+import {
+  RiDeleteBinFill,
+  RiGroupFill,
+  RiGroupLine,
+  RiHashtag,
+} from "react-icons/ri";
 
 interface ClassCellProps {
   section: Section;
 }
 
-export default function ClassCell({ section }: ClassCellProps) {
-  const { deleteSection, loadState } = useTrackedSectionsStore();
+function InstructorLabel({ instructorJson }: { instructorJson: JsonValue }) {
+  const data = instructorJson
+    ? (instructorJson as unknown as Instructor[])
+    : [];
+  const instructors = data.map((instructor) => {
+    return {
+      name: instructor.NAME.split(" ")
+        .filter((name) => name !== "(P)")
+        .pop(),
+      id: instructor.MORE,
+    };
+  });
 
   return (
-    <div className="transition-transform select-none flex flex-col sm:flex-row items-start sm:items-center w-full lg:w-[calc(50%-1rem)] min-h-[3.5rem] bg-zinc-100 border-l-4 border-l-zinc-400 px-3 py-2 shadow-sm cursor-pointer hover:scale-[1.01]">
-      <div className="w-full grid grid-cols-1 sm:grid-cols-[1fr_auto]">
-        <div className="space-y-2 sm:space-y-0 w-full">
-          <div className="flex items-center gap-2 justify-between w-full">
-            <div className="flex justify-start space-x-2 w-full">
-              <h3 className="font-bold text-sm">
-                {section.subject} {section.course} -{" "}
-                {section.title.replaceAll("HNR-", "")}
-              </h3>
-
-              <div className="flex flex-wrap gap-1">
-                {section.attributes?.split("|").map((attr, index) => (
-                  <AttributeBadge attribute={attr.trim()} key={index} />
-                ))}
-              </div>
-            </div>
-            <button
-              className="transition-transform hover:scale-110 active:scale-90 justify-end"
-              onClick={() => deleteSection(section.crn)}
-              disabled={loadState === LoadingState.DELETING}
+    <div>
+      {data.length > 0 ? (
+        instructors.map((ins, index) => (
+          <div key={ins.id} className="inline">
+            <Link
+              key={ins.id}
+              className="underline-anim"
+              href={`/dashboard/search/instructors?id=${ins.id}`}
             >
-              <X className="w-5 h-5" />
-            </button>
+              {ins.name}
+            </Link>
+            {index < instructors.length - 1 && ", "}
           </div>
+        ))
+      ) : (
+        <span>Not assigned</span>
+      )}
+    </div>
+  );
+}
 
-          <div className="flex flex-col gap-y-1 text-xs">
-            <div className="flex items-center mt-0.5">
-              <IoPerson className="w-4 h-4 mr-2" />
-              {section.instructorJson ? (
-                <Link
-                  href={`/dashboard/search/instructors?id=${
-                    (section.instructorJson as unknown as Instructor[])[0].MORE
-                  }&source=dashboard`}
-                  className="truncate hover:underline"
-                >
-                  {(
-                    section.instructorJson as unknown as Instructor[]
-                  )[0].NAME.replace("(P)", "")}
-                </Link>
-              ) : (
-                <p>Not assigned</p>
-              )}
-            </div>
+export default function ClassCell({ section }: ClassCellProps) {
+  const { deleteSection } = useTrackedSectionsStore();
 
-            <div
-              className={cn(
-                "flex items-center gap-x-2",
-                jetbrainsMono.className
-              )}
-            >
-              <div className="flex items-center">
-                <MdNumbers className="w-4 h-4 mr-2" />
-                <p
-                  className={cn(
-                    "truncate hover:underline",
-                    jetbrainsMono.className
-                  )}
-                >
-                  <Link
-                    href={`/dashboard/search/sections?term=${CURRENT_TERM}&crn=${section.crn}&source=dashboard`}
-                  >
-                    {section.crn}
-                  </Link>
-                </p>
-              </div>
+  return (
+    <div className="w-[calc(50%-1rem)] bg-gray-50 p-4 rounded-md border relative">
+      <Link
+        href={`/dashboard/search/sections?term=${CURRENT_TERM}&crn=${section.crn}&source=dashboard`}
+        className="inline-block group relative space-y-2 mb-1"
+      >
+        <div className="text-lg h-8 font-extrabold decoration-gray-600 decoration-1">
+          <span className="maroon-gradient group-hover:text-[1.2rem] transition-all bg-clip-text text-transparent">
+            {section.subject} {section.course}
+          </span>
+          <span className="text-black font-bold text-base">
+            {": "}
+            {section.title}
+          </span>
+        </div>
+      </Link>
 
-              <div>
-                <p className="truncate font-semibold">
-                  {section.isSectionOpen ? (
-                    "OPEN"
-                  ) : (
-                    <span className="text-red-500">CLOSED</span>
-                  )}
-                </p>
-              </div>
-            </div>
-          </div>
+      <div className="flex gap-x-4 text-xs">
+        <div className="flex items-center gap-x-2">
+          {section.instructorJson ? (
+            <RiGroupFill className="w-3 h-3" />
+          ) : (
+            <RiGroupLine className="w-3 h-3" />
+          )}
+          <InstructorLabel instructorJson={section.instructorJson} />
+        </div>
+
+        <div className="flex items-center gap-x-2">
+          <RiHashtag className="w-3 h-3" />
+          <div>Section {section.section}</div>
         </div>
       </div>
+
+      <div className="absolute bottom-1 font-medium right-1 text-xs opacity-25">
+        {section.crn}
+      </div>
+
+      <RiDeleteBinFill
+        onClick={() => deleteSection(section.crn)}
+        className="transition-opacity duration-300 hover:cursor-pointer w-4 h-4 opacity-25 m-2 hover:opacity-100 absolute top-0 right-0"
+      />
     </div>
   );
 }

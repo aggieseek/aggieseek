@@ -8,20 +8,22 @@ datasource db {
 }
 
 model User {
-  id                   String                @id @default(uuid())
-  name                 String
-  email                String?               @unique
-  emailVerified        DateTime?             @map("email_verified")
-  image                String?
-  createdAt            DateTime              @default(now()) @map("created_at")
-  updatedAt            DateTime              @updatedAt @map("updated_at")
-  accounts             Account[]
-  discordWebhooks      Webhook[]
-  feedback             Feedback[]
-  notificationSettings NotificationSettings?
-  profileSettings      ProfileSettings?
-  sessions             Session[]
-  trackedSections      TrackedSection[]
+  id                      String                   @id @default(uuid())
+  name                    String
+  email                   String?                  @unique
+  emailVerified           DateTime?                @map("email_verified")
+  image                   String?
+  discordId               String?                  @unique @map("discord_id")
+  createdAt               DateTime                 @default(now()) @map("created_at")
+  updatedAt               DateTime                 @updatedAt @map("updated_at")
+  accounts                Account[]
+  discordWebhooks         Webhook[]
+  feedback                Feedback[]
+  notificationPreferences NotificationPreference[]
+  notificationSettings    NotificationSettings?
+  profileSettings         ProfileSettings?
+  sessions                Session[]
+  trackedSections         TrackedSection[]
 
   @@map("users")
 }
@@ -135,24 +137,24 @@ model Feedback {
 /// This table is a partition table and requires additional setup for migrations. Visit https://pris.ly/d/partition-tables for more info.
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model Section {
-  term             String           @db.VarChar(10)
-  crn              String           @db.VarChar(5)
-  title            String           @db.VarChar(100)
-  subject          String           @db.VarChar(10)
-  course           String           @db.VarChar(10)
-  section          String           @db.VarChar(3)
-  creditHours      Decimal          @map("credit_hours") @db.Decimal
-  subjectDesc      String           @map("subject_desc")
-  instructorJson   Json?            @map("instructor_json")
-  meetingsJson     Json?            @map("meetings_json")
-  attributes       String?          @db.VarChar(500)
-  instructionType  String?          @map("instruction_type") @db.VarChar(50)
-  scheduleOpen     String           @map("schedule_type") @db.VarChar(10)
-  session          String           @db.VarChar(50)
-  site             String?          @db.VarChar(50)
-  isSectionOpen    Boolean          @map("section_open")
-  updatedAt        DateTime         @default(now()) @map("updated_at") @db.Timestamp(6)
-  tracked_sections TrackedSection[]
+  term            String           @db.VarChar(10)
+  crn             String           @db.VarChar(5)
+  title           String           @db.VarChar(100)
+  subject         String           @db.VarChar(10)
+  course          String           @db.VarChar(10)
+  section         String           @db.VarChar(3)
+  creditHours     Decimal          @map("credit_hours") @db.Decimal
+  subjectDesc     String           @map("subject_desc")
+  instructorJson  Json?            @map("instructor_json")
+  meetingsJson    Json?            @map("meetings_json")
+  attributes      String?          @db.VarChar(500)
+  instructionType String?          @map("instruction_type") @db.VarChar(50)
+  scheduleOpen    String           @map("schedule_type") @db.VarChar(10)
+  session         String           @db.VarChar(50)
+  site            String?          @db.VarChar(50)
+  isSectionOpen   Boolean          @map("section_open")
+  updatedAt       DateTime         @default(now()) @map("updated_at") @db.Timestamp(6)
+  trackedSections TrackedSection[]
 
   @@id([term, crn])
   @@index([term, crn], map: "idx_term_crn")
@@ -165,6 +167,16 @@ model Instructor {
   hasCv        Boolean? @map("has_cv")
 
   @@map("instructor")
+}
+
+model NotificationPreference {
+  userId  String              @map("user_id")
+  type    NotificationType
+  channel NotificationChannel
+  users   User                @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: Cascade)
+
+  @@id([userId, type, channel])
+  @@map("notification_preference")
 }
 
 enum Class {
@@ -183,4 +195,20 @@ enum PriorityLevel {
   High
 
   @@map("priority_level")
+}
+
+enum NotificationChannel {
+  DISCORD
+  SMS
+  EMAIL
+
+  @@map("notification_channel")
+}
+
+enum NotificationType {
+  CLASS_OPEN
+  CLASS_CLOSE
+  INSTRUCTOR_CHANGE
+
+  @@map("notification_type")
 }

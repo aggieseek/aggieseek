@@ -1,17 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import {
-  MdAdd,
-  MdCheck,
-  MdError,
-  MdOutlineAdd,
-  MdRefresh,
-  MdSearch,
-} from "react-icons/md";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import {
+  RiAddFill,
+  RiAddLine,
+  RiCheckboxCircleFill,
+  RiErrorWarningFill,
+  RiRestartLine,
+  RiSearch2Line,
+} from "react-icons/ri";
 import useTrackedSectionsStore, {
   LoadingState,
 } from "@/stores/useTrackedSectionsStore";
@@ -32,7 +32,7 @@ export default function DashboardHeader() {
     if (trackedSections.some((section) => section.crn === crnInput)) {
       toast(
         <div className="flex items-center">
-          <MdError className="w-4 h-4 mr-2" />
+          <RiErrorWarningFill className="w-4 h-4 mr-2" />
           You are already tracking section {crnInput}.
         </div>,
         {}
@@ -44,7 +44,7 @@ export default function DashboardHeader() {
       .then(() => {
         toast(
           <div className="flex items-center">
-            <MdCheck className="w-4 h-4 mr-2" />
+            <RiCheckboxCircleFill className="w-4 h-4 mr-2" />
             Added section {crnInput}.
           </div>,
           {}
@@ -53,7 +53,7 @@ export default function DashboardHeader() {
       .catch(() => {
         toast(
           <div className="flex items-center">
-            <MdError className="w-4 h-4 mr-2" />
+            <RiErrorWarningFill className="w-4 h-4 mr-2" />
             Failed to add section {crnInput}.
           </div>,
           {}
@@ -64,21 +64,21 @@ export default function DashboardHeader() {
 
   return (
     <div className="flex justify-between sm:items-center mb-6 border-b pb-4">
-      <div className="flex flex-col lg:flex-row gap-x-12">
+      <div className="flex flex-col lg:flex-row gap-x-12 items-center">
         <h3 className="font-bold mb-2 lg:mb-0 text-xl">Your Courses</h3>
 
         <Link
           href="/dashboard/search"
-          className="text-sm flex items-center gap-x-2 font-semibold hover:underline"
+          className="transition-colors text-sm flex items-center gap-x-2 font-semibold border bg-gray-50 hover:bg-gray-100 rounded-lg p-2"
         >
-          <MdSearch className="w-4 h-4" />
+          <RiSearch2Line className="w-4 h-4" />
           Search for Sections
         </Link>
 
         <Popover>
           <PopoverTrigger>
-            <div className="text-sm flex items-center gap-x-2 font-semibold hover:underline hover:cursor-pointer">
-              <MdOutlineAdd />
+            <div className="text-sm flex items-center gap-x-2 font-semibold border bg-gray-50 rounded-lg p-2 hover:cursor-pointer">
+              <RiAddLine />
               Add by CRN
             </div>
           </PopoverTrigger>
@@ -94,7 +94,7 @@ export default function DashboardHeader() {
                 inputMode="numeric"
               />
               <Button disabled={isAdding}>
-                {isAdding ? <LoadingCircle /> : <MdAdd />}
+                {isAdding ? <LoadingCircle /> : <RiAddFill />}
               </Button>
             </form>
           </PopoverContent>
@@ -107,7 +107,7 @@ export default function DashboardHeader() {
         }
         onClick={fetchSections}
       >
-        <MdRefresh className="w-5 h-5" />
+        <RiRestartLine className="w-5 h-5" />
       </div>
     </div>
   );

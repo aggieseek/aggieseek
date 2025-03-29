@@ -88,9 +88,7 @@ export default function WebhookInput({
         {webhooks.map((webhook, index) => (
           <p
             onClick={() => deleteWebhook(webhook)}
-            className={
-              "text-sm hover:line-through hover:cursor-pointer hover:text-red-600"
-            }
+            className={"text-sm hover:line-through hover:cursor-pointer"}
             key={index}
           >
             {webhook}
