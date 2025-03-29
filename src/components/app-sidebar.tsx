@@ -10,7 +10,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
-  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import {
   RiArrowDownSLine,
@@ -160,7 +159,6 @@ export function AppSidebar() {
       </SidebarContent>
       <SidebarFooter />
       <SidebarRail />
-      <SidebarTrigger className="transition-opacity border rounded-md bg-gray-50 absolute top-3 opacity-50 hover:opacity-100 -right-10 shadow-lg" />
     </Sidebar>
   );
 }
