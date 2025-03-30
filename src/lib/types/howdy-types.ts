@@ -57,3 +57,33 @@ export interface IAttributeHowdy {
   SSRATTR_ATTR_CODE: string;
   STVATTR_DESC: string;
 }
+
+export interface ITermHowdy {
+  STVTERM_CODE: string;
+  STVTERM_DESC: string;
+  STVTERM_START_DATE: string; // ISO date string
+  STVTERM_END_DATE: string; // ISO date string
+  STVTERM_FA_PROC_YR: string;
+  STVTERM_ACTIVITY_DATE: string; // ISO date string
+  STVTERM_FA_TERM: string | null;
+  STVTERM_FA_PERIOD: string | null;
+  STVTERM_FA_END_PERIOD: string | null;
+  STVTERM_ACYR_CODE: string;
+  STVTERM_HOUSING_START_DATE: string; // ISO date string
+  STVTERM_HOUSING_END_DATE: string; // ISO date string
+  STVTERM_SYSTEM_REQ_IND: string | null;
+  STVTERM_TRMT_CODE: string;
+  STVTERM_FA_SUMMER_IND: string | null;
+  STVTERM_SURROGATE_ID: number;
+  STVTERM_VERSION: number;
+  STVTERM_USER_ID: string | null;
+  STVTERM_DATA_ORIGIN: string | null;
+  STVTERM_VPDI_CODE: string | null;
+  STVTERM_APPORT_CDE: string | null;
+  STVTERM_MIS_TERM_CTG: string | null;
+  STVTERM_MIS_TERM_ID: string | null;
+  STVTERM_TERM_LEN_MULT: string | null;
+  STVTERM_TERM_LEN_MULT_IS: string | null;
+  STVTERM_GUID: string;
+  STVTERM_CATALOG_GUID: string;
+}

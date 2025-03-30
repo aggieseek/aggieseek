@@ -1,5 +1,11 @@
 "use client";
 
+import { useState } from "react";
+import { Label } from "./ui/label";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { Course } from "@/lib/types/course-types";
+import { Button } from "./ui/button";
+import { Check, ChevronsUpDown } from "lucide-react";
 import {
   Command,
   CommandEmpty,
@@ -7,67 +13,63 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command";
-import { Label } from "@/components/ui/label";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+} from "./ui/command";
 import { cn } from "@/lib/utils";
-import { Check, ChevronsUpDown } from "lucide-react";
-import { useState } from "react";
-import { Button } from "./ui/button";
 
-interface SearchSubjectProps {
+interface SearchCourseProps {
   selected: string;
   setSelected: (value: string) => void;
-  subjects: string[];
+  courses: Course[] | undefined;
 }
 
-export default function SearchSubject({
+export default function SearchCourse({
   selected,
   setSelected,
-  subjects,
-}: SearchSubjectProps) {
+  courses,
+}: SearchCourseProps) {
   const [open, setOpen] = useState<boolean>(false);
 
   return (
     <div className="flex flex-col">
-      <Label className="mb-1">Subject</Label>
+      <Label className="mb-1">Course</Label>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
+            disabled={courses === undefined}
             variant="outline"
             role="combobox"
             aria-expanded={open}
             className="w-[200px] justify-between"
           >
-            {selected ? selected : "Select subject..."}
+            {courses === undefined
+              ? "Loading..."
+              : selected
+              ? selected
+              : "Select course..."}
             <ChevronsUpDown className="opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-[200px] p-0">
+        <PopoverContent className="w-96 p-0" align="start">
           <Command>
-            <CommandInput placeholder="Search subject..." className="h-9" />
+            <CommandInput placeholder="Search course..." className="h-9" />
             <CommandList>
-              <CommandEmpty>No subject found.</CommandEmpty>
+              <CommandEmpty>No courses found.</CommandEmpty>
               <CommandGroup>
-                {subjects?.map((subject) => (
+                {courses?.map((course, index) => (
                   <CommandItem
-                    key={subject}
-                    value={subject}
+                    key={index}
+                    value={course.course}
                     className="hover:cursor-pointer"
                     onSelect={(curr) => {
                       setSelected(curr === selected ? "" : curr);
                       setOpen(false);
                     }}
                   >
-                    {subject}
+                    {course.course} - {course.title}
                     <Check
                       className={cn(
                         "ml-auto",
-                        selected === subject ? "opacity-100" : "opacity-0"
+                        selected === course.course ? "opacity-100" : "opacity-0"
                       )}
                     />
                   </CommandItem>

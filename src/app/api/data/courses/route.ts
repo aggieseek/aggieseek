@@ -4,6 +4,9 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const subject = searchParams.get("subject");
+  const term = searchParams.get("term");
+
+  const disallowed = ["- GV", "HNR-", ": SGP", ": FRA"];
 
   if (!subject)
     return NextResponse.json(
@@ -15,6 +18,14 @@ export async function GET(request: NextRequest) {
     const courses = await prisma.section.findMany({
       where: {
         subject,
+        ...(term ? { term } : {}),
+        AND: disallowed.map((label) => ({
+          NOT: {
+            title: {
+              contains: label,
+            },
+          },
+        })),
       },
       distinct: ["course", "title"],
       orderBy: {

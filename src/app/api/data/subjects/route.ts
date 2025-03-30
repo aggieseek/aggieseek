@@ -1,9 +1,15 @@
 import prisma from "@/lib/prisma-client";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams;
+  const term = searchParams.get("term");
+
   try {
     const subjects = await prisma.section.findMany({
+      where: {
+        ...(term ? { term } : {}),
+      },
       distinct: ["subject"],
       orderBy: {
         subject: "asc",
