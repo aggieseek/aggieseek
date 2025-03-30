@@ -8,16 +8,7 @@ import { CURRENT_TERM } from "@/lib/utils";
 import LoadingCircle from "@/components/loading-circle";
 import { RiHome3Line } from "react-icons/ri";
 import ProfClassCell from "@/components/prof-class-cell";
-
-function getTermLabel(term: string): string {
-  if (term.length !== 6) return term;
-  const year = term.substring(0, 4);
-  const code = term.substring(4, 6);
-  if (code === "31") return `Fall ${year}`;
-  else if (code === "21") return `Summer ${year}`;
-  else if (code === "11") return `Spring ${year}`;
-  else return term;
-}
+import { convertTermCode } from "@/lib/utils";
 
 const fetchInstructor = async (id: string) => {
   const url = `/api/data/instructors?id=${id}`;
@@ -71,12 +62,7 @@ function InstructorSections({ sections }: { sections: Section[] | null }) {
           <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-4 items-stretch">
             {currentSections.map((section) => (
               <div key={section.crn} className="flex">
-                <Link
-                  href={`/dashboard/search/sections?term=${CURRENT_TERM}&crn=${section.crn}`}
-                  className="flex-1"
-                >
-                  <ProfClassCell section={section} />
-                </Link>
+                <ProfClassCell section={section} />
               </div>
             ))}
           </div>
@@ -91,7 +77,7 @@ function InstructorSections({ sections }: { sections: Section[] | null }) {
             .map(([term, sectionsForTerm]) => (
               <div key={term} className="">
                 <p className="text-sm font-semibold mb-2 mt-4 text-gray-400">
-                  {getTermLabel(term)}
+                  {convertTermCode(term)}
                 </p>
                 <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-4 items-stretch">
                   {sectionsForTerm.map((section) => (
