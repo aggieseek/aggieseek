@@ -40,7 +40,7 @@ function InstructorLabel({ instructorJson }: { instructorJson: JsonValue }) {
             <Link
               key={ins.id}
               className="underline-anim"
-              href={`/dashboard/search/instructors?id=${ins.id}`}
+              href={`/dashboard/search/instructors?id=${ins.id}&source=dashboard`}
             >
               {ins.name}
             </Link>

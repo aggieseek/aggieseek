@@ -1,5 +1,4 @@
 "use client";
-
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import type { Instructor, Section } from "@prisma/client";
@@ -8,6 +7,17 @@ import Link from "next/link";
 import { CURRENT_TERM } from "@/lib/utils";
 import LoadingCircle from "@/components/loading-circle";
 import { RiHome3Line } from "react-icons/ri";
+import ProfClassCell from "@/components/prof-class-cell";
+
+function getTermLabel(term: string): string {
+  if (term.length !== 6) return term;
+  const year = term.substring(0, 4);
+  const code = term.substring(4, 6);
+  if (code === "31") return `Fall ${year}`;
+  else if (code === "21") return `Summer ${year}`;
+  else if (code === "11") return `Spring ${year}`;
+  else return term;
+}
 
 const fetchInstructor = async (id: string) => {
   const url = `/api/data/instructors?id=${id}`;
@@ -28,7 +38,7 @@ const fetchInstructorSections = async (id: string) => {
 };
 
 function InstructorSections({ sections }: { sections: Section[] | null }) {
-  if (sections === null) {
+  if (!sections || sections.length === 0) {
     return (
       <div className="flex justify-center py-4">
         <LoadingCircle />
@@ -36,19 +46,64 @@ function InstructorSections({ sections }: { sections: Section[] | null }) {
     );
   }
 
+  // Separate current courses and history based on CURRENT_TERM.
+  const currentSections = sections.filter(
+    (section) => section.term === CURRENT_TERM
+  );
+  const historySections = sections.filter(
+    (section) => section.term !== CURRENT_TERM
+  );
+
+  // Group history sections by term.
+  const groupedHistory = historySections.reduce((acc, section) => {
+    if (!acc[section.term]) {
+      acc[section.term] = [];
+    }
+    acc[section.term].push(section);
+    return acc;
+  }, {} as Record<string, Section[]>);
+
   return (
     <div className="text-xs">
-      {sections.map((section) => (
-        <div key={section.crn}>
-          <Link
-            href={`/dashboard/search/sections?term=${CURRENT_TERM}&crn=${section.crn}`}
-          >
-            <div className="bg-neutral-100 p-2 hover:bg-neutral-200 font-semibold">
-              {section.subject} {section.course} - {section.title}
-            </div>
-          </Link>
-        </div>
-      ))}
+      {currentSections.length > 0 && (
+        <>
+          <p className="text-lg font-semibold mt-6 mb-2">Current Courses</p>
+          <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-4 items-stretch">
+            {currentSections.map((section) => (
+              <div key={section.crn} className="flex">
+                <Link
+                  href={`/dashboard/search/sections?term=${CURRENT_TERM}&crn=${section.crn}`}
+                  className="flex-1"
+                >
+                  <ProfClassCell section={section} />
+                </Link>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
+      {Object.keys(groupedHistory).length > 0 && (
+        <>
+          <p className="text-lg font-semibold mt-6 -mb-4">Course History</p>
+          {Object.entries(groupedHistory)
+            .sort(([termA], [termB]) => termB.localeCompare(termA))
+            .map(([term, sectionsForTerm]) => (
+              <div key={term} className="">
+                <p className="text-sm font-semibold mb-2 mt-4 text-gray-400">
+                  {getTermLabel(term)}
+                </p>
+                <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-4 items-stretch">
+                  {sectionsForTerm.map((section) => (
+                    <div key={section.crn} className="flex">
+                      <ProfClassCell section={section} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+        </>
+      )}
     </div>
   );
 }
@@ -59,9 +114,9 @@ function InstructorPage() {
   const source = searchParams.get("source");
   const router = useRouter();
   const [instructorData, setInstructorData] = useState<Instructor | null>(null);
-  const [instructorSections, setInstructorSections] = useState<
-    Section[] | null
-  >(null);
+  const [instructorSections, setInstructorSections] = useState<Section[] | null>(
+    null
+  );
   const { setPageTitle: setTitle } = usePageTitle();
 
   useEffect(() => {
@@ -94,7 +149,7 @@ function InstructorPage() {
 
   return (
     <div className="space-y-4 text-sm">
-      <div className="translate-y-3 reset-transform">
+      <div className="reset-transform translate-y-3">
         {source === "dashboard" && (
           <Link
             href={"/dashboard"}
@@ -104,12 +159,12 @@ function InstructorPage() {
             Back to Dashboard
           </Link>
         )}
-
-        <p className="text-2xl border-b pb-3 font-semibold">
+        <div className="border-b pb-3 "> 
+        <p className="text-2xl tracking-wide font-black maroon-gradient inline-block text-transparent bg-clip-text">
           {instructorData?.name}
         </p>
+        </div>
       </div>
-
       <InstructorSections sections={instructorSections} />
     </div>
   );
