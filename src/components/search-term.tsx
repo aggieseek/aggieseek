@@ -18,56 +18,61 @@ import { cn } from "@/lib/utils";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useState } from "react";
 import { Button } from "./ui/button";
+import { Term } from "@/lib/types/course-types";
 
-interface SearchSubjectProps {
+interface SearchTermProps {
   selected: string;
   setSelected: (value: string) => void;
-  subjects: string[];
+  terms: Term[];
 }
 
-export default function SearchSubject({
+export default function SearchTerm({
   selected,
   setSelected,
-  subjects,
-}: SearchSubjectProps) {
+  terms,
+}: SearchTermProps) {
   const [open, setOpen] = useState<boolean>(false);
 
   return (
     <div className="flex flex-col">
-      <Label className="mb-1">Subject</Label>
+      <Label className="mb-1">Term</Label>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className="w-[200px] justify-between"
+            className="w-[200px] justify-between text-xs"
           >
-            {selected ? selected : "Select subject..."}
+            <div className="truncate">
+              {selected
+                ? terms.find((term) => term.desc === selected)?.desc
+                : "Select term..."}
+            </div>
             <ChevronsUpDown className="opacity-50" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[200px] p-0">
           <Command>
-            <CommandInput placeholder="Search subject..." className="h-9" />
+            <CommandInput placeholder="Search term..." className="h-9" />
             <CommandList>
               <CommandEmpty>No subject found.</CommandEmpty>
               <CommandGroup>
-                {subjects?.map((subject) => (
+                {terms?.map((term) => (
                   <CommandItem
-                    key={subject}
-                    value={subject}
-                    className="hover:cursor-pointer"
+                    key={term.desc}
+                    value={term.desc}
+                    className="hover:cursor-pointer text-xs"
                     onSelect={(curr) => {
-                      setSelected(curr === selected ? "" : curr);
+                      setSelected(curr);
                       setOpen(false);
                     }}
                   >
-                    {subject}
+                    {term.desc}
                     <Check
                       className={cn(
                         "ml-auto",
-                        selected === subject ? "opacity-100" : "opacity-0"
+                        selected === term.desc ? "opacity-100" : "opacity-0"
                       )}
                     />
                   </CommandItem>

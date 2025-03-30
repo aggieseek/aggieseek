@@ -87,6 +87,11 @@ export default function ClassCell({ section }: ClassCellProps) {
           <RiHashtag className="w-3 h-3" />
           <div>Section {section.section}</div>
         </div>
+
+        <div className="flex items-center gap-x-2">
+          <RiHashtag className="w-3 h-3" />
+          <div>{section.isSectionOpen}</div>
+        </div>
       </div>
 
       <div className="absolute bottom-1 font-medium right-1 text-xs opacity-25">

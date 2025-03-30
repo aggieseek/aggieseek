@@ -68,7 +68,6 @@ function MenuItem({
   icon: ReactNode;
 }) {
   const pathname = usePathname();
-  console.log(external);
 
   return (
     <SidebarMenuItem
