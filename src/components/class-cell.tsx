@@ -13,6 +13,7 @@ import {
   RiGroupLine,
   RiHashtag,
 } from "react-icons/ri";
+import { RiDoorOpenFill } from "react-icons/ri";
 
 interface ClassCellProps {
   section: Section;
@@ -86,6 +87,11 @@ export default function ClassCell({ section }: ClassCellProps) {
         <div className="flex items-center gap-x-2">
           <RiHashtag className="w-3 h-3" />
           <div>Section {section.section}</div>
+        </div>
+
+        <div className="flex items-center gap-x-2">
+          <RiDoorOpenFill className="w-3 h-3" />
+          <div>{section.isSectionOpen ? "Open" : "Closed"}</div>
         </div>
       </div>
 
