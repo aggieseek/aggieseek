@@ -13,6 +13,7 @@ import {
   RiGroupLine,
   RiHashtag,
 } from "react-icons/ri";
+import { RiDoorOpenFill } from "react-icons/ri";
 
 interface ClassCellProps {
   section: Section;
@@ -39,7 +40,7 @@ function InstructorLabel({ instructorJson }: { instructorJson: JsonValue }) {
             <Link
               key={ins.id}
               className="underline-anim"
-              href={`/dashboard/search/instructors?id=${ins.id}`}
+              href={`/dashboard/search/instructors?id=${ins.id}&source=dashboard`}
             >
               {ins.name}
             </Link>
@@ -89,8 +90,8 @@ export default function ClassCell({ section }: ClassCellProps) {
         </div>
 
         <div className="flex items-center gap-x-2">
-          <RiHashtag className="w-3 h-3" />
-          <div>{section.isSectionOpen}</div>
+          <RiDoorOpenFill className="w-3 h-3" />
+          <div>{section.isSectionOpen ? "Open" : "Closed"}</div>
         </div>
       </div>
 
