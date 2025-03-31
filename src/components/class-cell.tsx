@@ -9,6 +9,7 @@ import useTrackedSectionsStore from "@/stores/useTrackedSectionsStore";
 import { JsonValue } from "@prisma/client/runtime/library";
 import {
   RiDeleteBinFill,
+  RiDoorClosedFill,
   RiGroupFill,
   RiGroupLine,
   RiHashtag,
@@ -90,7 +91,11 @@ export default function ClassCell({ section }: ClassCellProps) {
         </div>
 
         <div className="flex items-center gap-x-2">
-          <RiDoorOpenFill className="w-3 h-3" />
+          {section.isSectionOpen ? (
+            <RiDoorOpenFill className="w-3 h-3" />
+          ) : (
+            <RiDoorClosedFill className="w-3 h-3" />
+          )}
           <div>{section.isSectionOpen ? "Open" : "Closed"}</div>
         </div>
       </div>
