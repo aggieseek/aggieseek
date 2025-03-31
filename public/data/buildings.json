@@ -588,14 +588,21 @@
     "coverage": 100
   },
   {
-    "number": 460,
+    "number": "0460",
     "abbreviation": "EABA",
     "name": "Engineering Activities Bldg A",
     "location": "East Campus",
     "coverage": 150
   },
   {
-    "number": 458,
+    "number": "0459",
+    "abbreviation": "EABB",
+    "name": "Engineering Activities Bldg B",
+    "location": "East Campus",
+    "coverage": 150
+  },
+  {
+    "number": "0458",
     "abbreviation": "EABC",
     "name": "Engineering Activities Bldg C",
     "location": "East Campus",
