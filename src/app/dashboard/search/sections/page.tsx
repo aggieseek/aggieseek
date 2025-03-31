@@ -47,19 +47,21 @@ const fetchWatchers = async (term: string, crn: string) => {
   return null;
 };
 
-const SectionButton = ({ crn, courseData }) => {
+const SectionButton = ({ courseData }: { courseData: ISectionHowdy }) => {
   const { loadState, trackedSections, addSection, deleteSection } =
     useTrackedSectionsStore();
   const isLoading = loadState === LoadingState.FETCHING;
   const isProcessing =
     loadState === LoadingState.ADDING || loadState === LoadingState.DELETING;
-  const isTracked = trackedSections.some((section) => section.crn === crn);
+  const isTracked = trackedSections.some(
+    (section) => section.crn === courseData.CRN
+  );
 
   const handleClick = isLoading
     ? () => {}
     : isTracked
-    ? () => deleteSection(courseData.term, courseData.CRN)
-    : () => addSection(courseData.term, courseData.CRN);
+    ? () => deleteSection(courseData.TERM_CODE, courseData.CRN)
+    : () => addSection(courseData.TERM_CODE, courseData.CRN);
 
   const icon =
     isLoading || isProcessing ? (
@@ -242,7 +244,7 @@ function SectionPage() {
         />
 
         {courseData.TERM_CODE === CURRENT_TERM && (
-          <SectionButton crn={crn} courseData={courseData} />
+          <SectionButton courseData={courseData} />
         )}
       </div>
     </div>

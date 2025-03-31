@@ -26,7 +26,7 @@ export default function SearchClassCell({ section }: SearchClassCellProps) {
           {section.subject} {section.course}-{section.section}
         </div>
 
-        <div>{section.title}</div>
+        <div className="text-xs font-medium">{section.title}</div>
       </div>
 
       <div className="flex">
@@ -51,7 +51,7 @@ export default function SearchClassCell({ section }: SearchClassCellProps) {
 
         <Link
           href={`/dashboard/search/sections?term=${section.term}&crn=${section.crn}`}
-          className="transition-colors duration-100 flex items-center justify-center text-white bg-gray-500 hover:bg-gray-600 px-2 rounded-r-md"
+          className="transition-colors duration-100 flex items-center justify-center text-white bg-black hover:bg-gray-800 px-2 rounded-r-md"
         >
           <RiArrowRightSLine className="w-4 h-4" />
         </Link>

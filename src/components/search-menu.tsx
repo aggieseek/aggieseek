@@ -1,8 +1,7 @@
 "use client";
 
-import { Course, Term } from "@/lib/types/course-types";
-import { CURRENT_TERM } from "@/lib/utils";
-import { FormEvent, useEffect, useState } from "react";
+import { Course } from "@/lib/types/course-types";
+import { useEffect, useState } from "react";
 import SearchTerm from "./search-term";
 import { Button } from "./ui/button";
 import LoadingCircle from "./loading-circle";
@@ -10,6 +9,7 @@ import SearchSubject from "./search-subject";
 import SearchCourse from "./search-course";
 import { Section } from "@prisma/client";
 import SearchClassCell from "./search-class-cell";
+import useTermsStore from "@/stores/useTermsStore";
 
 const pageSize = 8;
 
@@ -88,7 +88,8 @@ export default function SearchMenu() {
 
   const [searchTitle, setSearchTitle] = useState<string>("");
 
-  const [terms, setTerms] = useState<Term[] | undefined>(undefined);
+  const { fetchTerms, terms, activeTerms } = useTermsStore();
+
   const selectedTermCode =
     terms?.find((term) => term.desc === selectedTerm)?.code || "";
   const [subjects, setSubjects] = useState<string[] | undefined>(undefined);
@@ -97,8 +98,7 @@ export default function SearchMenu() {
 
   const [isSearching, setSearching] = useState<boolean>(false);
 
-  function beginSearch(e: FormEvent) {
-    e.preventDefault();
+  function beginSearch() {
     if (!terms) return;
     if (!selectedSubject) return;
 
@@ -125,16 +125,10 @@ export default function SearchMenu() {
   }
 
   useEffect(() => {
-    fetch("/api/data/terms")
-      .then((res) => res.json())
-      .then((data: Term[]) => {
-        setTerms(data);
-        console.log("hi");
-        setSelectedTerm(
-          data.find((obj) => obj.code === CURRENT_TERM)?.desc ?? ""
-        );
-      });
-  }, []);
+    if (terms.length === 0) {
+      fetchTerms().then(() => console.log(activeTerms));
+    }
+  }, [terms, fetchTerms]);
 
   useEffect(() => {
     fetch(`/api/data/subjects?term=${selectedTermCode}`)
@@ -152,7 +146,7 @@ export default function SearchMenu() {
       .then((data: Course[]) => setCourses(data));
   }, [selectedSubject, selectedTerm]);
 
-  if (terms === undefined || subjects === undefined)
+  if (terms.length === 0 || subjects === undefined)
     return (
       <div className="w-full flex justify-center">
         <LoadingCircle />
@@ -162,7 +156,10 @@ export default function SearchMenu() {
   return (
     <div className="flex flex-col lg:flex-row flex-1 mt-1 lg:gap-x-4 h-full">
       <form
-        onSubmit={(e) => beginSearch(e)}
+        onSubmit={(e) => {
+          e.preventDefault();
+          beginSearch();
+        }}
         className="flex w-full lg:pr-12 sticky flex-col justify-between lg:w-72 p-4 border rounded-lg"
       >
         <div className="flex flex-col gap-y-4">
@@ -170,7 +167,7 @@ export default function SearchMenu() {
 
           <div className="flex flex-col gap-y-4">
             <SearchTerm
-              terms={terms}
+              terms={activeTerms}
               selected={selectedTerm}
               setSelected={setSelectedTerm}
             />

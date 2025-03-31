@@ -9,6 +9,7 @@ export async function GET() {
   const terms = data.map((term: ITermHowdy) => ({
     code: term.STVTERM_CODE,
     desc: term.STVTERM_DESC,
+    startDate: term.STVTERM_START_DATE,
   }));
 
   const query = await prisma.section.findMany({

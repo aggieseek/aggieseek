@@ -16,9 +16,9 @@ export enum LoadingState {
 interface TrackedSectionsState {
   trackedSections: SectionInfo[];
   loadState: LoadingState;
-  addSection: (crn: string, term: string) => Promise<void>;
-  deleteSection: (crn: string, term: string) => Promise<void>;
-  deleteSectionImmediately: (crn: string, term: string) => Promise<void>;
+  addSection: (term: string, crn: string) => Promise<void>;
+  deleteSection: (term: string, crn: string) => Promise<void>;
+  deleteSectionImmediately: (term: string, crn: string) => Promise<void>;
   fetchSections: (term: string) => void;
   refresh: (term: string) => void;
 }

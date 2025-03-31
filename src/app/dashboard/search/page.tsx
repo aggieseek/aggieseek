@@ -1,4 +1,5 @@
 import SearchMenu from "@/components/search-menu";
+import { Suspense } from "react";
 
 export default function Search() {
   return (
@@ -9,7 +10,9 @@ export default function Search() {
         </div>
       </div>
 
-      <SearchMenu />
+      <Suspense>
+        <SearchMenu />
+      </Suspense>
     </div>
   );
 }

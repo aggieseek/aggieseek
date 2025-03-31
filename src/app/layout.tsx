@@ -11,6 +11,7 @@ const title = "AggieSeek";
 const description =
   "Track courses at Texas A&M University and get notified when seats open. Add your courses and forget about them!";
 export const metadata: Metadata = {
+  metadataBase: new URL("https://aggieseek.net"),
   title,
   description,
   keywords:
