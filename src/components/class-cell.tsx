@@ -12,6 +12,7 @@ import {
   RiGroupFill,
   RiGroupLine,
   RiHashtag,
+  RiMoreFill,
 } from "react-icons/ri";
 import { RiDoorOpenFill } from "react-icons/ri";
 
@@ -99,7 +100,7 @@ export default function ClassCell({ section }: ClassCellProps) {
         {section.crn}
       </div>
 
-      <RiDeleteBinFill
+      <RiMoreFill
         onClick={() => deleteSection(section.crn)}
         className="transition-opacity duration-300 hover:cursor-pointer w-4 h-4 opacity-25 m-2 hover:opacity-100 absolute top-0 right-0"
       />

@@ -2,10 +2,7 @@
 
 import Link from "next/link";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
 import {
-  RiAddFill,
   RiAddLine,
   RiCheckboxCircleFill,
   RiErrorWarningFill,
@@ -17,8 +14,8 @@ import useTrackedSectionsStore, {
 } from "@/stores/useTrackedSectionsStore";
 import { FormEvent, useState } from "react";
 import { toast } from "sonner";
-import LoadingCircle from "./loading-circle";
 import { cn } from "@/lib/utils";
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "./ui/input-otp";
 
 export default function DashboardHeader() {
   const { addSection, trackedSections, fetchSections, loadState } =
@@ -87,20 +84,15 @@ export default function DashboardHeader() {
               </div>
             </PopoverTrigger>
             <PopoverContent className="rounded-none w-max" align="start">
-              <form onSubmit={(e) => handleAdd(e)} className="flex gap-x-2">
-                <Input
-                  className="flex-1 w-40"
-                  placeholder="#####"
-                  value={crnInput}
-                  required
-                  onChange={(e) => setCrnInput(e.target.value)}
-                  maxLength={5}
-                  inputMode="numeric"
-                />
-                <Button disabled={isAdding}>
-                  {isAdding ? <LoadingCircle /> : <RiAddFill />}
-                </Button>
-              </form>
+              <InputOTP value={crnInput} maxLength={5}>
+                <InputOTPGroup>
+                  <InputOTPSlot index={0} />
+                  <InputOTPSlot index={1} />
+                  <InputOTPSlot index={2} />
+                  <InputOTPSlot index={3} />
+                  <InputOTPSlot index={4} />
+                </InputOTPGroup>
+              </InputOTP>
             </PopoverContent>
           </Popover>
         </div>

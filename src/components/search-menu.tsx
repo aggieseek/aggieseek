@@ -1,6 +1,6 @@
 "use client";
 
-import { Course, Instructor, Term } from "@/lib/types/course-types";
+import { Course, Term } from "@/lib/types/course-types";
 import { CURRENT_TERM } from "@/lib/utils";
 import { FormEvent, useEffect, useState } from "react";
 import SearchTerm from "./search-term";
@@ -9,7 +9,7 @@ import LoadingCircle from "./loading-circle";
 import SearchSubject from "./search-subject";
 import SearchCourse from "./search-course";
 import { Section } from "@prisma/client";
-import Link from "next/link";
+import SearchClassCell from "./search-class-cell";
 
 const pageSize = 8;
 
@@ -41,37 +41,10 @@ function SectionDisplay({ sections }: { sections: Section[] | undefined }) {
     <div className="flex flex-col justify-between flex-1">
       <div className="flex flex-col text-xs w-full overflow-visible gap-y-1">
         {paginateArray(sections, page).map((section) => (
-          <Link
-            href={`search/sections?term=${section.term}&crn=${section.crn}`}
-            className="transition-transform bg-gray-50 border flex justify-between p-3 rounded-lg w-full hover:translate-x-2"
-            key={section.crn}
-          >
-            <div>
-              <div className="font-bold maroon-gradient text-transparent bg-clip-text">
-                {section.subject} {section.course}-{section.section}
-              </div>
-
-              <div>{section.title}</div>
-            </div>
-
-            <div className="truncate flex flex-col font-medium items-end">
-              <div>
-                {(() => {
-                  const parse =
-                    section.instructorJson as unknown as Instructor[];
-                  const instructors = parse?.map((instructor) => {
-                    return {
-                      name: instructor.NAME.replace("(P)", ""),
-                      id: instructor.MORE,
-                    };
-                  });
-                  return instructors ? instructors[0].name : "Not assigned";
-                })()}
-              </div>
-
-              <div className="opacity-25">{section.crn}</div>
-            </div>
-          </Link>
+          <SearchClassCell
+            key={section.term + " " + section.crn}
+            section={section}
+          />
         ))}
       </div>
 
