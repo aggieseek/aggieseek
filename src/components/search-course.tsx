@@ -39,7 +39,7 @@ export default function SearchCourse({
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className="w-[200px] justify-between"
+            className="w-full lg:w-[200px] justify-between"
           >
             {courses === undefined
               ? "Loading..."
@@ -49,7 +49,7 @@ export default function SearchCourse({
             <ChevronsUpDown className="opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-96 p-0" align="start">
+        <PopoverContent className="w-[--radix-popover-trigger-width] lg:w-[200px] p-0" align="start">
           <Command>
             <CommandInput placeholder="Search course..." className="h-9" />
             <CommandList>
