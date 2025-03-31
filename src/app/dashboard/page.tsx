@@ -9,11 +9,13 @@ import DashboardHeader from "@/components/dashboard-header";
 import useTrackedSectionsStore, {
   LoadingState,
 } from "@/stores/useTrackedSectionsStore";
+import { CURRENT_TERM } from "@/lib/utils";
 
 export default function Dashboard() {
   const { trackedSections, loadState, fetchSections } =
     useTrackedSectionsStore();
   const { status } = useSession();
+  const term = CURRENT_TERM ?? "";
   const { setPageTitle: setTitle } = usePageTitle();
 
   useEffect(() => {
@@ -22,7 +24,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (status === "authenticated") {
-      fetchSections();
+      fetchSections(term);
     }
   }, [status]);
 

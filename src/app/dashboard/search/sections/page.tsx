@@ -58,8 +58,8 @@ const SectionButton = ({ crn, courseData }) => {
   const handleClick = isLoading
     ? () => {}
     : isTracked
-    ? () => deleteSection(courseData.CRN)
-    : () => addSection(courseData.CRN);
+    ? () => deleteSection(courseData.term, courseData.CRN)
+    : () => addSection(courseData.term, courseData.CRN);
 
   const icon =
     isLoading || isProcessing ? (
@@ -130,8 +130,8 @@ function SectionPage() {
   const { setPageTitle: setTitle } = usePageTitle();
 
   useEffect(() => {
-    if (status === "authenticated") {
-      fetchSections();
+    if (status === "authenticated" && courseData) {
+      fetchSections(courseData.TERM_CODE);
     }
   }, [status]);
 

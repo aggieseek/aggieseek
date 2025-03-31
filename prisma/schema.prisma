@@ -13,9 +13,10 @@ model User {
   email                   String?                  @unique
   emailVerified           DateTime?                @map("email_verified")
   image                   String?
-  discordId               String?                  @unique @map("discord_id")
   createdAt               DateTime                 @default(now()) @map("created_at")
   updatedAt               DateTime                 @updatedAt @map("updated_at")
+  discordId               String?                  @unique @map("discord_id")
+  role                    Int                      @default(0)
   accounts                Account[]
   discordWebhooks         Webhook[]
   feedback                Feedback[]
@@ -74,12 +75,13 @@ model VerificationRequest {
 }
 
 model TrackedSection {
-  userId    String   @map("user_id")
-  crn       String   @db.VarChar(5)
-  createdAt DateTime @default(now()) @map("created_at")
-  term      String   @db.VarChar(10)
-  section   Section  @relation(fields: [term, crn], references: [term, crn], onDelete: Cascade, onUpdate: NoAction)
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String   @map("user_id")
+  crn          String   @db.VarChar(5)
+  createdAt    DateTime @default(now()) @map("created_at")
+  term         String   @db.VarChar(10)
+  isSmsEnabled Boolean  @default(false) @map("sms_enabled")
+  section      Section  @relation(fields: [term, crn], references: [term, crn], onDelete: Cascade, onUpdate: NoAction)
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([userId, term, crn])
   @@map("tracked_sections")
@@ -173,10 +175,17 @@ model NotificationPreference {
   userId  String              @map("user_id")
   type    NotificationType
   channel NotificationChannel
-  users   User                @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: Cascade)
+  users   User                @relation(fields: [userId], references: [id], onDelete: NoAction)
 
   @@id([userId, type, channel])
   @@map("notification_preference")
+}
+
+model SMSLimits {
+  role    Int  @id(map: "sms_limits_pk")
+  maximum Int?
+
+  @@map("sms_limits")
 }
 
 enum Class {

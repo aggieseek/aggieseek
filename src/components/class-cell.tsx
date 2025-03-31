@@ -12,9 +12,11 @@ import {
   RiGroupFill,
   RiGroupLine,
   RiHashtag,
+  RiMessage2Fill,
   RiMoreFill,
 } from "react-icons/ri";
 import { RiDoorOpenFill } from "react-icons/ri";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
 interface ClassCellProps {
   section: Section;
@@ -100,10 +102,32 @@ export default function ClassCell({ section }: ClassCellProps) {
         {section.crn}
       </div>
 
-      <RiMoreFill
-        onClick={() => deleteSection(section.crn)}
-        className="transition-opacity duration-300 hover:cursor-pointer w-4 h-4 opacity-25 m-2 hover:opacity-100 absolute top-0 right-0"
-      />
+      <Popover>
+        <PopoverTrigger className="absolute top-0 right-0">
+          <RiMoreFill className="transition-opacity duration-150 hover:cursor-pointer w-4 h-4 opacity-25 m-2 hover:opacity-100" />
+        </PopoverTrigger>
+        <PopoverContent
+          className="text-xs w-max p-2 font-medium"
+          align="end"
+          side="top"
+        >
+          <div
+            className="flex p-1 items-center gap-x-2 hover:cursor-pointer hover:bg-gray-50"
+            onClick={() => deleteSection(section.term, section.crn)}
+          >
+            <RiDeleteBinFill />
+            <div>Delete Section</div>
+          </div>
+
+          <div
+            className="flex p-1 items-center gap-x-2 hover:cursor-pointer hover:bg-gray-50"
+            onClick={() => alert("sms")}
+          >
+            <RiMessage2Fill />
+            <div>Enable SMS Notifications</div>
+          </div>
+        </PopoverContent>
+      </Popover>
     </div>
   );
 }
