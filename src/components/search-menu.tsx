@@ -75,7 +75,7 @@ function SectionDisplay({ sections }: { sections: Section[] | undefined }) {
         ))}
       </div>
 
-      <div className="flex justify-between">
+      <div className="flex justify-between mt-4">
         <div className="text-xs self-center font-bold">
           Page {page + 1} of {maxPage + 1}{" "}
         </div>
@@ -190,7 +190,7 @@ export default function SearchMenu() {
     <div className="flex flex-col lg:flex-row flex-1 mt-1 lg:gap-x-4 h-full">
       <form
         onSubmit={(e) => beginSearch(e)}
-        className="flex w-full lg:pr-12 sticky flex-col justify-between lg:w-72 p-4 border rounded-lg"
+        className="flex w-full sticky flex-col justify-between lg:w-72 p-4 border rounded-lg"
       >
         <div className="flex flex-col gap-y-4">
           <div className="font-semibold">Filter Sections</div>
