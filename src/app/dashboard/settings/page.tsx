@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useState } from "react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Select,
@@ -12,11 +12,9 @@ import {
 import ProfileTab from "@/components/settings/profile-tab";
 import NotificationsTab from "@/components/settings/notifications-tab";
 import AccountTab from "@/components/settings/account-tab";
-import { usePageTitle } from "@/contexts/title-context";
 
 export default function Settings() {
   const [activeTab, setActiveTab] = useState("notifications");
-  const { setPageTitle: setTitle } = usePageTitle();
 
   const handleValueChange = (value: string) => {
     setActiveTab(value);
@@ -25,9 +23,11 @@ export default function Settings() {
   const renderContent = () => {
     switch (activeTab) {
       case "notifications":
-        return <Suspense>
-          <NotificationsTab />
-        </Suspense>;
+        return (
+          <Suspense>
+            <NotificationsTab />
+          </Suspense>
+        );
       case "profile":
         return <ProfileTab />;
       case "account":
@@ -36,10 +36,6 @@ export default function Settings() {
         return null;
     }
   };
-
-  useEffect(() => {
-    setTitle({ title: "Settings" });
-  }, [setTitle]);
 
   return (
     <div className="w-full">

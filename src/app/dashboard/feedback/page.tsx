@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -11,7 +11,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { usePageTitle } from "@/contexts/title-context";
 
 const submitFeedback = async (
   title: string,
@@ -33,12 +32,6 @@ export default function Feedback() {
   const [priority, setPriority] = useState<string>("Low");
   const [description, setDescription] = useState<string>("");
   const [title, setTitle] = useState<string>("");
-
-  const { setPageTitle } = usePageTitle();
-
-  useEffect(() => {
-    setPageTitle({ title: "Feedback" });
-  }, [setPageTitle]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();

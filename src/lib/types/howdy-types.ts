@@ -87,3 +87,8 @@ export interface ITermHowdy {
   STVTERM_GUID: string;
   STVTERM_CATALOG_GUID: string;
 }
+export interface IInstructorHowdy {
+  NAME: string;
+  MORE: number;
+  HAS_CV: string;
+}

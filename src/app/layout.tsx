@@ -43,7 +43,7 @@ export default function RootLayout({
       <SessionWrapper>
         <body className={`${satoshi.className} antialiased`}>
           {children}
-          <Toaster />
+          <Toaster position="top-right" />
           <SpeedInsights />
           <Analytics />
         </body>

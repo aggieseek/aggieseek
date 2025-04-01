@@ -7,8 +7,6 @@ import { Button } from "./ui/button";
 import {
   RiAddFill,
   RiAddLine,
-  RiCheckboxCircleFill,
-  RiErrorWarningFill,
   RiRestartLine,
   RiSearch2Line,
 } from "react-icons/ri";
@@ -31,34 +29,16 @@ export default function DashboardHeader() {
     e.preventDefault();
     if (crnInput.trim() === "") return;
     if (trackedSections.some((section) => section.crn === crnInput)) {
-      toast(
-        <div className="flex items-center">
-          <RiErrorWarningFill className="w-4 h-4 mr-2" />
-          You are already tracking section {crnInput}.
-        </div>,
-        {}
-      );
+      toast.error(`You are already tracking section ${crnInput}.`);
       return;
     }
 
     addSection(crnInput)
       .then(() => {
-        toast(
-          <div className="flex items-center">
-            <RiCheckboxCircleFill className="w-4 h-4 mr-2" />
-            Added section {crnInput}.
-          </div>,
-          {}
-        );
+        toast.success(`Added section ${crnInput}.`);
       })
       .catch(() => {
-        toast(
-          <div className="flex items-center">
-            <RiErrorWarningFill className="w-4 h-4 mr-2" />
-            Failed to add section {crnInput}.
-          </div>,
-          {}
-        );
+        toast.error(`Failed to add section ${crnInput}.`);
       });
     setCrnInput("");
   };

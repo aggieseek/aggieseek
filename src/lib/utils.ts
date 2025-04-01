@@ -1,7 +1,5 @@
 import { clsx, type ClassValue } from "clsx";
-import { Session } from "next-auth";
 import { twMerge } from "tailwind-merge";
-import prisma from "./prisma-client";
 
 const seasonMapping: Record<string, string> = {
   "11": "Spring",
@@ -20,17 +18,4 @@ export function convertTermCode(termCode: string) {
   const season = termCode.slice(4);
 
   return `${seasonMapping[season]} ${year}`;
-}
-
-export async function getUserId(session: Session) {
-  if (!session.user) return null;
-  return prisma.user
-    .findUnique({
-      where: {
-        email: session.user.email || "",
-      },
-    })
-    .then((user) => {
-      return user?.id;
-    });
 }

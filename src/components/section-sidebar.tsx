@@ -1,4 +1,4 @@
-import { Instructor } from "@/lib/types/course-types";
+import { IInstructorHowdy } from "@/lib/types/howdy-types";
 import { ISectionHowdy } from "@/lib/types/howdy-types";
 import Link from "next/link";
 import {
@@ -10,7 +10,7 @@ import {
 } from "react-icons/ri";
 
 interface SectionSidebarProps {
-  instructors: Instructor[];
+  instructors: IInstructorHowdy[];
   courseData: ISectionHowdy;
   numWatching: number;
 }
@@ -32,7 +32,7 @@ export default function SectionSidebar({
                 <RiUserFill className="w-4 h-4" />
               )}
               <Link
-                className="hover:underline"
+                className="underline-anim"
                 href={`/dashboard/search/instructors?id=${instructor.MORE}`}
               >
                 {instructor.NAME}

@@ -4,7 +4,6 @@ import ClassCell from "@/components/class-cell";
 import { useEffect } from "react";
 import LoadingCircle from "@/components/loading-circle";
 import { useSession } from "next-auth/react";
-import { usePageTitle } from "@/contexts/title-context";
 import DashboardHeader from "@/components/dashboard-header";
 import useTrackedSectionsStore, {
   LoadingState,
@@ -14,11 +13,6 @@ export default function Dashboard() {
   const { trackedSections, loadState, fetchSections } =
     useTrackedSectionsStore();
   const { status } = useSession();
-  const { setPageTitle: setTitle } = usePageTitle();
-
-  useEffect(() => {
-    setTitle({ title: "Dashboard" });
-  }, [setTitle]);
 
   useEffect(() => {
     if (status === "authenticated") {

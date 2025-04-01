@@ -1,6 +1,7 @@
 "use client";
 
-import { Course, Instructor, Term } from "@/lib/types/course-types";
+import { Course, Term } from "@/lib/types/course-types";
+import { IInstructorHowdy } from "@/lib/types/howdy-types";
 import { CURRENT_TERM } from "@/lib/utils";
 import { FormEvent, useEffect, useState } from "react";
 import SearchTerm from "./search-term";
@@ -10,6 +11,8 @@ import SearchSubject from "./search-subject";
 import SearchCourse from "./search-course";
 import { Section } from "@prisma/client";
 import Link from "next/link";
+import { getSubjects } from "@/actions/subjects";
+import { getTerms } from "@/actions/terms";
 
 const pageSize = 8;
 
@@ -58,7 +61,7 @@ function SectionDisplay({ sections }: { sections: Section[] | undefined }) {
               <div>
                 {(() => {
                   const parse =
-                    section.instructorJson as unknown as Instructor[];
+                    section.instructorJson as unknown as IInstructorHowdy[];
                   const instructors = parse?.map((instructor) => {
                     return {
                       name: instructor.NAME.replace("(P)", ""),
@@ -152,21 +155,16 @@ export default function SearchMenu() {
   }
 
   useEffect(() => {
-    fetch("/api/data/terms")
-      .then((res) => res.json())
-      .then((data: Term[]) => {
-        setTerms(data);
-        console.log("hi");
-        setSelectedTerm(
-          data.find((obj) => obj.code === CURRENT_TERM)?.desc ?? ""
-        );
-      });
+    getTerms().then((data: Term[]) => {
+      setTerms(data);
+      setSelectedTerm(
+        data.find((obj) => obj.code === CURRENT_TERM)?.desc ?? ""
+      );
+    });
   }, []);
 
   useEffect(() => {
-    fetch(`/api/data/subjects?term=${selectedTermCode}`)
-      .then((res) => res.json())
-      .then((data) => setSubjects(data));
+    getSubjects(selectedTermCode).then((data) => setSubjects(data));
   }, [selectedTerm]);
 
   useEffect(() => {

@@ -8,22 +8,22 @@ datasource db {
 }
 
 model User {
-  id                      String                   @id @default(uuid())
-  name                    String
-  email                   String?                  @unique
-  emailVerified           DateTime?                @map("email_verified")
-  image                   String?
-  discordId               String?                  @unique @map("discord_id")
-  createdAt               DateTime                 @default(now()) @map("created_at")
-  updatedAt               DateTime                 @updatedAt @map("updated_at")
-  accounts                Account[]
-  discordWebhooks         Webhook[]
-  feedback                Feedback[]
-  notificationPreferences NotificationPreference[]
-  notificationSettings    NotificationSettings?
-  profileSettings         ProfileSettings?
-  sessions                Session[]
-  trackedSections         TrackedSection[]
+  id                   String                @id @default(uuid())
+  name                 String
+  email                String?               @unique
+  emailVerified        DateTime?             @map("email_verified")
+  image                String?
+  createdAt            DateTime              @default(now()) @map("created_at")
+  updatedAt            DateTime              @updatedAt @map("updated_at")
+  discordId            String?               @unique @map("discord_id")
+  role                 Int                   @default(0)
+  accounts             Account[]
+  discordWebhooks      Webhook[]
+  feedback             Feedback[]
+  notificationSettings NotificationSettings?
+  profileSettings      ProfileSettings?
+  sessions             Session[]
+  trackedSections      TrackedSection[]
 
   @@map("users")
 }
@@ -74,12 +74,13 @@ model VerificationRequest {
 }
 
 model TrackedSection {
-  userId    String   @map("user_id")
-  crn       String   @db.VarChar(5)
-  createdAt DateTime @default(now()) @map("created_at")
-  term      String   @db.VarChar(10)
-  section   Section  @relation(fields: [term, crn], references: [term, crn], onDelete: Cascade, onUpdate: NoAction)
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String   @map("user_id")
+  crn         String   @db.VarChar(5)
+  createdAt   DateTime @default(now()) @map("created_at")
+  term        String   @db.VarChar(10)
+  sms_enabled Boolean  @default(false)
+  section     Section  @relation(fields: [term, crn], references: [term, crn], onDelete: Cascade, onUpdate: NoAction)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([userId, term, crn])
   @@map("tracked_sections")
@@ -103,10 +104,17 @@ model Major {
 }
 
 model NotificationSettings {
-  userId      String  @id @map("user_id")
-  email       String?
-  phoneNumber String? @map("phone_number")
-  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  userId           String  @id @map("user_id")
+  email            String?
+  phoneNumber      String? @map("phone_number")
+  sectionOpen      Boolean @default(true) @map("section_open")
+  sectionClose     Boolean @default(true) @map("section_close")
+  instructorChange Boolean @default(true) @map("instructor_change")
+  smsEnabled       Boolean @default(false) @map("sms_enabled")
+  emailEnabled     Boolean @default(false) @map("email_enabled")
+  globalEnabled    Boolean @default(true) @map("global_enabled")
+  discordEnabled   Boolean @default(true) @map("discord_enabled")
+  user             User    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@map("notification_settings")
 }
@@ -117,7 +125,7 @@ model ProfileSettings {
   class    Class?
   majorId  Int?    @map("major_id")
   major    Major?  @relation(fields: [majorId], references: [majorId], onUpdate: NoAction)
-  user     User    @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  user     User    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@map("profile_settings")
 }
@@ -129,7 +137,7 @@ model Feedback {
   priority   PriorityLevel
   createdAt  DateTime?     @default(now()) @map("created_at") @db.Timestamp(6)
   body       String        @db.VarChar(100)
-  users      User          @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users      User          @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@map("feedback")
 }
@@ -169,14 +177,21 @@ model Instructor {
   @@map("instructor")
 }
 
-model NotificationPreference {
-  userId  String              @map("user_id")
-  type    NotificationType
-  channel NotificationChannel
-  users   User                @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: Cascade)
+model Role {
+  roleId            Int    @id @map("role_id")
+  name              String @db.VarChar(20)
+  smsMaximum        Int    @map("sms_maximum")
+  sectionsMaximum   Int    @map("sections_maximum")
+  notificationDelay Int    @map("notification_delay")
 
-  @@id([userId, type, channel])
-  @@map("notification_preference")
+  @@map("role")
+}
+
+model SmsLimits {
+  role    Int  @id(map: "sms_limits_pk")
+  maximum Int?
+
+  @@map("sms_limits")
 }
 
 enum Class {
@@ -195,20 +210,4 @@ enum PriorityLevel {
   High
 
   @@map("priority_level")
-}
-
-enum NotificationChannel {
-  DISCORD
-  SMS
-  EMAIL
-
-  @@map("notification_channel")
-}
-
-enum NotificationType {
-  CLASS_OPEN
-  CLASS_CLOSE
-  INSTRUCTOR_CHANGE
-
-  @@map("notification_type")
 }

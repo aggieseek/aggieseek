@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { CURRENT_TERM } from "@/lib/utils";
 import { Section } from "@prisma/client";
-import { Instructor } from "@/lib/types/course-types";
+import { IInstructorHowdy } from "@/lib/types/howdy-types";
 import useTrackedSectionsStore from "@/stores/useTrackedSectionsStore";
 import { JsonValue } from "@prisma/client/runtime/library";
 import {
@@ -22,7 +22,7 @@ interface ClassCellProps {
 
 function InstructorLabel({ instructorJson }: { instructorJson: JsonValue }) {
   const data = instructorJson
-    ? (instructorJson as unknown as Instructor[])
+    ? (instructorJson as unknown as IInstructorHowdy[])
     : [];
   const instructors = data.map((instructor) => {
     return {

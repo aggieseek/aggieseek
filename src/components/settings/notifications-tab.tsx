@@ -3,38 +3,52 @@ import { NotificationSettings } from "@prisma/client";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { Checkbox } from "@/components/ui/checkbox";
 import { useSession } from "next-auth/react";
 import {
-  RiCheckboxCircleFill,
   RiCheckLine,
   RiDiscordFill,
-  RiErrorWarningFill,
   RiMailOpenFill,
-  RiNotification2Fill,
   RiPhoneFill,
 } from "react-icons/ri";
 import { useRouter, useSearchParams } from "next/navigation";
 import LoadingCircle from "../loading-circle";
+import {
+  getNotificationSettings,
+  updatePhoneNumber,
+  updatePreferences,
+} from "@/actions/notification-settings";
+import PreferencesSelect from "./preferences-select";
+import { getWebhooks } from "@/actions/webhooks";
+import WebhooksSelect from "./webhooks-input";
+import { toast } from "sonner";
+import { getUserDiscordId } from "@/actions/discord";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { cn } from "@/lib/utils";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "../ui/accordion";
 
-async function getDataFromRoute(endpoint: string) {
-  try {
-    const res = await fetch(endpoint);
-    return await res.json();
-  } catch (err) {
-    console.error(err);
-    return [];
-  }
-}
+export const PreferencesSchema = z.object({
+  sectionOpen: z.boolean(),
+  sectionClose: z.boolean(),
+  instructorChange: z.boolean(),
+  globalEnabled: z.boolean(),
+  smsEnabled: z.boolean(),
+  emailEnabled: z.boolean(),
+  discordEnabled: z.boolean(),
+});
 
 function DiscordButton({
   discordId,
   setDiscordId,
 }: {
-  discordId: string | undefined;
-  setDiscordId: (value: string | undefined) => void;
+  discordId: string | undefined | null;
+  setDiscordId: (value: string | undefined | null) => void;
 }) {
   const router = useRouter();
   const [isHovered, setIsHovered] = useState(false);
@@ -46,9 +60,10 @@ function DiscordButton({
     fetch("/api/auth/discord/disconnect")
       .then((res) => {
         if (res.ok) {
-          getDataFromRoute("/api/users/discord").then((result) => {
-            setDiscordId(result.discordId);
-            router.push("?status=dcsuccess");
+          getUserDiscordId().then((discordId) => {
+            setDiscordId(discordId);
+            console.log("a");
+            toast.success("Successfully unlinked your discord account!");
           });
         }
       })
@@ -105,118 +120,80 @@ function DiscordButton({
   );
 }
 
-function StatusMessage({ status }: { status: string | null }) {
-  if (status == "failed") {
-    return (
-      <div className="flex items-center font-semibold gap-x-4 border rounded-lg border-red-200 bg-red-100 p-3">
-        <RiErrorWarningFill className="w-5 h-5" />
-        An error occurred while trying to link your discord account.
-      </div>
-    );
-  }
-
-  if (status == "success") {
-    return (
-      <div className="flex items-center font-semibold gap-x-4 border rounded-lg border-green-200 bg-green-100 p-3">
-        <RiCheckboxCircleFill className="w-5 h-5" />
-        Successfully linked your discord account!
-      </div>
-    );
-  }
-
-  if (status == "exists") {
-    return (
-      <div className="flex items-center font-semibold gap-x-4 border rounded-lg border-red-200 bg-red-100 p-3">
-        <RiErrorWarningFill className="w-5 h-5" />
-        This discord account is linked to another user.
-      </div>
-    );
-  }
-
-  if (status == "dcerror") {
-    return (
-      <div className="flex items-center font-semibold gap-x-4 border rounded-lg border-red-200 bg-red-100 p-3">
-        <RiErrorWarningFill className="w-5 h-5" />
-        An error occurred while trying to unlink your discord account.
-      </div>
-    );
-  }
-
-  if (status == "dcsuccess") {
-    return (
-      <div className="flex items-center font-semibold gap-x-4 border rounded-lg border-green-200 bg-green-100 p-3">
-        <RiCheckboxCircleFill className="w-5 h-5" />
-        Successfully unlinked your discord account!
-      </div>
-    );
-  }
-
-  return <></>;
-}
-
 export default function NotificationsTab() {
   const [notificationSettings, setNotificationSettings] =
     useState<NotificationSettings | null>(null);
   const [phoneNumber, setPhoneNumber] = useState<string | undefined>(undefined);
+  const [discordId, setDiscordId] = useState<string | undefined | null>(
+    undefined
+  );
   const [webhooks, setWebhooks] = useState<string[] | undefined>(undefined);
-  const [discordId, setDiscordId] = useState<string | undefined>(undefined);
-
-  const [webhookInput, setWebhookInput] = useState<string>("");
 
   const searchParams = useSearchParams();
   const { data: session } = useSession();
   const status = searchParams.get("status");
+  const router = useRouter();
 
-  const addWebhook = (webhookUrl: string) => {
-    fetch("/api/users/webhooks", {
-      method: "POST",
-      body: JSON.stringify({ webhookUrl }),
-    })
-      .then((res) => {
-        if (!res.ok) return;
-        setWebhookInput("");
-        setWebhooks((prev) => [...(prev ?? []), webhookUrl]);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  };
+  const preferencesForm = useForm<z.infer<typeof PreferencesSchema>>({
+    resolver: zodResolver(PreferencesSchema),
+  });
 
-  const deleteWebhook = (webhookUrl: string) => {
-    fetch("/api/users/webhooks", {
-      method: "DELETE",
-      body: JSON.stringify({ webhookUrl }),
-    })
-      .then((res) => {
-        if (!res.ok) return;
-        setWebhookInput("");
-        setWebhooks((webhooks ?? []).filter((prev) => prev !== webhookUrl));
+  function saveChanges() {
+    if (phoneNumber === undefined) return;
+    Promise.all([
+      updatePhoneNumber(phoneNumber),
+      updatePreferences(preferencesForm.getValues()),
+    ])
+      .then(() => {
+        toast.success("Your changes were successfully saved!");
       })
-      .catch((err) => {
-        console.error(err);
+      .catch(() => {
+        toast.error("An error occurred while trying to save your settings.");
       });
-  };
+  }
 
   useEffect(() => {
-    getDataFromRoute("/api/users/notifications").then((result) =>
-      setNotificationSettings(result)
-    );
-    getDataFromRoute("/api/users/webhooks").then((result) =>
-      setWebhooks(result)
-    );
-    getDataFromRoute("/api/users/discord").then((result) => {
-      setDiscordId(result.discordId);
+    getNotificationSettings().then((data) => {
+      if (!data) return;
+      setNotificationSettings(data);
+      preferencesForm.reset({
+        sectionOpen: data.sectionOpen,
+        sectionClose: data.sectionClose,
+        instructorChange: data.instructorChange,
+        smsEnabled: data.smsEnabled,
+        globalEnabled: data.globalEnabled,
+        emailEnabled: data.emailEnabled,
+        discordEnabled: data.discordEnabled,
+      });
     });
+    getWebhooks().then((data) => setWebhooks(data));
+    getUserDiscordId().then((data) => setDiscordId(data ?? null));
   }, []);
 
   useEffect(() => {
-    setPhoneNumber(notificationSettings?.phoneNumber || "");
+    setPhoneNumber(notificationSettings?.phoneNumber ?? "");
   }, [notificationSettings]);
+
+  useEffect(() => {
+    if (!status) return;
+
+    if (status === "success")
+      toast.success("Successfully linked your discord account!");
+    if (status === "error")
+      toast.error("An error occurred while linking your account.");
+    if (status === "exists")
+      toast.error("This discord account is already linked to another user.");
+    if (status === "dcerror")
+      toast.error("An error occurred while unlinking your account.");
+
+    router.push("?");
+  }, []);
 
   if (
     phoneNumber === undefined ||
     webhooks === undefined ||
-    discordId === undefined
+    discordId === undefined ||
+    !notificationSettings
   ) {
     return (
       <div className="flex justify-center mt-8">
@@ -226,132 +203,67 @@ export default function NotificationsTab() {
   }
 
   return (
-    <div className={"flex flex-col gap-y-8 md:gap-y-6 pt-4"}>
-      <StatusMessage status={status} />
-
-      <div className="flex flex-col gap-2">
-        <Label className={"flex gap-x-2"}>
-          <RiMailOpenFill />
-          Email Address
-        </Label>
-        <Input className={"w-64"} value={session?.user?.email || ""} disabled />
-      </div>
-      <div className="flex flex-col gap-2 hidden">
-        <Label className={"flex gap-x-2"}>
-          <RiPhoneFill />
-          Phone Number
-        </Label>
-        <Input
-          autoComplete={"mobile tel"}
-          placeholder="Enter your phone number"
-          value={phoneNumber || ""}
-          onChange={(e) => setPhoneNumber(e.target.value)}
-          className={"w-64"}
-        />
-      </div>
-      <div className=" flex flex-col gap-2">
-        <Label htmlFor={"webhook"} className={"flex gap-x-2"}>
-          <RiDiscordFill />
-          Discord Webhooks
-        </Label>
-        <div className={"flex rounded-md flex-col border p-4 gap-y-4"}>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              addWebhook(webhookInput);
-            }}
-            className={"flex w-full h-1/4 gap-x-2 items-center"}
-          >
+    <div className={"flex flex-col gap-y-6 pt-4"}>
+      <div className="flex justify-between">
+        <div className="flex flex-col gap-y-8 md:gap-y-6">
+          <div className="flex flex-col gap-2">
+            <Label className={"flex gap-x-2"}>
+              <RiMailOpenFill />
+              Email Address
+            </Label>
             <Input
-              autoComplete={"off"}
-              value={webhookInput}
-              placeholder="Enter your Discord webhook"
-              onChange={(e) => setWebhookInput(e.target.value)}
-              id={"webhook"}
-              className={"h-full w-full"}
+              className={"w-64"}
+              value={session?.user?.email || ""}
+              disabled
             />
-            <Button
-              className={"transition-transform active:scale-95"}
-              type={"submit"}
-            >
-              + Add
-            </Button>
-          </form>
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label className={"flex gap-x-2"}>
+              <RiPhoneFill />
+              Phone Number
+            </Label>
+            <Input
+              className={"w-64"}
+              placeholder="(123) 456-7890"
+              defaultValue={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+            />
+          </div>
+        </div>
+        <div className="hidden lg:flex flex-col gap-y-2">
+          <Button onClick={saveChanges} className="">
+            Save Changes
+          </Button>
 
-          <div className={"flex flex-col rounded-md border h-full p-4"}>
-            {webhooks.map((webhook, index) => (
-              <p
-                onClick={() => deleteWebhook(webhook)}
-                className={
-                  "text-sm hover:line-through hover:cursor-pointer break-words whitespace-normal  "
-                }
-                key={index}
-              >
-                {webhook}
-              </p>
-            ))}
-          </div>
-        </div>
-      </div>
-      <div className="flex flex-col gap-2 hidden">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2">
-          <Label className={"flex gap-x-2 mb-2"}>
-            <RiNotification2Fill />
-            Notification Preferences
-          </Label>
-          <div className="flex gap-4 text-neutral-500 text-sm font-semibold">
-            <p>Discord</p>
-            <p>SMS</p>
-            <p>Email</p>
-          </div>
-        </div>
-        <Separator />
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
-          <div>
-            <p className=" text-sm font-semibold">Class Openings</p>
-            <p className=" text-xs text-neutral-500">
-              Get notified when classes open up
-            </p>
-          </div>
-          <div className="flex gap-12 ml-0 lg:gap-8 lg:mr-2 mt-2 lg:mt-0">
-            <Checkbox />
-            <Checkbox />
-            <Checkbox />
-          </div>
-        </div>
-        <Separator className="" />
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
-          <div>
-            <p className=" text-sm font-semibold">Class Closings</p>
-            <p className=" text-xs text-neutral-500">
-              Get notified when classes close
-            </p>
-          </div>
-          <div className=" flex gap-12 ml-0 lg:gap-8 lg:mr-2 mt-2 lg:mt-0">
-            <Checkbox />
-            <Checkbox />
-            <Checkbox />
-          </div>
-        </div>
-        <Separator className="" />
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
-          <div>
-            <p className=" text-sm font-semibold">Instructor Changes</p>
-            <p className=" text-xs text-neutral-500">
-              Get notified when instructors change for a class
-            </p>
-          </div>
-          <div className=" flex gap-12 ml-0 lg:gap-8 lg:mr-2 mt-2 lg:mt-0">
-            <Checkbox />
-            <Checkbox />
-            <Checkbox />
-          </div>
+          <DiscordButton discordId={discordId} setDiscordId={setDiscordId} />
         </div>
       </div>
 
-      <DiscordButton discordId={discordId} setDiscordId={setDiscordId} />
+      <Accordion className="mb-3" type="single" collapsible>
+        <AccordionItem value="item-1">
+          <AccordionTrigger>
+            <Label htmlFor={"webhook"} className={"flex gap-x-2"}>
+              <RiDiscordFill />
+              Discord Webhooks
+            </Label>
+          </AccordionTrigger>
+          <AccordionContent>
+            <WebhooksSelect webhooks={webhooks} setWebhooks={setWebhooks} />
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
 
-      <Button className="w-40 hidden">Save Changes</Button>
+      <div className="flex gap-x-8">
+        <PreferencesSelect form={preferencesForm} />
+      </div>
+
+      <div className="flex lg:hidden gap-x-2">
+        <Button onClick={saveChanges} className="">
+          Save Changes
+        </Button>
+
+        <DiscordButton discordId={discordId} setDiscordId={setDiscordId} />
+      </div>
     </div>
   );
 }

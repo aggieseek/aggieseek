@@ -2,7 +2,6 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import type { Instructor, Section } from "@prisma/client";
-import { usePageTitle } from "@/contexts/title-context";
 import Link from "next/link";
 import { CURRENT_TERM } from "@/lib/utils";
 import LoadingCircle from "@/components/loading-circle";
@@ -100,13 +99,11 @@ function InstructorPage() {
   const source = searchParams.get("source");
   const router = useRouter();
   const [instructorData, setInstructorData] = useState<Instructor | null>(null);
-  const [instructorSections, setInstructorSections] = useState<Section[] | null>(
-    null
-  );
-  const { setPageTitle: setTitle } = usePageTitle();
+  const [instructorSections, setInstructorSections] = useState<
+    Section[] | null
+  >(null);
 
   useEffect(() => {
-    setTitle(null);
     if (!instructorId) {
       router.push("/dashboard/search");
       return;
@@ -114,16 +111,12 @@ function InstructorPage() {
 
     fetchInstructor(instructorId).then((data: Instructor) => {
       setInstructorData(data);
-      setTitle({
-        title: data.name ?? "",
-        subtitle: data.instructorId,
-      });
     });
 
     fetchInstructorSections(instructorId).then((data: Section[]) => {
       setInstructorSections(data);
     });
-  }, [instructorId, router, setTitle]);
+  }, [instructorId, router]);
 
   if (instructorData === null) {
     return (
@@ -145,10 +138,10 @@ function InstructorPage() {
             Back to Dashboard
           </Link>
         )}
-        <div className="border-b pb-3 "> 
-        <p className="text-2xl tracking-wide font-black maroon-gradient inline-block text-transparent bg-clip-text">
-          {instructorData?.name}
-        </p>
+        <div className="border-b pb-3 ">
+          <p className="text-2xl tracking-wide font-black maroon-gradient inline-block text-transparent bg-clip-text">
+            {instructorData?.name}
+          </p>
         </div>
       </div>
       <InstructorSections sections={instructorSections} />
