@@ -57,8 +57,8 @@ const SectionButton = ({ crn, courseData }) => {
   const handleClick = isLoading
     ? () => {}
     : isTracked
-    ? () => deleteSection(courseData.CRN)
-    : () => addSection(courseData.CRN);
+    ? () => deleteSection(courseData.term, courseData.CRN)
+    : () => addSection(courseData.term, courseData.CRN);
 
   const icon =
     isLoading || isProcessing ? (
@@ -113,7 +113,7 @@ function SectionPanel({
 
 function SectionPage() {
   const searchParams = useSearchParams();
-  const term = searchParams.get("term");
+  const term = searchParams.get("term") ?? "202531";
   const crn = searchParams.get("crn");
   const source = searchParams.get("source");
   const router = useRouter();
@@ -128,7 +128,7 @@ function SectionPage() {
 
   useEffect(() => {
     if (status === "authenticated") {
-      fetchSections();
+      fetchSections(term);
     }
   }, [status]);
 

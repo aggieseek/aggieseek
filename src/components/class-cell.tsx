@@ -15,6 +15,7 @@ import {
   RiHashtag,
 } from "react-icons/ri";
 import { RiDoorOpenFill } from "react-icons/ri";
+import { toast } from "sonner";
 
 interface ClassCellProps {
   section: Section;
@@ -56,7 +57,7 @@ function InstructorLabel({ instructorJson }: { instructorJson: JsonValue }) {
 }
 
 export default function ClassCell({ section }: ClassCellProps) {
-  const { deleteSection } = useTrackedSectionsStore();
+  const { deleteSectionImmediately } = useTrackedSectionsStore();
 
   return (
     <div className="w-full lg:w-[calc(50%-1rem)] bg-gray-50 p-4 rounded-md border relative">
@@ -105,7 +106,11 @@ export default function ClassCell({ section }: ClassCellProps) {
       </div>
 
       <RiDeleteBinFill
-        onClick={() => deleteSection(section.crn)}
+        onClick={() =>
+          deleteSectionImmediately(section.term, section.crn).then(() =>
+            toast.success(`Successfully deleted section ${section.crn}.`)
+          )
+        }
         className="transition-opacity duration-300 hover:cursor-pointer w-4 h-4 opacity-25 m-2 hover:opacity-100 absolute top-0 right-0"
       />
     </div>

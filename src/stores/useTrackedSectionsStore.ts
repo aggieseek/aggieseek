@@ -1,4 +1,3 @@
-import { CURRENT_TERM } from "@/lib/utils";
 import { Section, TrackedSection } from "@prisma/client";
 import { create } from "zustand";
 
@@ -17,29 +16,29 @@ export enum LoadingState {
 interface TrackedSectionsState {
   trackedSections: SectionInfo[];
   loadState: LoadingState;
-  addSection: (crn: string) => Promise<void>;
-  deleteSection: (crn: string) => Promise<void>;
-  deleteSectionImmediately: (crn: string) => Promise<void>;
-  fetchSections: () => void;
-  refresh: () => void;
+  addSection: (term: string, crn: string) => Promise<void>;
+  deleteSection: (term: string, crn: string) => Promise<void>;
+  deleteSectionImmediately: (term: string, crn: string) => Promise<void>;
+  fetchSections: (term: string) => void;
+  refresh: (term: string) => void;
 }
 
 const useTrackedSectionsStore = create<TrackedSectionsState>((set) => ({
   trackedSections: [],
   loadState: LoadingState.FETCHING,
-  addSection: async (crn: string) => {
+  addSection: async (term: string, crn: string) => {
     set({ loadState: LoadingState.ADDING });
 
     try {
       const res = await fetch("/api/users/sections", {
         method: "POST",
-        body: JSON.stringify({ crn, term: CURRENT_TERM }),
+        body: JSON.stringify({ crn, term }),
         headers: { "Content-Type": "application/json" },
       });
 
       if (!res.ok) throw new Error("Failed to add section.");
       set((state) => {
-        state.refresh();
+        state.refresh(term);
         return state;
       });
     } catch (error) {
@@ -48,13 +47,13 @@ const useTrackedSectionsStore = create<TrackedSectionsState>((set) => ({
       throw error;
     }
   },
-  deleteSectionImmediately: async (crn: string) => {
+  deleteSectionImmediately: async (term: string, crn: string) => {
     set({ loadState: LoadingState.DELETING });
 
     try {
       const res = await fetch("/api/users/sections", {
         method: "DELETE",
-        body: JSON.stringify({ crn, term: CURRENT_TERM }),
+        body: JSON.stringify({ crn, term }),
         headers: { "Content-Type": "application/json" },
       });
 
@@ -67,7 +66,7 @@ const useTrackedSectionsStore = create<TrackedSectionsState>((set) => ({
       }));
 
       set((state) => {
-        state.refresh();
+        state.refresh(term);
         return state;
       });
     } catch (error) {
@@ -76,20 +75,20 @@ const useTrackedSectionsStore = create<TrackedSectionsState>((set) => ({
       throw error;
     }
   },
-  deleteSection: async (crn: string) => {
+  deleteSection: async (term: string, crn: string) => {
     set({ loadState: LoadingState.DELETING });
 
     try {
       const res = await fetch("/api/users/sections", {
         method: "DELETE",
-        body: JSON.stringify({ crn, term: CURRENT_TERM }),
+        body: JSON.stringify({ crn, term }),
         headers: { "Content-Type": "application/json" },
       });
 
       if (!res.ok) throw new Error("Failed to delete section.");
 
       set((state) => {
-        state.refresh();
+        state.refresh(term);
         return state;
       });
     } catch (error) {
@@ -98,19 +97,19 @@ const useTrackedSectionsStore = create<TrackedSectionsState>((set) => ({
       throw error;
     }
   },
-  fetchSections: async () => {
+  fetchSections: async (term: string) => {
     set(() => ({
       loadState: LoadingState.FETCHING,
     }));
 
     set((state) => {
-      state.refresh();
+      state.refresh(term);
       return state;
     });
   },
-  refresh: async () => {
+  refresh: async (term: string) => {
     try {
-      const res = await fetch(`/api/users/sections?term=${CURRENT_TERM}`, {
+      const res = await fetch(`/api/users/sections?term=${term}`, {
         method: "GET",
       });
 
