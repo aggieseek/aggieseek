@@ -1,4 +1,5 @@
 import { Section, TrackedSection } from "@prisma/client";
+import { toast } from "sonner";
 import { create } from "zustand";
 
 interface SectionInfo extends TrackedSection {
@@ -21,6 +22,7 @@ interface TrackedSectionsState {
   deleteSectionImmediately: (term: string, crn: string) => Promise<void>;
   fetchSections: (term: string) => void;
   refresh: (term: string) => void;
+  toggleSms: (term: string, crn: string) => void;
 }
 
 const useTrackedSectionsStore = create<TrackedSectionsState>((set) => ({
@@ -123,6 +125,38 @@ const useTrackedSectionsStore = create<TrackedSectionsState>((set) => ({
     } catch (error) {
       console.error(error);
       set({ loadState: LoadingState.ERROR });
+    }
+  },
+  toggleSms: async (term, crn) => {
+    try {
+      const response = await fetch("/api/users/sections/sms", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ term, crn }),
+      });
+
+      if (response.status !== 201) {
+        toast.error(
+          "You have reached the maximum number of SMS-tracked sections."
+        );
+        return;
+      }
+
+      const data: TrackedSection = await response.json();
+
+      toast.success(
+        `You have successfully ${
+          data.smsEnabled ? "enabled" : "disabled"
+        } SMS-tracking for section ${data.crn}.`
+      );
+
+      set((state) => {
+        state.refresh(term);
+        return state;
+      });
+    } catch (error) {
+      console.error("Failed to toggle SMS tracking:", error);
+      toast.error("An error occurred while updating SMS tracking.");
     }
   },
 }));
