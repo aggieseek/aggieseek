@@ -46,7 +46,13 @@ const fetchWatchers = async (term: string, crn: string) => {
   return null;
 };
 
-const SectionButton = ({ crn, courseData }) => {
+const SectionButton = ({
+  crn,
+  courseData,
+}: {
+  crn: string | null;
+  courseData: ISectionHowdy;
+}) => {
   const { loadState, trackedSections, addSection, deleteSection } =
     useTrackedSectionsStore();
   const isLoading = loadState === LoadingState.FETCHING;
@@ -57,8 +63,8 @@ const SectionButton = ({ crn, courseData }) => {
   const handleClick = isLoading
     ? () => {}
     : isTracked
-    ? () => deleteSection(courseData.term, courseData.CRN)
-    : () => addSection(courseData.term, courseData.CRN);
+    ? () => deleteSection(courseData.TERM_CODE, courseData.CRN)
+    : () => addSection(courseData.TERM_CODE, courseData.CRN);
 
   const icon =
     isLoading || isProcessing ? (
