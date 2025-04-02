@@ -1,6 +1,6 @@
+import { getUserId } from "@/actions/user";
 import { authOptions } from "@/lib/auth-options";
 import prisma from "@/lib/prisma-client";
-import { getUserId } from "@/lib/utils";
 import { getServerSession } from "next-auth";
 import { NextResponse, type NextRequest } from "next/server";
 
