@@ -124,7 +124,7 @@ export default function PreferencesSelect({
               <div className="flex items-center justify-between">
                 <div className="flex gap-x-2">
                   <p className="text-sm font-medium">SMS Messaging</p>
-                  {!savedPhone && (
+                  {(!savedPhone && field.value) && (
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger type="button">
