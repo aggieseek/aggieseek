@@ -1,14 +1,15 @@
-"use client";
-
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { ReactNode } from "react";
-import { useSession } from "next-auth/react";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth-options";
+import { redirect } from "next/navigation";
 
-export default function Layout({ children }: { children: ReactNode }) {
-  useSession({
-    required: true,
-  });
+export default async function Layout({ children }: { children: ReactNode }) {
+  const session = await getServerSession(authOptions);
+  if (!session?.user) {
+    return redirect("/");
+  }
 
   return (
     <SidebarProvider>
