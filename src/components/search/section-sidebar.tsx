@@ -1,7 +1,9 @@
-import { IInstructorHowdy } from "@/lib/types/howdy-types";
-import { ISectionHowdy } from "@/lib/types/howdy-types";
+import { IInstructorHowdy } from "@/lib/types";
+import { ISectionHowdy } from "@/lib/types";
 import Link from "next/link";
 import {
+  RiDoorClosedFill,
+  RiDoorOpenFill,
   RiPencilFill,
   RiSpyFill,
   RiTimeFill,
@@ -32,7 +34,8 @@ export default function SectionSidebar({
                 <RiUserFill className="w-4 h-4" />
               )}
               <Link
-                className="underline-anim"
+                className="underline-anim
+                "
                 href={`/dashboard/search/instructors?id=${instructor.MORE}`}
               >
                 {instructor.NAME}
@@ -44,6 +47,20 @@ export default function SectionSidebar({
             <RiUserFill className="w-4 h-4" />
             <p>Not assigned</p>
           </div>
+        )}
+      </div>
+
+      <div className="flex items-center gap-x-4 border-b pb-2 border-b-neutral-300">
+        {courseData.SECTION_OPEN ? (
+          <>
+            <RiDoorOpenFill className="w-4 h-4" />
+            <p>Open</p>
+          </>
+        ) : (
+          <>
+            <RiDoorClosedFill className="w-4 h-4 text-red-500" />
+            <p className="text-red-500">Closed</p>
+          </>
         )}
       </div>
 

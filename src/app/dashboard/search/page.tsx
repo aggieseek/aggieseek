@@ -1,5 +1,5 @@
 import { getTerms } from "@/actions/terms";
-import SearchMenu from "@/components/search-menu";
+import SearchMenu from "@/components/search/search-menu";
 
 export default async function Search() {
   const terms = await getTerms();

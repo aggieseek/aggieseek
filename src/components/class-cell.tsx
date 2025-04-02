@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { CURRENT_TERM } from "@/lib/utils";
 import { Section } from "@prisma/client";
-import { IInstructorHowdy } from "@/lib/types/howdy-types";
+import { IInstructorHowdy } from "@/lib/types";
 import useTrackedSectionsStore from "@/stores/useTrackedSectionsStore";
 import { JsonValue } from "@prisma/client/runtime/library";
 import {

@@ -1,3 +1,15 @@
+export interface Term {
+  code: string;
+  desc: string;
+  startDate: string;
+}
+
+export interface Course {
+  subject: string;
+  course: string;
+  title: string;
+}
+
 export interface ISectionHowdy {
   TERM_CODE: string;
   CRN: string;
@@ -88,6 +100,7 @@ export interface ITermHowdy {
   STVTERM_GUID: string;
   STVTERM_CATALOG_GUID: string;
 }
+
 export interface IInstructorHowdy {
   NAME: string;
   MORE: number;

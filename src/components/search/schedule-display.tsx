@@ -1,6 +1,6 @@
-import { IScheduleHowdy } from "@/lib/types/howdy-types";
+import { IScheduleHowdy } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import buildings from "../../public/data/buildings.json";
+import buildings from "../../../public/data/buildings.json";
 
 function BuildingLink({ building }: { building: string }) {
   const abbreviation = building.split(" ")[0];

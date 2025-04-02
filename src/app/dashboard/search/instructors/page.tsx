@@ -6,7 +6,7 @@ import Link from "next/link";
 import { CURRENT_TERM } from "@/lib/utils";
 import LoadingCircle from "@/components/loading-circle";
 import { RiHome3Line } from "react-icons/ri";
-import ProfClassCell from "@/components/prof-class-cell";
+import ProfClassCell from "@/components/search/prof-class-cell";
 import { convertTermCode } from "@/lib/utils";
 
 const fetchInstructor = async (id: string) => {

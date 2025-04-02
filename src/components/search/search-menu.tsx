@@ -1,9 +1,9 @@
 "use client";
 
-import { IInstructorHowdy } from "@/lib/types/howdy-types";
+import { IInstructorHowdy } from "@/lib/types";
 import { useEffect, useState } from "react";
-import { Button } from "./ui/button";
-import LoadingCircle from "./loading-circle";
+import { Button } from "../ui/button";
+import LoadingCircle from "../loading-circle";
 import { Section } from "@prisma/client";
 import Link from "next/link";
 import { z } from "zod";
@@ -16,8 +16,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "./ui/form";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+} from "../ui/form";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import {
   Command,
   CommandEmpty,
@@ -25,11 +25,11 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "./ui/command";
+} from "../ui/command";
 import { RiCheckLine } from "react-icons/ri";
 import { ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Course, Term } from "@/lib/types/course-types";
+import { Course, Term } from "@/lib/types";
 import { getSubjects } from "@/actions/subjects";
 import { getCourses } from "@/actions/courses";
 
@@ -68,9 +68,8 @@ function SectionDisplay({ sections }: { sections: Section[] | undefined }) {
     <div className="flex flex-col justify-between flex-1">
       <div className="flex flex-col text-xs w-full overflow-visible gap-y-1">
         {paginateArray(sections, page).map((section) => (
-          <Link
-            href={`search/sections?term=${section.term}&crn=${section.crn}`}
-            className="transition-transform bg-gray-50 border flex justify-between p-3 rounded-lg w-full hover:translate-x-2"
+          <div
+            className="transition-transform bg-gray-50 border flex justify-between p-3 rounded-lg w-full"
             key={section.crn}
           >
             <div>
@@ -98,7 +97,7 @@ function SectionDisplay({ sections }: { sections: Section[] | undefined }) {
 
               <div className="opacity-25">{section.crn}</div>
             </div>
-          </Link>
+          </div>
         ))}
       </div>
 

@@ -1,7 +1,7 @@
 "use server";
 
 import prisma from "@/lib/prisma-client";
-import { Course } from "@/lib/types/course-types";
+import { Course } from "@/lib/types";
 
 export async function getCourses(termCode: string, subject: string) {
   const result: Course[] = await prisma.$queryRaw`

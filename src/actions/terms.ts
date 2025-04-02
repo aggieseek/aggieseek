@@ -1,8 +1,8 @@
 "use server";
 
 import prisma from "@/lib/prisma-client";
-import { Term } from "@/lib/types/course-types";
-import { ITermHowdy } from "@/lib/types/howdy-types";
+import { Term } from "@/lib/types";
+import { ITermHowdy } from "@/lib/types";
 
 export async function getTerms() {
   const response = await fetch("https://howdy.tamu.edu/api/all-terms");
