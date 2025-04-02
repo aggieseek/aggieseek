@@ -25,6 +25,7 @@ export interface ISectionHowdy {
   HAS_SYLLABUS: string;
   BILL_HRS: number | null;
   BILL_IND: number | null;
+  SECTION_OPEN: boolean;
   BILL_HR_HIGH: number | null;
   BILL_HR_LOW: number;
   CREDIT_HR_IND: number | null;

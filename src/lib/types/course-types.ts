@@ -5,6 +5,7 @@ export interface Term {
 }
 
 export interface Course {
+  subject: string;
   course: string;
   title: string;
 }

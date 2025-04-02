@@ -1,3 +1,4 @@
+import prisma from "@/lib/prisma-client";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
@@ -37,11 +38,25 @@ export async function GET(request: NextRequest) {
     });
     const attributes = await attributesResponse.json();
 
+    const sectionOpen =
+      (
+        await prisma.section.findFirst({
+          where: {
+            term,
+            crn,
+          },
+          select: {
+            isSectionOpen: true,
+          },
+        })
+      )?.isSectionOpen ?? false;
+
     return NextResponse.json(
       {
         ...details,
         ...jsons,
         ...(attributes.length > 0 ? { ATTRIBUTES: attributes } : {}),
+        SECTION_OPEN: sectionOpen,
       },
       { status: 200 }
     );

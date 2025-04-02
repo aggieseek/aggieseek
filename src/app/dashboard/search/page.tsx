@@ -1,6 +1,9 @@
+import { getTerms } from "@/actions/terms";
 import SearchMenu from "@/components/search-menu";
 
-export default function Search() {
+export default async function Search() {
+  const terms = await getTerms();
+
   return (
     <div className="flex flex-col h-full">
       <div className="flex gap-x-8 border-b pb-3 mb-6">
@@ -9,7 +12,7 @@ export default function Search() {
         </div>
       </div>
 
-      <SearchMenu />
+      <SearchMenu terms={terms} />
     </div>
   );
 }
