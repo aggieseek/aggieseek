@@ -57,7 +57,7 @@ export async function updatePreferences(
   });
 }
 
-export async function updatePhoneNumber(phoneNumber: string) {
+export async function updatePhoneNumber(phoneNumber: string | undefined) {
   const session = await getServerSession(authOptions);
   const userId = await getUserId(session);
   if (!userId) return;

@@ -122,7 +122,7 @@ export default function PreferencesSelect({
               </div>
             )}
           />
-          <Separator className="" />
+          {/* <Separator className="" />
           <FormField
             control={form.control}
             name="emailEnabled"
@@ -139,7 +139,7 @@ export default function PreferencesSelect({
                 </div>
               </div>
             )}
-          />
+          /> */}
           <Separator className="" />
           <FormField
             control={form.control}

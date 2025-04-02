@@ -3,6 +3,8 @@ import { NotificationSettings } from "@prisma/client";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import "react-phone-input-2/lib/style.css";
+import PhoneInput from "react-phone-input-2";
 import { useSession } from "next-auth/react";
 import {
   RiCheckLine,
@@ -32,6 +34,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../ui/accordion";
+import { satoshi } from "@/lib/fonts";
 
 export const PreferencesSchema = z.object({
   sectionOpen: z.boolean(),
@@ -127,6 +130,7 @@ export default function NotificationsTab() {
   const [discordId, setDiscordId] = useState<string | undefined | null>(
     undefined
   );
+  const [isPhoneInvalid, setPhoneInvalid] = useState<boolean>(false);
   const [webhooks, setWebhooks] = useState<string[] | undefined>(undefined);
 
   const searchParams = useSearchParams();
@@ -139,7 +143,12 @@ export default function NotificationsTab() {
   });
 
   function saveChanges() {
-    if (phoneNumber === undefined) return;
+    if (phoneNumber && phoneNumber.length != 11) {
+      toast.error("Invalid phone number!");
+      setPhoneInvalid(true);
+      return;
+    }
+
     Promise.all([
       updatePhoneNumber(phoneNumber),
       updatePreferences(preferencesForm.getValues()),
@@ -189,6 +198,10 @@ export default function NotificationsTab() {
     router.push("?");
   }, []);
 
+  useEffect(() => {
+    setPhoneInvalid(false);
+  }, [phoneNumber]);
+
   if (
     phoneNumber === undefined ||
     webhooks === undefined ||
@@ -222,11 +235,23 @@ export default function NotificationsTab() {
               <RiPhoneFill />
               Phone Number
             </Label>
-            <Input
-              className={"w-64"}
-              placeholder="(123) 456-7890"
-              defaultValue={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
+            <PhoneInput
+              onlyCountries={["us"]}
+              containerStyle={satoshi.style}
+              inputStyle={{
+                width: "16rem",
+                height: "2.5rem",
+                padding: "0.5rem 0.75rem 0.5rem 0.75rem",
+                borderWidth: "1px",
+                borderColor: isPhoneInvalid
+                  ? "oklch(0.808 0.114 19.571)"
+                  : "rgb(229 229 229)",
+              }}
+              buttonStyle={{ visibility: "hidden" }}
+              country={0}
+              value={phoneNumber}
+              placeholder="+1 (###) ###-####"
+              onChange={(phone) => setPhoneNumber(phone)}
             />
           </div>
         </div>
