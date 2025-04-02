@@ -35,6 +35,13 @@ import {
   AccordionTrigger,
 } from "../ui/accordion";
 import { satoshi } from "@/lib/fonts";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "../ui/dialog";
 
 export const PreferencesSchema = z.object({
   sectionOpen: z.boolean(),
@@ -54,12 +61,12 @@ function DiscordButton({
   setDiscordId: (value: string | undefined | null) => void;
 }) {
   const router = useRouter();
-  const [isHovered, setIsHovered] = useState(false);
-
-  const handleMouseEnter = () => setIsHovered(true);
-  const handleMouseLeave = () => setIsHovered(false);
+  const [isHovered, setIsHovered] = useState<boolean>(false);
+  const [opened, setOpened] = useState<boolean>(false);
+  const [isLinking, setLinking] = useState<boolean>(false);
 
   function handleDisconnect() {
+    setLinking(true);
     fetch("/api/auth/discord/disconnect")
       .then((res) => {
         if (res.ok) {
@@ -72,15 +79,12 @@ function DiscordButton({
       })
       .catch((err) => {
         console.error(err);
+      })
+      .finally(() => {
+        setOpened(false);
+        setLinking(false);
       });
   }
-
-  const buttonClasses = cn([
-    "transition-all w-max group p-1 pr-4 bg-[#7289da] active:scale-[0.97]",
-    discordId
-      ? "hover:bg-[#7289da] opacity-80 hover:opacity-100"
-      : "hover:bg-[#5b72c3]",
-  ]);
 
   const buttonText = discordId
     ? isHovered
@@ -88,44 +92,71 @@ function DiscordButton({
       : "Discord Linked"
     : "Link Discord";
 
-  const icon = discordId ? (
-    isHovered ? (
-      <RiDiscordFill />
-    ) : (
-      <RiCheckLine />
-    )
-  ) : (
-    <RiDiscordFill />
-  );
+  const icon = !discordId || isHovered ? <RiDiscordFill /> : <RiCheckLine />;
 
   return (
-    <Button
-      onClick={() =>
-        discordId
-          ? handleDisconnect()
-          : router.push("/api/auth/discord/connect")
-      }
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      className={buttonClasses}
-    >
-      <div
-        className={
-          "transition-colors bg-[#4f68c1] p-2 group-hover:bg-[#4158ab] flex justify-center items-center text-white h-full aspect-square rounded-sm mr-2"
+    <>
+      <Button
+        onClick={() =>
+          discordId ? setOpened(true) : router.push("/api/auth/discord/connect")
         }
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className={cn(
+          "transition-all w-max group p-1 pr-4 bg-[#7289da] active:scale-[0.97]",
+          discordId
+            ? "hover:bg-[#7289da] opacity-80 hover:opacity-100"
+            : "hover:bg-[#5b72c3]"
+        )}
       >
-        {icon}
-      </div>
-      <div className="w-28">
-        <p>{buttonText}</p>
-      </div>
-    </Button>
+        <div
+          className={
+            "transition-colors bg-[#4f68c1] p-2 group-hover:bg-[#4158ab] flex justify-center items-center text-white h-full aspect-square rounded-sm mr-2"
+          }
+        >
+          {icon}
+        </div>
+        <div className="w-28">
+          <p>{buttonText}</p>
+        </div>
+      </Button>
+
+      <Dialog open={opened} onOpenChange={setOpened}>
+        <DialogContent className="w-96">
+          <DialogHeader>
+            <DialogTitle>Are you sure?</DialogTitle>
+            <DialogDescription>
+              This will unlink your discord account from your AggieSeek account.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="flex gap-x-4">
+            <Button
+              className="flex-1 bg-gray-50 hover:bg-gray-100 text-black border"
+              onClick={() => setOpened(false)}
+              disabled={isLinking}
+            >
+              Cancel
+            </Button>
+            <Button
+              className="flex-1"
+              variant={"destructive"}
+              onClick={() => discordId && handleDisconnect()}
+              disabled={isLinking}
+            >
+              {isLinking ? <LoadingCircle /> : "Unlink Account"}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
 
 export default function NotificationsTab() {
   const [notificationSettings, setNotificationSettings] =
     useState<NotificationSettings | null>(null);
+  const [savedPhone, setSavedPhone] = useState<string | undefined>(undefined);
   const [phoneNumber, setPhoneNumber] = useState<string | undefined>(undefined);
   const [discordId, setDiscordId] = useState<string | undefined | null>(
     undefined
@@ -151,36 +182,41 @@ export default function NotificationsTab() {
 
     Promise.all([
       updatePhoneNumber(phoneNumber),
+      setSavedPhone(phoneNumber),
       updatePreferences(preferencesForm.getValues()),
     ])
       .then(() => {
         toast.success("Your changes were successfully saved!");
       })
       .catch(() => {
-        toast.error("An error occurred while trying to save your settings.");
+        toast.error("An error occurred while saving your settings.");
       });
   }
 
   useEffect(() => {
-    getNotificationSettings().then((data) => {
-      if (!data) return;
-      setNotificationSettings(data);
-      preferencesForm.reset({
-        sectionOpen: data.sectionOpen,
-        sectionClose: data.sectionClose,
-        instructorChange: data.instructorChange,
-        smsEnabled: data.smsEnabled,
-        globalEnabled: data.globalEnabled,
-        emailEnabled: data.emailEnabled,
-        discordEnabled: data.discordEnabled,
-      });
-    });
-    getWebhooks().then((data) => setWebhooks(data));
-    getUserDiscordId().then((data) => setDiscordId(data ?? null));
+    Promise.all([getNotificationSettings(), getWebhooks(), getUserDiscordId()])
+      .then(([settings, webhooksData, discordIdData]) => {
+        if (settings) {
+          setNotificationSettings(settings);
+          preferencesForm.reset({
+            sectionOpen: settings.sectionOpen,
+            sectionClose: settings.sectionClose,
+            instructorChange: settings.instructorChange,
+            smsEnabled: settings.smsEnabled,
+            globalEnabled: settings.globalEnabled,
+            emailEnabled: settings.emailEnabled,
+            discordEnabled: settings.discordEnabled,
+          });
+        }
+        setWebhooks(webhooksData);
+        setDiscordId(discordIdData ?? null);
+      })
+      .catch((err) => console.error("Error fetching data:", err));
   }, []);
 
   useEffect(() => {
     setPhoneNumber(notificationSettings?.phoneNumber ?? "");
+    setSavedPhone(notificationSettings?.phoneNumber ?? "");
   }, [notificationSettings]);
 
   useEffect(() => {
@@ -279,7 +315,7 @@ export default function NotificationsTab() {
       </Accordion>
 
       <div className="flex gap-x-8">
-        <PreferencesSelect form={preferencesForm} />
+        <PreferencesSelect savedPhone={savedPhone} form={preferencesForm} />
       </div>
 
       <div className="flex lg:hidden gap-x-2">

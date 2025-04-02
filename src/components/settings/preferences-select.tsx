@@ -1,6 +1,10 @@
 "use client";
 
-import { RiContactsBook2Fill, RiNotification2Fill } from "react-icons/ri";
+import {
+  RiContactsBook2Fill,
+  RiErrorWarningFill,
+  RiNotification2Fill,
+} from "react-icons/ri";
 import { Label } from "../ui/label";
 import { Separator } from "../ui/separator";
 import { Checkbox } from "../ui/checkbox";
@@ -8,11 +12,19 @@ import { Form, FormField } from "../ui/form";
 import { UseFormReturn } from "react-hook-form";
 import { PreferencesSchema } from "./notifications-tab";
 import { z } from "zod";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip";
 
 export default function PreferencesSelect({
   form,
+  savedPhone,
 }: {
   form: UseFormReturn<z.infer<typeof PreferencesSchema>>;
+  savedPhone: string | undefined;
 }) {
   return (
     <Form {...form}>
@@ -110,8 +122,20 @@ export default function PreferencesSelect({
             name="smsEnabled"
             render={({ field }) => (
               <div className="flex items-center justify-between">
-                <div>
-                  <p className=" text-sm font-medium">SMS Messaging</p>
+                <div className="flex gap-x-2">
+                  <p className="text-sm font-medium">SMS Messaging</p>
+                  {!savedPhone && (
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger type="button">
+                          <RiErrorWarningFill className="self-center w-4 h-4 text-red-500" />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>You do not have a phone number set.</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  )}
                 </div>
                 <div className="flex gap-12 ml-0 lg:gap-8 lg:mr-2 lg:mt-0">
                   <Checkbox
