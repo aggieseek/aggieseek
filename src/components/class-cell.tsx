@@ -80,9 +80,8 @@ export default function ClassCell({
               {section.subject} {section.course}
             </span>
             <span className="hidden sm:inline">{": "}</span>
-            <span className="text-black inline-flex line-clamp-1 font-semibold md:text-bold text-sm md:text-base">
+            <span className="text-black block sm:inline line-clamp-1 font-semibold md:text-bold text-sm md:text-base">
               {section.title}
-              {sms && <RiMessage2Fill className="ml-2 self-center" />}
             </span>
           </div>
         </Link>
@@ -117,41 +116,53 @@ export default function ClassCell({
         {section.crn}
       </div>
 
-      <Popover>
-        <PopoverTrigger className="absolute top-0 right-0">
-          <RiMoreFill className="transition-opacity duration-150 hover:cursor-pointer w-4 h-4 opacity-25 m-2 hover:opacity-100" />
-        </PopoverTrigger>
-        <PopoverContent
-          className="text-xs w-max p-2 font-medium"
-          align="end"
-          side="top"
-        >
-          <div
-            className="flex p-1 items-center gap-x-2 hover:cursor-pointer hover:bg-gray-50"
-            onClick={() => {
-              deleteSectionImmediately(section.term, section.crn).then(() => {
-                toast.success(`Successfully deleted section ${section.crn}!`);
-              });
-            }}
-          >
-            <RiDeleteBinFill />
-            <div>Delete Section</div>
-          </div>
+      <div className="absolute top-0 right-0">
+        <div className="flex gap-x-1 items-center">
+          {sms && <RiMessage2Fill className="w-4 h-4 opacity-25" />}
 
-          {(sms || !smsLimitReached) && (
-            <div
-              className="flex p-1 items-center gap-x-2 hover:cursor-pointer hover:bg-gray-50"
-              onClick={() => toggleSms(section.term, section.crn)}
+          <Popover>
+            <PopoverTrigger>
+              <RiMoreFill className="transition-opacity duration-150 hover:cursor-pointer w-4 h-4 opacity-25 m-2 hover:opacity-100" />
+            </PopoverTrigger>
+            <PopoverContent
+              className="text-xs w-max p-2 font-medium"
+              align="end"
+              side="top"
             >
-              <RiMessage2Fill />
-
-              <div>
-                {sms ? "Disable SMS Notifications" : "Enable SMS Notifications"}
+              <div
+                className="flex p-1 items-center gap-x-2 hover:cursor-pointer hover:bg-gray-50"
+                onClick={() => {
+                  deleteSectionImmediately(section.term, section.crn).then(
+                    () => {
+                      toast.success(
+                        `Successfully deleted section ${section.crn}!`
+                      );
+                    }
+                  );
+                }}
+              >
+                <RiDeleteBinFill />
+                <div>Delete Section</div>
               </div>
-            </div>
-          )}
-        </PopoverContent>
-      </Popover>
+
+              {(sms || !smsLimitReached) && (
+                <div
+                  className="flex p-1 items-center gap-x-2 hover:cursor-pointer hover:bg-gray-50"
+                  onClick={() => toggleSms(section.term, section.crn)}
+                >
+                  <RiMessage2Fill />
+
+                  <div>
+                    {sms
+                      ? "Disable SMS Notifications"
+                      : "Enable SMS Notifications"}
+                  </div>
+                </div>
+              )}
+            </PopoverContent>
+          </Popover>
+        </div>
+      </div>
     </div>
   );
 }
