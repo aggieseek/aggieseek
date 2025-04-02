@@ -174,7 +174,7 @@ export default function NotificationsTab() {
   });
 
   function saveChanges() {
-    if (phoneNumber && phoneNumber.length != 11) {
+    if (phoneNumber && phoneNumber.length != 11 && phoneNumber.length != 10) {
       toast.error("Invalid phone number!");
       setPhoneInvalid(true);
       return;
