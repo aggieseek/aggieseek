@@ -17,7 +17,7 @@ export async function getUserId(session: Session | null) {
     });
 }
 
-export async function getLimits() {
+export async function getUserInfo() {
   const session = await getServerSession(authOptions);
   if (!session || !session.user) return;
 
