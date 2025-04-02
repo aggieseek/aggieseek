@@ -47,6 +47,9 @@ export async function GET(request: NextRequest) {
     include: {
       section: true,
     },
+    orderBy: {
+      createdAt: "asc",
+    },
   });
 
   return NextResponse.json(sections, { status: 200 });

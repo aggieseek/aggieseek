@@ -11,25 +11,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { RiBook2Fill, RiGraduationCapFill, RiUserFill } from "react-icons/ri";
-
-async function getDataFromRoute(endpoint: string) {
-  try {
-    const res = await fetch(endpoint);
-    return await res.json();
-  } catch (err) {
-    console.error(err);
-    return [];
-  }
-}
+import { getClasses, getMajors } from "@/actions/settings-fields";
 
 export default function ProfileTab() {
   const [majors, setMajors] = useState<string[]>([]);
   const [classes, setClasses] = useState<string[]>([]);
 
   useEffect(() => {
-    getDataFromRoute("/api/data/majors").then((result) => setMajors(result));
-
-    getDataFromRoute("/api/data/classes").then((result) => setClasses(result));
+    getMajors().then((majors) => setMajors(majors));
+    getClasses().then((classes) => setClasses(classes));
   }, []);
 
   return (

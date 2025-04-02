@@ -11,36 +11,14 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FaDiscord, FaPhone, FaEnvelope } from "react-icons/fa6";
+import { addWebhook, getWebhooks } from "@/actions/webhooks";
+import { getNotificationSettings } from "@/actions/notification-settings";
 
-async function getDataFromRoute(endpoint: string) {
-  try {
-    const res = await fetch(endpoint);
-    return await res.json();
-  } catch (err) {
-    console.error(err);
-    return [];
-  }
-}
 export default function Contact({ onNext, onPrevious }) {
   const [notificationSettings, setNotificationSettings] =
     useState<NotificationSettings | null>(null);
   const [webhooks, setWebhooks] = useState<string[]>([]);
   const [webhookInput, setWebhookInput] = useState<string>("");
-
-  const addWebhook = (webhookUrl: string) => {
-    fetch("/api/users/webhooks", {
-      method: "POST",
-      body: JSON.stringify({ webhookUrl }),
-    })
-      .then((res) => {
-        if (!res.ok) return;
-        setWebhookInput("");
-        setWebhooks((prev) => [...prev, webhookUrl]);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  };
 
   const deleteWebhook = (webhookUrl: string) => {
     fetch("/api/users/webhooks", {
@@ -58,12 +36,10 @@ export default function Contact({ onNext, onPrevious }) {
   };
 
   useEffect(() => {
-    getDataFromRoute("/api/users/notifications").then((result) =>
-      setNotificationSettings(result)
+    getNotificationSettings().then((data) =>
+      setNotificationSettings(data ?? null)
     );
-    getDataFromRoute("/api/users/webhooks").then((result) =>
-      setWebhooks(result)
-    );
+    getWebhooks().then((data) => setWebhooks(data ?? []));
   }, []);
 
   return (

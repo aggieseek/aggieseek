@@ -1,5 +1,5 @@
-import { CURRENT_TERM } from "@/lib/utils";
 import { Section, TrackedSection } from "@prisma/client";
+import { toast } from "sonner";
 import { create } from "zustand";
 
 interface SectionInfo extends TrackedSection {
@@ -17,29 +17,30 @@ export enum LoadingState {
 interface TrackedSectionsState {
   trackedSections: SectionInfo[];
   loadState: LoadingState;
-  addSection: (crn: string) => Promise<void>;
-  deleteSection: (crn: string) => Promise<void>;
-  deleteSectionImmediately: (crn: string) => Promise<void>;
-  fetchSections: () => void;
-  refresh: () => void;
+  addSection: (term: string, crn: string) => Promise<void>;
+  deleteSection: (term: string, crn: string) => Promise<void>;
+  deleteSectionImmediately: (term: string, crn: string) => Promise<void>;
+  fetchSections: (term: string) => void;
+  refresh: (term: string) => void;
+  toggleSms: (term: string, crn: string) => void;
 }
 
 const useTrackedSectionsStore = create<TrackedSectionsState>((set) => ({
   trackedSections: [],
   loadState: LoadingState.FETCHING,
-  addSection: async (crn: string) => {
+  addSection: async (term: string, crn: string) => {
     set({ loadState: LoadingState.ADDING });
 
     try {
       const res = await fetch("/api/users/sections", {
         method: "POST",
-        body: JSON.stringify({ crn, term: CURRENT_TERM }),
+        body: JSON.stringify({ crn, term }),
         headers: { "Content-Type": "application/json" },
       });
 
       if (!res.ok) throw new Error("Failed to add section.");
       set((state) => {
-        state.refresh();
+        state.refresh(term);
         return state;
       });
     } catch (error) {
@@ -48,13 +49,13 @@ const useTrackedSectionsStore = create<TrackedSectionsState>((set) => ({
       throw error;
     }
   },
-  deleteSectionImmediately: async (crn: string) => {
+  deleteSectionImmediately: async (term: string, crn: string) => {
     set({ loadState: LoadingState.DELETING });
 
     try {
       const res = await fetch("/api/users/sections", {
         method: "DELETE",
-        body: JSON.stringify({ crn, term: CURRENT_TERM }),
+        body: JSON.stringify({ crn, term }),
         headers: { "Content-Type": "application/json" },
       });
 
@@ -67,7 +68,7 @@ const useTrackedSectionsStore = create<TrackedSectionsState>((set) => ({
       }));
 
       set((state) => {
-        state.refresh();
+        state.refresh(term);
         return state;
       });
     } catch (error) {
@@ -76,20 +77,20 @@ const useTrackedSectionsStore = create<TrackedSectionsState>((set) => ({
       throw error;
     }
   },
-  deleteSection: async (crn: string) => {
+  deleteSection: async (term: string, crn: string) => {
     set({ loadState: LoadingState.DELETING });
 
     try {
       const res = await fetch("/api/users/sections", {
         method: "DELETE",
-        body: JSON.stringify({ crn, term: CURRENT_TERM }),
+        body: JSON.stringify({ crn, term }),
         headers: { "Content-Type": "application/json" },
       });
 
       if (!res.ok) throw new Error("Failed to delete section.");
 
       set((state) => {
-        state.refresh();
+        state.refresh(term);
         return state;
       });
     } catch (error) {
@@ -98,19 +99,19 @@ const useTrackedSectionsStore = create<TrackedSectionsState>((set) => ({
       throw error;
     }
   },
-  fetchSections: async () => {
+  fetchSections: async (term: string) => {
     set(() => ({
       loadState: LoadingState.FETCHING,
     }));
 
     set((state) => {
-      state.refresh();
+      state.refresh(term);
       return state;
     });
   },
-  refresh: async () => {
+  refresh: async (term: string) => {
     try {
-      const res = await fetch(`/api/users/sections?term=${CURRENT_TERM}`, {
+      const res = await fetch(`/api/users/sections?term=${term}`, {
         method: "GET",
       });
 
@@ -124,6 +125,38 @@ const useTrackedSectionsStore = create<TrackedSectionsState>((set) => ({
     } catch (error) {
       console.error(error);
       set({ loadState: LoadingState.ERROR });
+    }
+  },
+  toggleSms: async (term, crn) => {
+    try {
+      const response = await fetch("/api/users/sections/sms", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ term, crn }),
+      });
+
+      if (response.status !== 201) {
+        toast.error(
+          "You have reached the maximum number of SMS-tracked sections."
+        );
+        return;
+      }
+
+      const data: TrackedSection = await response.json();
+
+      toast.success(
+        `You have successfully ${
+          data.smsEnabled ? "enabled" : "disabled"
+        } SMS-tracking for section ${data.crn}.`
+      );
+
+      set((state) => {
+        state.refresh(term);
+        return state;
+      });
+    } catch (error) {
+      console.error("Failed to toggle SMS tracking:", error);
+      toast.error("An error occurred while updating SMS tracking.");
     }
   },
 }));

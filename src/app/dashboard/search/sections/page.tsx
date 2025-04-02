@@ -5,9 +5,8 @@ import { ReactNode, Suspense, useEffect, useState } from "react";
 import LoadingCircle from "@/components/loading-circle";
 import { ISectionHowdy } from "@/lib/types/howdy-types";
 import Link from "next/link";
-import { Instructor } from "@/lib/types/course-types";
-import { usePageTitle } from "@/contexts/title-context";
-import { cn, convertTermCode, CURRENT_TERM } from "@/lib/utils";
+import { IInstructorHowdy } from "@/lib/types/howdy-types";
+import { cn, CURRENT_TERM } from "@/lib/utils";
 import useTrackedSectionsStore, {
   LoadingState,
 } from "@/stores/useTrackedSectionsStore";
@@ -58,8 +57,8 @@ const SectionButton = ({ crn, courseData }) => {
   const handleClick = isLoading
     ? () => {}
     : isTracked
-    ? () => deleteSection(courseData.CRN)
-    : () => addSection(courseData.CRN);
+    ? () => deleteSection(courseData.term, courseData.CRN)
+    : () => addSection(courseData.term, courseData.CRN);
 
   const icon =
     isLoading || isProcessing ? (
@@ -114,7 +113,7 @@ function SectionPanel({
 
 function SectionPage() {
   const searchParams = useSearchParams();
-  const term = searchParams.get("term");
+  const term = searchParams.get("term") ?? "202531";
   const crn = searchParams.get("crn");
   const source = searchParams.get("source");
   const router = useRouter();
@@ -122,22 +121,18 @@ function SectionPage() {
 
   const [courseData, setCourseData] = useState<ISectionHowdy | null>(null);
   const [numWatching, setNumWatching] = useState<number | null>(null);
-  const [instructors, setInstructors] = useState<Instructor[]>([]);
+  const [instructors, setInstructors] = useState<IInstructorHowdy[]>([]);
   const [pageState, setPageState] = useState<PageState>(PageState.LOADING);
 
   const { fetchSections } = useTrackedSectionsStore();
 
-  const { setPageTitle: setTitle } = usePageTitle();
-
   useEffect(() => {
     if (status === "authenticated") {
-      fetchSections();
+      fetchSections(term);
     }
   }, [status]);
 
   useEffect(() => {
-    setTitle(null);
-
     if (!term || !crn) {
       router.push("/dashboard/search");
       return;
@@ -145,19 +140,11 @@ function SectionPage() {
 
     fetchSectionDetails(term, crn).then((data: ISectionHowdy) => {
       if (Object.keys(data).length === 0) {
-        setTitle({
-          title: "Unknown Section",
-          subtitle: `${convertTermCode(term)}`,
-        });
         setPageState(PageState.ERROR);
         return;
       }
 
       setCourseData(data);
-      setTitle({
-        title: `${data.SUBJECT_CODE} ${data.COURSE_NUMBER}-${data.SECTION_NUMBER}`,
-        subtitle: `${convertTermCode(term)} / ${data.CRN}`,
-      });
       if (data.SWV_CLASS_SEARCH_INSTRCTR_JSON !== null)
         setInstructors(JSON.parse(data.SWV_CLASS_SEARCH_INSTRCTR_JSON));
 
@@ -166,7 +153,7 @@ function SectionPage() {
       });
       setPageState(PageState.IDLE);
     });
-  }, [crn, router, term, setTitle]);
+  }, [crn, router, term]);
 
   if (pageState === PageState.ERROR) {
     return (
