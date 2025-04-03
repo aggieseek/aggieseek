@@ -136,6 +136,7 @@ export default function SearchMenu({ terms }: { terms: Term[] }) {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const { termCode: term, subject, course } = values;
+    if (!term || !subject) return;
     setSearching(true);
     fetch(`/api/search/`, {
       method: "POST",
@@ -500,8 +501,16 @@ export default function SearchMenu({ terms }: { terms: Term[] }) {
               }}
             />
           </div>
-          <Button type="submit" className="w-full mt-8 xl:mt-0">
-            {isSearching ? <LoadingCircle /> : "Search"}
+          <Button
+            disabled={isSearching || subjectsLoading || coursesLoading}
+            type="submit"
+            className="w-full mt-8 xl:mt-0"
+          >
+            {isSearching || subjectsLoading || coursesLoading ? (
+              <LoadingCircle />
+            ) : (
+              "Search"
+            )}
           </Button>
         </form>
       </Form>
