@@ -52,6 +52,11 @@ export default function Feedback() {
 
   return (
     <>
+      <div className="flex gap-x-8 border-b pb-4 mb-6">
+        <div className="flex items-center font-bold h-10 text-xl flex-1">
+          Feedback
+        </div>
+      </div>
       <div className=" border p-4 rounded-lg">
         <p className=" text-lg font-semibold">Submit Feedback</p>
         <p className=" text-sm text-neutral-500">

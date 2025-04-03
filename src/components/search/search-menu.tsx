@@ -1,11 +1,9 @@
 "use client";
 
-import { IInstructorHowdy } from "@/lib/types";
 import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import LoadingCircle from "../loading-circle";
 import { Section } from "@prisma/client";
-import Link from "next/link";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -27,18 +25,23 @@ import {
   CommandList,
 } from "../ui/command";
 import { RiCheckLine } from "react-icons/ri";
-import { ChevronsUpDown } from "lucide-react";
+import { ChevronsUpDown, LoaderCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Course, Term } from "@/lib/types";
 import { getSubjects } from "@/actions/subjects";
 import { getCourses } from "@/actions/courses";
+import { useRouter, useSearchParams } from "next/navigation";
+import { persistSearch } from "@/actions/persist";
+import SearchClassCell from "./search-class-cell";
 
 const pageSize = 8;
 const formSchema = z.object({
   termCode: z.string({ required_error: "Please specify a term." }),
-  subject: z.string({ required_error: "Please specify a subject." }),
+  subject: z.string().optional(),
   course: z.string().optional(),
 });
+
+const CURRENT_TERM = "202531";
 
 function SectionDisplay({ sections }: { sections: Section[] | undefined }) {
   const [page, setPage] = useState<number>(0);
@@ -68,36 +71,7 @@ function SectionDisplay({ sections }: { sections: Section[] | undefined }) {
     <div className="flex flex-col justify-between flex-1">
       <div className="flex flex-col text-xs w-full overflow-visible gap-y-1">
         {paginateArray(sections, page).map((section) => (
-          <div
-            className="transition-transform bg-gray-50 border flex justify-between p-3 rounded-lg w-full"
-            key={section.crn}
-          >
-            <div>
-              <div className="font-bold maroon-gradient text-transparent bg-clip-text">
-                {section.subject} {section.course}-{section.section}
-              </div>
-
-              <div>{section.title}</div>
-            </div>
-
-            <div className="truncate flex flex-col font-medium items-end">
-              <div>
-                {(() => {
-                  const parse =
-                    section.instructorJson as unknown as IInstructorHowdy[];
-                  const instructors = parse?.map((instructor) => {
-                    return {
-                      name: instructor.NAME.replace("(P)", ""),
-                      id: instructor.MORE,
-                    };
-                  });
-                  return instructors ? instructors[0].name : "Not assigned";
-                })()}
-              </div>
-
-              <div className="opacity-25">{section.crn}</div>
-            </div>
-          </div>
+          <SearchClassCell key={section.term + section.crn} section={section} />
         ))}
       </div>
 
@@ -138,6 +112,10 @@ export default function SearchMenu({ terms }: { terms: Term[] }) {
   const [open, setOpen] = useState<boolean>(false);
   const [subjectsOpen, setSubjectsOpen] = useState<boolean>(false);
   const [coursesOpen, setCoursesOpen] = useState<boolean>(false);
+
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -151,10 +129,12 @@ export default function SearchMenu({ terms }: { terms: Term[] }) {
   const [courses, setCourses] = useState<Course[] | undefined>(undefined);
   const [sections, setSections] = useState<Section[] | undefined>(undefined);
 
+  const [pageLoading, setPageLoading] = useState<boolean>(true);
+  const [subjectsLoading, setSubjectsLoading] = useState<boolean>(false);
+  const [coursesLoading, setCoursesLoading] = useState<boolean>(false);
   const [isSearching, setSearching] = useState<boolean>(false);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(form.formState.errors);
     const { termCode: term, subject, course } = values;
     setSearching(true);
     fetch(`/api/search/`, {
@@ -166,30 +146,64 @@ export default function SearchMenu({ terms }: { terms: Term[] }) {
     })
       .then((res) => res.json())
       .then((data: Section[]) => setSections(data))
-      .finally(() => setSearching(false));
+      .finally(() => {
+        setSearching(false);
+        setPageLoading(false);
+      });
   }
 
   function fetchSubjects() {
-    setSubjects(undefined);
-    setCourses(undefined);
-    getSubjects(form.getValues("termCode")).then((subjects) =>
-      setSubjects(subjects)
-    );
+    setSubjectsLoading(true);
+    getSubjects(form.getValues("termCode"))
+      .then((subjects) => setSubjects(subjects))
+      .finally(() => setSubjectsLoading(false));
   }
 
   function fetchCourses() {
-    setCourses(undefined);
-    getCourses(form.getValues("termCode"), form.getValues("subject")).then(
-      (courses) => setCourses(courses)
+    const subject = form.getValues("subject");
+    if (!subject) return;
+    setCoursesLoading(true);
+    getCourses(form.getValues("termCode"), subject)
+      .then((courses) => setCourses(courses))
+      .finally(() => setCoursesLoading(false));
+  }
+
+  useEffect(() => {
+    const term = searchParams.get("term") ?? undefined;
+    const subject = searchParams.get("subject") ?? undefined;
+    const course = searchParams.get("course") ?? undefined;
+
+    form.setValue("termCode", term ?? CURRENT_TERM);
+    persistSearch(term, subject, course).then((res) => {
+      console.log(res);
+      if (res !== false) {
+        setSubjects(res.subjects);
+        setCourses(res.courses);
+        form.setValue("subject", subject);
+        form.setValue("course", course);
+        onSubmit(form.getValues());
+      } else {
+        fetchSubjects();
+        router.push(`?term=${CURRENT_TERM}`);
+        setPageLoading(false);
+      }
+    });
+  }, []);
+
+  if (pageLoading) {
+    return (
+      <div className="flex justify-center">
+        <LoadingCircle />
+      </div>
     );
   }
 
   return (
-    <div className="flex flex-col lg:flex-row flex-1 mt-1 lg:gap-x-4 h-full">
+    <div className="flex flex-col xl:flex-row flex-1 mt-1 xl:gap-x-4 h-full">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex w-full sticky flex-col justify-between lg:w-96 p-4 border rounded-lg"
+          className="flex w-full sticky flex-col justify-between xl:w-96 p-4 border rounded-lg"
         >
           <div className="flex flex-col gap-y-4">
             <div className="font-semibold">Filter Sections</div>
@@ -204,6 +218,7 @@ export default function SearchMenu({ terms }: { terms: Term[] }) {
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button
+                          disabled={isSearching}
                           variant="outline"
                           role="combobox"
                           className={cn(
@@ -249,10 +264,13 @@ export default function SearchMenu({ terms }: { terms: Term[] }) {
                                 value={term.code}
                                 key={term.code}
                                 onSelect={() => {
+                                  router.push(`?term=${term.code}`);
                                   form.setValue("termCode", term.code);
-                                  form.setValue("subject", "");
+                                  form.setValue("subject", undefined);
                                   form.setValue("course", undefined);
                                   setOpen(false);
+                                  setSections(undefined);
+                                  setCourses(undefined);
                                   fetchSubjects();
                                 }}
                                 className="hover:cursor-pointer"
@@ -288,19 +306,33 @@ export default function SearchMenu({ terms }: { terms: Term[] }) {
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button
-                          disabled={subjects === undefined}
+                          disabled={
+                            subjects === undefined ||
+                            subjectsLoading ||
+                            isSearching
+                          }
                           variant="outline"
                           role="combobox"
                           className={cn(
-                            "w-full justify-between",
+                            "w-full justify-between items-center",
                             !field.value && "text-muted-foreground"
                           )}
                         >
-                          {field.value
-                            ? subjects?.find(
+                          <div>
+                            {subjectsLoading ? (
+                              <LoaderCircle
+                                className={"animate-spin w-4 h-4"}
+                              />
+                            ) : subjects === undefined ? (
+                              ""
+                            ) : subjects.find(
                                 (subject) => subject === field.value
-                              )
-                            : "Select subject"}
+                              ) ? (
+                              field.value
+                            ) : (
+                              "Select subject"
+                            )}
+                          </div>
                           <ChevronsUpDown className="opacity-50" />
                         </Button>
                       </FormControl>
@@ -322,6 +354,11 @@ export default function SearchMenu({ terms }: { terms: Term[] }) {
                                 value={subject}
                                 key={subject}
                                 onSelect={() => {
+                                  router.push(
+                                    `?term=${form.getValues(
+                                      "termCode"
+                                    )}&subject=${subject}`
+                                  );
                                   form.setValue("subject", subject);
                                   form.setValue("course", undefined);
                                   setSubjectsOpen(false);
@@ -353,97 +390,117 @@ export default function SearchMenu({ terms }: { terms: Term[] }) {
             <FormField
               control={form.control}
               name="course"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel className="mb-1">Course</FormLabel>
-                  <Popover open={coursesOpen} onOpenChange={setCoursesOpen}>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          disabled={courses === undefined}
-                          variant="outline"
-                          role="combobox"
-                          className={cn(
-                            "w-full justify-between",
-                            !field.value && "text-muted-foreground"
-                          )}
-                        >
-                          {field.value
-                            ? `${
-                                courses?.find(
-                                  (course) => course.course === field.value
-                                )?.course
-                              } - ${
-                                courses?.find(
-                                  (course) => course.course === field.value
-                                )?.title
-                              }`
-                            : "Select course"}
-                          <ChevronsUpDown className="opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent
-                      className="w-[--radix-popover-trigger-width] p-0"
-                      align="start"
-                    >
-                      <Command
-                        filter={(value, search) => {
-                          if (!courses) return 0;
-                          const course = courses.find(
-                            (course) => course.course === value
-                          );
-                          const title = `${course?.course} - ${course?.title}`;
-                          if (
-                            title.toLowerCase().includes(search.toLowerCase())
-                          )
-                            return 1;
-                          return 0;
-                        }}
-                      >
-                        <CommandInput
-                          placeholder="Search course..."
-                          className="h-9"
-                        />
-                        <CommandList>
-                          <CommandEmpty>No course found.</CommandEmpty>
-                          <CommandGroup>
-                            {courses?.map((course) => (
-                              <CommandItem
-                                value={course.course}
-                                key={course.course + " - " + course.title}
-                                onSelect={() => {
-                                  if (field.value === course.course) {
-                                    form.setValue("course", undefined);
-                                  } else {
-                                    form.setValue("course", course.course);
-                                  }
-                                  setCoursesOpen(false);
-                                }}
-                                className="hover:cursor-pointer"
-                              >
-                                {course.course} - {course.title}
-                                <RiCheckLine
-                                  className={cn(
-                                    "ml-auto",
-                                    course.course === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
-                                  )}
+              render={({ field }) => {
+                const currentCourse = courses?.find(
+                  (course) => course.course === field.value
+                );
+                return (
+                  <FormItem className="flex flex-col">
+                    <FormLabel className="mb-1">Course</FormLabel>
+                    <Popover open={coursesOpen} onOpenChange={setCoursesOpen}>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            disabled={
+                              courses === undefined ||
+                              coursesLoading ||
+                              isSearching
+                            }
+                            variant="outline"
+                            role="combobox"
+                            className={cn(
+                              "w-full justify-between",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            <div>
+                              {coursesLoading ? (
+                                <LoaderCircle
+                                  className={"animate-spin w-4 h-4"}
                                 />
-                              </CommandItem>
-                            ))}
-                          </CommandGroup>
-                        </CommandList>
-                      </Command>
-                    </PopoverContent>
-                  </Popover>
-                  <FormMessage />
-                </FormItem>
-              )}
+                              ) : !courses ? (
+                                ""
+                              ) : currentCourse ? (
+                                `${currentCourse.course} - ${currentCourse.title}`
+                              ) : (
+                                "Select course"
+                              )}
+                            </div>
+                            <ChevronsUpDown className="opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent
+                        className="w-[--radix-popover-trigger-width] p-0"
+                        align="start"
+                      >
+                        <Command
+                          filter={(value, search) => {
+                            if (!courses) return 0;
+                            const found = courses?.find(
+                              (course) => course.course === value
+                            );
+                            if (!found) return 0;
+                            const title = `${found.course} - ${found.title}`;
+                            if (
+                              title.toLowerCase().includes(search.toLowerCase())
+                            )
+                              return 1;
+                            return 0;
+                          }}
+                        >
+                          <CommandInput
+                            placeholder="Search course..."
+                            className="h-9"
+                          />
+                          <CommandList>
+                            <CommandEmpty>No course found.</CommandEmpty>
+                            <CommandGroup>
+                              {courses?.map((course) => (
+                                <CommandItem
+                                  value={course.course}
+                                  key={course.course + " - " + course.title}
+                                  onSelect={() => {
+                                    router.push(
+                                      `?term=${form.getValues(
+                                        "termCode"
+                                      )}&subject=${form.getValues(
+                                        "subject"
+                                      )}&course=${course.course}`
+                                    );
+
+                                    if (field.value === course.course) {
+                                      form.setValue("course", undefined);
+                                    } else {
+                                      form.setValue("course", course.course);
+                                    }
+                                    setCoursesOpen(false);
+                                  }}
+                                  className="hover:cursor-pointer"
+                                >
+                                  {course.course} - {course.title}
+                                  <RiCheckLine
+                                    className={cn(
+                                      "ml-auto",
+                                      course.course === field.value
+                                        ? "opacity-100"
+                                        : "opacity-0"
+                                    )}
+                                  />
+                                </CommandItem>
+                              ))}
+                            </CommandGroup>
+                          </CommandList>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                    <FormMessage />
+                  </FormItem>
+                );
+              }}
             />
           </div>
-          <Button type="submit" className="w-full mt-8 lg:mt-0">
+          <Button type="submit" className="w-full mt-8 xl:mt-0">
             {isSearching ? <LoadingCircle /> : "Search"}
           </Button>
         </form>

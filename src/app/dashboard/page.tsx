@@ -1,5 +1,5 @@
-import DashboardHeader from "@/components/dashboard-header";
-import DashboardContent from "@/components/dashboard-content";
+import DashboardContent from "@/sections/home/dashboard-content";
+import DashboardHeader from "@/sections/home/dashboard-header";
 
 export default function Dashboard() {
   return (

@@ -3,13 +3,13 @@
 import useTrackedSectionsStore, {
   LoadingState,
 } from "@/stores/useTrackedSectionsStore";
-import LoadingCircle from "./loading-circle";
-import ClassCell from "./class-cell";
 import { useEffect, useState } from "react";
 import { Role, User } from "@prisma/client";
 import { CURRENT_TERM } from "@/lib/utils";
 import { getUserInfo } from "@/actions/user";
 import { useSession } from "next-auth/react";
+import ClassCell from "@/components/class-cell";
+import LoadingCircle from "@/components/loading-circle";
 
 interface UserData extends User {
   role: Role;
@@ -36,7 +36,7 @@ export default function DashboardContent() {
   }, [status]);
 
   return (
-    <div className="flex flex-col lg:flex-row justify-between items-start lg:flex-wrap gap-y-4">
+    <section className="flex flex-col lg:flex-row justify-between items-start lg:flex-wrap gap-y-4">
       {loadState !== LoadingState.FETCHING ? (
         trackedSections.length > 0 ? (
           trackedSections.map((section) => (
@@ -57,6 +57,6 @@ export default function DashboardContent() {
           <LoadingCircle />
         </div>
       )}
-    </div>
+    </section>
   );
 }

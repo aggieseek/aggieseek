@@ -151,7 +151,7 @@ function SectionPage() {
       }
 
       setCourseData(data);
-      if (data.SWV_CLASS_SEARCH_INSTRCTR_JSON !== null)
+      if (data.SWV_CLASS_SEARCH_INSTRCTR_JSON)
         setInstructors(JSON.parse(data.SWV_CLASS_SEARCH_INSTRCTR_JSON));
 
       fetchWatchers(term, crn).then((data) => {
@@ -196,6 +196,16 @@ function SectionPage() {
             <RiHome3Line className="w-4 h-4 group-hover:w-5 group-hover:h-5 transition-all" />
             Back to Dashboard
           </Link>
+        )}
+
+        {source === "search" && (
+          <div
+            onClick={() => router.back()}
+            className="inline-flex hover:cursor-pointer gap-x-2 w-auto items-center font-bold mb-4 hover:underline"
+          >
+            <RiSearch2Line />
+            Back to Search
+          </div>
         )}
 
         <div className="border-b pb-3">

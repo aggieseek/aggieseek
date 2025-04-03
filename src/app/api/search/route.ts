@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
   const sections = await prisma.section.findMany({
     where: {
       term,
-      subject,
+      ...(subject && { subject }),
       ...(course && { course }),
     },
     orderBy: [{ subject: "asc" }, { course: "asc" }, { section: "asc" }],
