@@ -8,7 +8,7 @@ import useTrackedSectionsStore, {
 import { toast } from "sonner";
 import { cn, CURRENT_TERM } from "@/lib/utils";
 import { z } from "zod";
-import { Form, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Popover,
@@ -22,6 +22,7 @@ import {
   FormItem,
   FormControl,
   FormMessage,
+  Form,
 } from "@/components/ui/form";
 import {
   InputOTP,
@@ -71,7 +72,7 @@ export default function DashboardHeader() {
 
   return (
     <div className="flex justify-between sm:items-center mb-6 border-b pb-4">
-      <div className="flex flex-col lg:flex-row lg:gap-x-12 h-10 lg:items-center">
+      <div className="flex flex-col lg:flex-row lg:gap-x-12 lg:h-10 lg:items-center">
         <h3 className="font-bold text-xl">Your Courses</h3>
 
         <div className="flex items-center">
