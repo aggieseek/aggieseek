@@ -3,16 +3,16 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { ReactNode, Suspense, useEffect, useState } from "react";
 import LoadingCircle from "@/components/loading-circle";
-import { ISectionHowdy } from "@/lib/types/howdy-types";
+import { ISectionHowdy } from "@/lib/types";
 import Link from "next/link";
-import { IInstructorHowdy } from "@/lib/types/howdy-types";
+import { IInstructorHowdy } from "@/lib/types";
 import { cn, CURRENT_TERM } from "@/lib/utils";
 import useTrackedSectionsStore, {
   LoadingState,
 } from "@/stores/useTrackedSectionsStore";
 import { useSession } from "next-auth/react";
-import ScheduleDisplay from "@/components/schedule-display";
-import SectionSidebar from "@/components/section-sidebar";
+import ScheduleDisplay from "@/components/search/schedule-display";
+import SectionSidebar from "@/components/search/section-sidebar";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -151,7 +151,7 @@ function SectionPage() {
       }
 
       setCourseData(data);
-      if (data.SWV_CLASS_SEARCH_INSTRCTR_JSON !== null)
+      if (data.SWV_CLASS_SEARCH_INSTRCTR_JSON)
         setInstructors(JSON.parse(data.SWV_CLASS_SEARCH_INSTRCTR_JSON));
 
       fetchWatchers(term, crn).then((data) => {
@@ -196,6 +196,16 @@ function SectionPage() {
             <RiHome3Line className="w-4 h-4 group-hover:w-5 group-hover:h-5 transition-all" />
             Back to Dashboard
           </Link>
+        )}
+
+        {source === "search" && (
+          <div
+            onClick={() => router.back()}
+            className="inline-flex hover:cursor-pointer gap-x-2 w-auto items-center font-bold mb-4 hover:underline"
+          >
+            <RiSearch2Line />
+            Back to Search
+          </div>
         )}
 
         <div className="border-b pb-3">

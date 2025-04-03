@@ -53,6 +53,12 @@ export default function Settings() {
       </div>
 
       <div className="hidden md:block mb-4">
+        <div className="flex gap-x-8 pb-4 mb-3">
+          <div className="flex items-center font-bold h-10 text-xl flex-1">
+            Settings
+          </div>
+        </div>
+
         <Tabs value={activeTab} onValueChange={handleValueChange}>
           <TabsList className="">
             <TabsTrigger value="notifications">Notifications</TabsTrigger>

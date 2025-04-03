@@ -5,8 +5,8 @@ import type { Instructor, Section } from "@prisma/client";
 import Link from "next/link";
 import { CURRENT_TERM } from "@/lib/utils";
 import LoadingCircle from "@/components/loading-circle";
-import { RiHome3Line } from "react-icons/ri";
-import ProfClassCell from "@/components/prof-class-cell";
+import { RiHome3Line, RiSearch2Line } from "react-icons/ri";
+import ProfClassCell from "@/components/search/prof-class-cell";
 import { convertTermCode } from "@/lib/utils";
 
 const fetchInstructor = async (id: string) => {
@@ -138,6 +138,17 @@ function InstructorPage() {
             Back to Dashboard
           </Link>
         )}
+
+        {source === "search" && (
+          <div
+            onClick={() => router.back()}
+            className="inline-flex hover:cursor-pointer gap-x-2 w-auto items-center font-bold mb-4 hover:underline"
+          >
+            <RiSearch2Line />
+            Back to Search
+          </div>
+        )}
+
         <div className="border-b pb-3 ">
           <p className="text-2xl tracking-wide font-black maroon-gradient inline-block text-transparent bg-clip-text">
             {instructorData?.name}

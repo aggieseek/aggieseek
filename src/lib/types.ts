@@ -1,3 +1,15 @@
+export interface Term {
+  code: string;
+  desc: string;
+  startDate: string;
+}
+
+export interface Course {
+  subject: string;
+  course: string;
+  title: string;
+}
+
 export interface ISectionHowdy {
   TERM_CODE: string;
   CRN: string;
@@ -25,6 +37,7 @@ export interface ISectionHowdy {
   HAS_SYLLABUS: string;
   BILL_HRS: number | null;
   BILL_IND: number | null;
+  SECTION_OPEN: boolean;
   BILL_HR_HIGH: number | null;
   BILL_HR_LOW: number;
   CREDIT_HR_IND: number | null;
@@ -87,6 +100,7 @@ export interface ITermHowdy {
   STVTERM_GUID: string;
   STVTERM_CATALOG_GUID: string;
 }
+
 export interface IInstructorHowdy {
   NAME: string;
   MORE: number;

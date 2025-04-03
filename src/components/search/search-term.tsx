@@ -17,8 +17,8 @@ import {
 import { cn } from "@/lib/utils";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useState } from "react";
-import { Button } from "./ui/button";
-import { Term } from "@/lib/types/course-types";
+import { Button } from "../ui/button";
+import { Term } from "@/lib/types";
 
 interface SearchTermProps {
   selected: string;

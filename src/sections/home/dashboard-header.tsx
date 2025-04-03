@@ -1,20 +1,33 @@
 "use client";
 
 import Link from "next/link";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { Button } from "./ui/button";
 import { RiAddLine, RiRestartLine, RiSearch2Line } from "react-icons/ri";
 import useTrackedSectionsStore, {
   LoadingState,
 } from "@/stores/useTrackedSectionsStore";
 import { toast } from "sonner";
-import LoadingCircle from "./loading-circle";
 import { cn, CURRENT_TERM } from "@/lib/utils";
 import { z } from "zod";
-import { useForm } from "react-hook-form";
+import { Form, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "./ui/input-otp";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import LoadingCircle from "@/components/loading-circle";
+import { Button } from "@/components/ui/button";
+import {
+  FormField,
+  FormItem,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
 
 const formSchema = z.object({
   crn: z.string().length(5, { message: "" }),
@@ -58,7 +71,7 @@ export default function DashboardHeader() {
 
   return (
     <div className="flex justify-between sm:items-center mb-6 border-b pb-4">
-      <div className="flex flex-col lg:flex-row lg:gap-x-12 lg:items-center">
+      <div className="flex flex-col lg:flex-row lg:gap-x-12 h-10 lg:items-center">
         <h3 className="font-bold text-xl">Your Courses</h3>
 
         <div className="flex items-center">

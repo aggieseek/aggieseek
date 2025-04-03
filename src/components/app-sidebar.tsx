@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Sidebar,
   SidebarContent,
@@ -14,6 +16,7 @@ import {
 import {
   RiArrowDownSLine,
   RiDiscordLine,
+  RiFeedbackLine,
   RiHome3Line,
   RiSearch2Line,
   RiSettings2Line,
@@ -145,7 +148,7 @@ export function AppSidebar() {
             name="Feedback"
             href="/dashboard/feedback"
             active={(path) => path === "/dashboard/feedback"}
-            icon={<RiHome3Line />}
+            icon={<RiFeedbackLine />}
           />
           <MenuItem
             name="Discord"
