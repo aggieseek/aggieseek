@@ -17,7 +17,7 @@ export default function ProfClassCell({ section }: ProfClassCellProps) {
   return (
     <div className="w-full bg-gray-50 p-4 rounded-md border relative">
       <Link
-        href={`/dashboard/search/sections?term=${CURRENT_TERM}&crn=${section.crn}&source=dashboard`}
+        href={`/dashboard/search/sections?term=${section.term}&crn=${section.crn}&source=dashboard`}
         className="inline-block group relative space-y-2 mb-1"
       >
         <div className="text-lg flex flex-col sm:block leading-tight min-h-8 font-extrabold decoration-gray-600 decoration-1">

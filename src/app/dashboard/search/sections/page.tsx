@@ -218,13 +218,13 @@ function SectionPage() {
 
           <SectionPanel title="Schedule">
             <ScheduleDisplay
-              schedules={JSON.parse(courseData.SWV_CLASS_SEARCH_JSON_CLOB)}
+              schedules={courseData.SWV_CLASS_SEARCH_JSON_CLOB ? JSON.parse(courseData.SWV_CLASS_SEARCH_JSON_CLOB) : []}
             />
           </SectionPanel>
 
           <SectionPanel title="Attributes">
             <div className="flex gap-x-2 -mt-2">
-              {courseData.ATTRIBUTES.map((attr) => (
+              {courseData.ATTRIBUTES?.map((attr) => (
                 <Badge
                   className=" bg-red-950 hover:bg-red-900 text-xs hover:cursor-pointer"
                   key={attr.SSRATTR_ATTR_CODE}
