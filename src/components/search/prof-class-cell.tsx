@@ -2,7 +2,6 @@
 
 import React from "react";
 import Link from "next/link";
-import { CURRENT_TERM } from "@/lib/utils";
 import { Section } from "@prisma/client";
 import {
   RiHashtag,
