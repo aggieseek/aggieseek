@@ -11,7 +11,7 @@ export default function Footer() {
           <p>by the AggieSeek team</p>
         </div>
         <div className="text-sm opacity-50">
-        This web site is not endorsed by, directly affiliated with, maintained, or sponsored by Texas A&M University.
+        This website is not endorsed by, directly affiliated with, maintained, or sponsored by Texas A&M University.
         </div>
         <div className="flex space-x-5 lg:space-x-10">
           <a
