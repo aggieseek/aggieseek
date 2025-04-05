@@ -20,9 +20,15 @@ export default function Home() {
     });
   }, []);
 
+  function redirectUser() {
+      session
+        ? router.push("/dashboard")
+        : signIn("google", { callbackUrl: "/dashboard" })
+  }
+
   return (
     <div className="">
-      <div className="flex flex-col lg:flex-row lg:mt-12 pl-8 lg:pl-24 gap-8">
+      <div className="flex flex-col lg:grid lg:grid-cols-[2fr_3fr] lg:mt-12 pl-8 lg:pl-24 gap-8">
         <div className="mt-10 mr-10">
           <motion.div
             initial={{ opacity: 0, translateY: 20 }}
@@ -32,8 +38,8 @@ export default function Home() {
             <Image
               src={"/images/logo-black.png"}
               alt={"AggieSeek"}
-              width={400}
-              height={200}
+              width={450}
+              height={225}
             />
           </motion.div>
           <motion.h2
@@ -84,11 +90,7 @@ export default function Home() {
               transition={{ type: "spring", delay: 2, duration: 4 }}
             >
               <Button
-                onClick={() =>
-                  session
-                    ? router.push("/dashboard")
-                    : signIn("google", { callbackUrl: "/dashboard" })
-                }
+                onClick={redirectUser}
                 className={
                   "transition-all group bg-[#3c1817] hover:bg-[#2d0908] active:scale-[0.97]"
                 }
@@ -125,14 +127,13 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="relative w-full h-[400px] sm:h-[300px] md:h-[500px] lg:w-[800px] lg:h-[500px] overflow-hidden rounded-md shadow-xl">
-          <Image
+        <Image
             src="/images/aggieseek-ss.png"
             alt="Dashboard"
-            fill
-            className="object-cover object-left"
+            width={800}
+            height={1600}
+            className="w-full object-cover translate-x-[20%] rounded-lg shadow-xl"
           />
-        </div>
       </div>
       <div className="flex flex-col-reverse lg:flex-row mt-16 px-8 lg:px-24 gap-8">
         {/* Mobile Mockup on the Left for `lg`, Bottom for Smaller Screens */}
