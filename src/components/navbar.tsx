@@ -5,7 +5,7 @@ export default function Navbar() {
   return (
     <nav
       className={
-        "flex items-center w-full px-8 lg:px-24 py-2 sticky top-0 bg-white h-20 border-b border-b-neutral-200 shadow-sm z-50"
+        "flex items-center justify-between w-full px-8 lg:px-24 py-2 sticky top-0 bg-white h-20 border-b border-b-neutral-200 shadow-sm z-50"
       }
     >
       <Link
@@ -22,6 +22,21 @@ export default function Navbar() {
           height={25} // Adjust height for a reasonable size
         />
       </Link>
+      
+      <div className="flex items-center gap-6">
+        <Link 
+          href="/about" 
+          className="text-neutral-800 hover:text-neutral-600 font-medium"
+        >
+          About
+        </Link>
+        <Link 
+          href="/contact" 
+          className="text-neutral-800 hover:text-neutral-600 font-medium"
+        >
+          Contact
+        </Link>
+      </div>
     </nav>
   );
 }
